@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'wf4.ui'
+# Form implementation generated from reading ui file 'Mainform_QT.ui'
 #
 # Created by: PyQt5 UI code generator 5.6
 #
@@ -159,13 +159,105 @@ class Ui_Form(object):
         self.label_3.setScaledContents(True)
         self.label_3.setObjectName("label_3")
         self.label_4 = QtWidgets.QLabel(self.p0)
-        self.label_4.setGeometry(QtCore.QRect(600, 210, 71, 21))
+        self.label_4.setGeometry(QtCore.QRect(610, 200, 71, 21))
         font = QtGui.QFont()
         font.setFamily("微软雅黑 Light")
         font.setPointSize(11)
         self.label_4.setFont(font)
         self.label_4.setStyleSheet("color: rgb(109, 109, 109);")
         self.label_4.setObjectName("label_4")
+        self.pushButton_39 = QtWidgets.QPushButton(self.p0)
+        self.pushButton_39.setGeometry(QtCore.QRect(630, 240, 181, 41))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(9)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(9)
+        self.pushButton_39.setFont(font)
+        self.pushButton_39.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_39.setStyleSheet("border-width: 1px;\n"
+"border-color: rgb(230, 230, 230);\n"
+"background-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);\n"
+"border-radius:20px;\n"
+"border-style:solid; \n"
+"font: 75 9pt \"Arial\";")
+        self.pushButton_39.setObjectName("pushButton_39")
+        self.pushButton_40 = QtWidgets.QPushButton(self.p0)
+        self.pushButton_40.setGeometry(QtCore.QRect(630, 290, 181, 41))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(9)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(9)
+        self.pushButton_40.setFont(font)
+        self.pushButton_40.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_40.setStyleSheet("border-width: 1px;\n"
+"border-color: rgb(230, 230, 230);\n"
+"background-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);\n"
+"border-radius:20px;\n"
+"border-style:solid; \n"
+"font: 75 9pt \"Arial\";")
+        self.pushButton_40.setObjectName("pushButton_40")
+        self.pushButton_41 = QtWidgets.QPushButton(self.p0)
+        self.pushButton_41.setGeometry(QtCore.QRect(630, 340, 181, 41))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(9)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(9)
+        self.pushButton_41.setFont(font)
+        self.pushButton_41.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_41.setStyleSheet("border-width: 1px;\n"
+"border-color: rgb(230, 230, 230);\n"
+"background-color: rgb(255, 255, 255);\n"
+"color: rgb(0, 0, 0);\n"
+"border-radius:20px;\n"
+"border-style:solid; \n"
+"font: 75 9pt \"Arial\";")
+        self.pushButton_41.setObjectName("pushButton_41")
+        self.pushButton_42 = QtWidgets.QPushButton(self.p0)
+        self.pushButton_42.setGeometry(QtCore.QRect(630, 410, 181, 41))
+        font = QtGui.QFont()
+        font.setFamily("Arial")
+        font.setPointSize(9)
+        font.setBold(False)
+        font.setItalic(False)
+        font.setWeight(9)
+        self.pushButton_42.setFont(font)
+        self.pushButton_42.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushButton_42.setStyleSheet("border-width: 1px;\n"
+"border-color: rgb(170, 0, 255);\n"
+"background-color: rgb(170, 0, 255);\n"
+"font: 75 9pt \"Arial\";\n"
+"color: rgb(255, 255, 255);\n"
+"border-radius:20px;\n"
+"border-style:solid; \n"
+"")
+        self.pushButton_42.setObjectName("pushButton_42")
+        self.mw_2 = QtWidgets.QToolButton(self.p0)
+        self.mw_2.setGeometry(QtCore.QRect(650, 470, 141, 31))
+        font = QtGui.QFont()
+        font.setFamily("微软雅黑")
+        font.setPointSize(10)
+        self.mw_2.setFont(font)
+        self.mw_2.setStyleSheet("border:0px;\n"
+"")
+        self.mw_2.setIcon(icon7)
+        self.mw_2.setIconSize(QtCore.QSize(200, 200))
+        self.mw_2.setPopupMode(QtWidgets.QToolButton.DelayedPopup)
+        self.mw_2.setToolButtonStyle(QtCore.Qt.ToolButtonTextBesideIcon)
+        self.mw_2.setAutoRaise(True)
+        self.mw_2.setObjectName("mw_2")
+        self.line_28 = QtWidgets.QFrame(self.p0)
+        self.line_28.setGeometry(QtCore.QRect(630, 390, 181, 16))
+        self.line_28.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line_28.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_28.setObjectName("line_28")
         self.stackedWidget.addWidget(self.p0)
         self.p1 = QtWidgets.QWidget()
         self.p1.setObjectName("p1")
@@ -529,7 +621,7 @@ class Ui_Form(object):
         self.pushButton.setGeometry(QtCore.QRect(670, 380, 51, 51))
         self.pushButton.setText("")
         icon19 = QtGui.QIcon()
-        icon19.addPixmap(QtGui.QPixmap("C:/Users/m1595/.designer/backup/pic/sdO8tAw.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon19.addPixmap(QtGui.QPixmap("../../../.designer/backup/pic/sdO8tAw.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButton.setIcon(icon19)
         self.pushButton.setIconSize(QtCore.QSize(40, 40))
         self.pushButton.setFlat(True)
@@ -538,7 +630,7 @@ class Ui_Form(object):
         self.pushButton_2.setGeometry(QtCore.QRect(740, 380, 51, 51))
         self.pushButton_2.setText("")
         icon20 = QtGui.QIcon()
-        icon20.addPixmap(QtGui.QPixmap("C:/Users/m1595/.designer/backup/pic/03.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon20.addPixmap(QtGui.QPixmap("../../../.designer/backup/pic/03.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButton_2.setIcon(icon20)
         self.pushButton_2.setIconSize(QtCore.QSize(40, 40))
         self.pushButton_2.setFlat(True)
@@ -547,7 +639,7 @@ class Ui_Form(object):
         self.pushButton_3.setGeometry(QtCore.QRect(670, 450, 51, 51))
         self.pushButton_3.setText("")
         icon21 = QtGui.QIcon()
-        icon21.addPixmap(QtGui.QPixmap("C:/Users/m1595/.designer/backup/pic/04.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon21.addPixmap(QtGui.QPixmap("../../../.designer/backup/pic/04.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButton_3.setIcon(icon21)
         self.pushButton_3.setIconSize(QtCore.QSize(40, 40))
         self.pushButton_3.setFlat(True)
@@ -556,7 +648,7 @@ class Ui_Form(object):
         self.pushButton_4.setGeometry(QtCore.QRect(740, 450, 51, 51))
         self.pushButton_4.setText("")
         icon22 = QtGui.QIcon()
-        icon22.addPixmap(QtGui.QPixmap("C:/Users/m1595/.designer/backup/pic/05.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon22.addPixmap(QtGui.QPixmap("../../../.designer/backup/pic/05.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButton_4.setIcon(icon22)
         self.pushButton_4.setIconSize(QtCore.QSize(40, 40))
         self.pushButton_4.setFlat(True)
@@ -1429,7 +1521,7 @@ class Ui_Form(object):
         self.label_6.setGeometry(QtCore.QRect(-10, 80, 421, 211))
         self.label_6.setAutoFillBackground(False)
         self.label_6.setText("")
-        self.label_6.setPixmap(QtGui.QPixmap("C:/Users/m1595/.designer/backup/pic/图表.png"))
+        self.label_6.setPixmap(QtGui.QPixmap("../../../.designer/backup/pic/图表.png"))
         self.label_6.setScaledContents(True)
         self.label_6.setObjectName("label_6")
         self.label_22 = QtWidgets.QLabel(self.p5)
@@ -1750,9 +1842,14 @@ class Ui_Form(object):
         self.listView.setGeometry(QtCore.QRect(10, 50, 61, 21))
         self.listView.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.listView.setObjectName("listView")
+        self.line_27 = QtWidgets.QFrame(Form)
+        self.line_27.setGeometry(QtCore.QRect(10, 460, 141, 16))
+        self.line_27.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line_27.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_27.setObjectName("line_27")
 
         self.retranslateUi(Form)
-        self.stackedWidget.setCurrentIndex(2)
+        self.stackedWidget.setCurrentIndex(0)
         self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(Form)
 
@@ -1768,6 +1865,11 @@ class Ui_Form(object):
         self.mw.setText(_translate("Form", "  Multiple Wallets"))
         self.cw.setText(_translate("Form", "  Creat Wallet"))
         self.label_4.setText(_translate("Form", "import"))
+        self.pushButton_39.setText(_translate("Form", "By Passphras + Keystore"))
+        self.pushButton_40.setText(_translate("Form", "By Private Key"))
+        self.pushButton_41.setText(_translate("Form", "By Mnemonic Phrase"))
+        self.pushButton_42.setText(_translate("Form", "Creat New Wallet"))
+        self.mw_2.setText(_translate("Form", "  My Wallets"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("Form", "My Wallet"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("Form", "Market"))
         self.pushButton_9.setText(_translate("Form", "Send"))

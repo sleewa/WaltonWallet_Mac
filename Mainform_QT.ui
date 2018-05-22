@@ -375,7 +375,7 @@ color: rgb(93, 93, 93);</string>
     <enum>QFrame::NoFrame</enum>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="p0">
     <widget class="QLabel" name="label_3">
@@ -400,8 +400,8 @@ color: rgb(93, 93, 93);</string>
     <widget class="QLabel" name="label_4">
      <property name="geometry">
       <rect>
-       <x>600</x>
-       <y>210</y>
+       <x>610</x>
+       <y>200</y>
        <width>71</width>
        <height>21</height>
       </rect>
@@ -417,6 +417,198 @@ color: rgb(93, 93, 93);</string>
      </property>
      <property name="text">
       <string>import</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_39">
+     <property name="geometry">
+      <rect>
+       <x>630</x>
+       <y>240</y>
+       <width>181</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial</family>
+       <pointsize>9</pointsize>
+       <weight>9</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-width: 1px;
+border-color: rgb(230, 230, 230);
+background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
+border-radius:20px;
+border-style:solid; 
+font: 75 9pt &quot;Arial&quot;;</string>
+     </property>
+     <property name="text">
+      <string>By Passphras + Keystore</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_40">
+     <property name="geometry">
+      <rect>
+       <x>630</x>
+       <y>290</y>
+       <width>181</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial</family>
+       <pointsize>9</pointsize>
+       <weight>9</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-width: 1px;
+border-color: rgb(230, 230, 230);
+background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
+border-radius:20px;
+border-style:solid; 
+font: 75 9pt &quot;Arial&quot;;</string>
+     </property>
+     <property name="text">
+      <string>By Private Key</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_41">
+     <property name="geometry">
+      <rect>
+       <x>630</x>
+       <y>340</y>
+       <width>181</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial</family>
+       <pointsize>9</pointsize>
+       <weight>9</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-width: 1px;
+border-color: rgb(230, 230, 230);
+background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
+border-radius:20px;
+border-style:solid; 
+font: 75 9pt &quot;Arial&quot;;</string>
+     </property>
+     <property name="text">
+      <string>By Mnemonic Phrase</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_42">
+     <property name="geometry">
+      <rect>
+       <x>630</x>
+       <y>410</y>
+       <width>181</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>Arial</family>
+       <pointsize>9</pointsize>
+       <weight>9</weight>
+       <italic>false</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-width: 1px;
+border-color: rgb(170, 0, 255);
+background-color: rgb(170, 0, 255);
+font: 75 9pt &quot;Arial&quot;;
+color: rgb(255, 255, 255);
+border-radius:20px;
+border-style:solid; 
+</string>
+     </property>
+     <property name="text">
+      <string>Creat New Wallet</string>
+     </property>
+    </widget>
+    <widget class="QToolButton" name="mw_2">
+     <property name="geometry">
+      <rect>
+       <x>650</x>
+       <y>470</y>
+       <width>141</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>微软雅黑</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border:0px;
+</string>
+     </property>
+     <property name="text">
+      <string>  My Wallets</string>
+     </property>
+     <property name="icon">
+      <iconset>
+       <normaloff>pic/mw0.png</normaloff>pic/mw0.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>200</width>
+       <height>200</height>
+      </size>
+     </property>
+     <property name="popupMode">
+      <enum>QToolButton::DelayedPopup</enum>
+     </property>
+     <property name="toolButtonStyle">
+      <enum>Qt::ToolButtonTextBesideIcon</enum>
+     </property>
+     <property name="autoRaise">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="Line" name="line_28">
+     <property name="geometry">
+      <rect>
+       <x>630</x>
+       <y>390</y>
+       <width>181</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
     </widget>
    </widget>
@@ -1259,7 +1451,7 @@ color: rgb(100, 100, 100);</string>
      </property>
      <property name="icon">
       <iconset>
-       <normaloff>C:/Users/m1595/.designer/backup/pic/sdO8tAw.png</normaloff>C:/Users/m1595/.designer/backup/pic/sdO8tAw.png</iconset>
+       <normaloff>../../../.designer/backup/pic/sdO8tAw.png</normaloff>../../../.designer/backup/pic/sdO8tAw.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -1285,7 +1477,7 @@ color: rgb(100, 100, 100);</string>
      </property>
      <property name="icon">
       <iconset>
-       <normaloff>C:/Users/m1595/.designer/backup/pic/03.png</normaloff>C:/Users/m1595/.designer/backup/pic/03.png</iconset>
+       <normaloff>../../../.designer/backup/pic/03.png</normaloff>../../../.designer/backup/pic/03.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -1311,7 +1503,7 @@ color: rgb(100, 100, 100);</string>
      </property>
      <property name="icon">
       <iconset>
-       <normaloff>C:/Users/m1595/.designer/backup/pic/04.png</normaloff>C:/Users/m1595/.designer/backup/pic/04.png</iconset>
+       <normaloff>../../../.designer/backup/pic/04.png</normaloff>../../../.designer/backup/pic/04.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -1337,7 +1529,7 @@ color: rgb(100, 100, 100);</string>
      </property>
      <property name="icon">
       <iconset>
-       <normaloff>C:/Users/m1595/.designer/backup/pic/05.png</normaloff>C:/Users/m1595/.designer/backup/pic/05.png</iconset>
+       <normaloff>../../../.designer/backup/pic/05.png</normaloff>../../../.designer/backup/pic/05.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -3662,7 +3854,7 @@ border-style:solid;
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>C:/Users/m1595/.designer/backup/pic/图表.png</pixmap>
+      <pixmap>../../../.designer/backup/pic/图表.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -4397,6 +4589,19 @@ color: rgb(100, 100, 100);</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::NoFrame</enum>
+   </property>
+  </widget>
+  <widget class="Line" name="line_27">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>460</y>
+     <width>141</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Horizontal</enum>
    </property>
   </widget>
  </widget>
