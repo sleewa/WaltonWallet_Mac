@@ -1,16 +1,20 @@
 import sys
+import Warning_Form
+
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (QWidget, QToolTip, QDesktopWidget, QMessageBox, QTextEdit, QLabel,
                              QPushButton, QApplication, QMainWindow, QAction, qApp, QHBoxLayout, QVBoxLayout,
-                             QGridLayout,
+                             QGridLayout,QDialog,
                              QLineEdit, QFrame, QAbstractItemView)
 from PyQt5.QtGui import *
 from PyQt5.QtCore import QCoreApplication
 from Mainform_QT import *
 
 
-class Example(QWidget):
+
+
+class Example(QDialog,QWidget):
 
     def __init__(self):
         super().__init__()
@@ -87,12 +91,51 @@ class Example(QWidget):
         self.ui.cw.setIcon(QIcon("pic/cw1.png"))
         self.ui.stackedWidget.setCurrentIndex(0)
 
+    def pressCreatNewWallet(self):
+        self.ui.importstack.setCurrentIndex(1)
+
+    def pressimportbykeystore(self):
+        self.ui.importstack.setCurrentIndex(4)
+
+    def presspressimportbyPri(self):
+        self.ui.importstack.setCurrentIndex(2)
+
+    def presspressimportbyMnem(self):
+        self.ui.importstack.setCurrentIndex(3)
+
+    def pressback2import(self):
+        self.ui.importstack.setCurrentIndex(0)
+
+
+
+
+
     def initUI(self):
         '显示窗口'
         self.ui = Ui_Form()
         self.ui.setupUi(self)
+        #s = Warning_Form.SecondWindow()
 
         stackedW = self.ui.stackedWidget
+        btncnw = self.ui.creat_new_wallet
+        btncnw.clicked.connect(self.pressCreatNewWallet)
+        btnimportKeys = self.ui.import_Keystore
+        btnimportKeys.clicked.connect(self.pressimportbykeystore)
+        btnimportPri = self.ui.import_Pri
+        btnimportPri.clicked.connect(self.presspressimportbyPri)
+        btnimportMnem = self.ui.import_MP
+        btnimportMnem.clicked.connect(self.presspressimportbyMnem)
+
+        btnback1 = self.ui.back_to_import
+        btnback1.clicked.connect(self.pressback2import)
+        btnback2 = self.ui.back_to_import_2
+        btnback2.clicked.connect(self.pressback2import)
+        btnback3 = self.ui.back_to_import_6
+        btnback3.clicked.connect(self.pressback2import)
+        btnback4 = self.ui.back_to_import_7
+        btnback4.clicked.connect(self.pressback2import)
+
+        self.ui.importstack.setCurrentIndex(0)
 
         btn1 = self.ui.mywallet
         btn1.clicked.connect(self.pressbtn1)
@@ -108,6 +151,7 @@ class Example(QWidget):
         btn6.clicked.connect(self.pressbtn6)
         btn0 = self.ui.cw
         btn0.clicked.connect(self.pressbtn0)
+        #btn0.clicked.connect(s.handle_click())
 
         stackedW.setCurrentIndex(1)
 
@@ -244,10 +288,15 @@ class Example(QWidget):
         self.ui.multWallet.setCellWidget(1, 4, mwDelete)
         self.ui.multWallet.setCellWidget(1, 5, mwSaveKey)
 
-        self.show()  # show()方法在屏幕上显示出widget。一个widget对象在这里第一次被在内存中创建，并且之后在屏幕上显示。
+
+
+        #self.show()  # show()方法在屏幕上显示出widget。一个widget对象在这里第一次被在内存中创建，并且之后在屏幕上显示。
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = Example()
+    #s = Warning_Form.SecondWindow()
+    #ex.ui.cw.clicked.connect(s.handle_click)
+    ex.show()
     sys.exit(app.exec_())

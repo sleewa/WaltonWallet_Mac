@@ -397,153 +397,162 @@ color: rgb(93, 93, 93);</string>
       <bool>true</bool>
      </property>
     </widget>
-    <widget class="QLabel" name="label_4">
+    <widget class="QStackedWidget" name="importstack">
      <property name="geometry">
       <rect>
-       <x>610</x>
-       <y>200</y>
-       <width>71</width>
-       <height>21</height>
+       <x>589</x>
+       <y>140</y>
+       <width>261</width>
+       <height>371</height>
       </rect>
      </property>
-     <property name="font">
-      <font>
-       <family>微软雅黑 Light</family>
-       <pointsize>11</pointsize>
-      </font>
+     <property name="currentIndex">
+      <number>1</number>
      </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(109, 109, 109);</string>
-     </property>
-     <property name="text">
-      <string>import</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_39">
-     <property name="geometry">
-      <rect>
-       <x>630</x>
-       <y>240</y>
-       <width>181</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Arial</family>
-       <pointsize>9</pointsize>
-       <weight>9</weight>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-width: 1px;
+     <widget class="QWidget" name="page">
+      <widget class="QWidget" name="importForm" native="true">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>30</y>
+         <width>261</width>
+         <height>321</height>
+        </rect>
+       </property>
+       <widget class="QToolButton" name="mw_2">
+        <property name="geometry">
+         <rect>
+          <x>60</x>
+          <y>280</y>
+          <width>141</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>微软雅黑</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:0px;
+</string>
+        </property>
+        <property name="text">
+         <string>  My Wallets</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>pic/mw0.png</normaloff>pic/mw0.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>200</width>
+          <height>200</height>
+         </size>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::DelayedPopup</enum>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_4">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>10</y>
+          <width>71</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>微软雅黑 Light</family>
+          <pointsize>11</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(109, 109, 109);</string>
+        </property>
+        <property name="text">
+         <string>import</string>
+        </property>
+       </widget>
+       <widget class="Line" name="line_28">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>200</y>
+          <width>181</width>
+          <height>16</height>
+         </rect>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="import_Pri">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>100</y>
+          <width>181</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>9</pointsize>
+          <weight>9</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-width: 1px;
 border-color: rgb(230, 230, 230);
 background-color: rgb(255, 255, 255);
 color: rgb(0, 0, 0);
 border-radius:20px;
 border-style:solid; 
 font: 75 9pt &quot;Arial&quot;;</string>
-     </property>
-     <property name="text">
-      <string>By Passphras + Keystore</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_40">
-     <property name="geometry">
-      <rect>
-       <x>630</x>
-       <y>290</y>
-       <width>181</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Arial</family>
-       <pointsize>9</pointsize>
-       <weight>9</weight>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-width: 1px;
-border-color: rgb(230, 230, 230);
-background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);
-border-radius:20px;
-border-style:solid; 
-font: 75 9pt &quot;Arial&quot;;</string>
-     </property>
-     <property name="text">
-      <string>By Private Key</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_41">
-     <property name="geometry">
-      <rect>
-       <x>630</x>
-       <y>340</y>
-       <width>181</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Arial</family>
-       <pointsize>9</pointsize>
-       <weight>9</weight>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-width: 1px;
-border-color: rgb(230, 230, 230);
-background-color: rgb(255, 255, 255);
-color: rgb(0, 0, 0);
-border-radius:20px;
-border-style:solid; 
-font: 75 9pt &quot;Arial&quot;;</string>
-     </property>
-     <property name="text">
-      <string>By Mnemonic Phrase</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_42">
-     <property name="geometry">
-      <rect>
-       <x>630</x>
-       <y>410</y>
-       <width>181</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Arial</family>
-       <pointsize>9</pointsize>
-       <weight>9</weight>
-       <italic>false</italic>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border-width: 1px;
+        </property>
+        <property name="text">
+         <string>By Private Key</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="creat_new_wallet">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>220</y>
+          <width>181</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>9</pointsize>
+          <weight>9</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-width: 1px;
 border-color: rgb(170, 0, 255);
 background-color: rgb(170, 0, 255);
 font: 75 9pt &quot;Arial&quot;;
@@ -551,65 +560,1315 @@ color: rgb(255, 255, 255);
 border-radius:20px;
 border-style:solid; 
 </string>
-     </property>
-     <property name="text">
-      <string>Creat New Wallet</string>
-     </property>
-    </widget>
-    <widget class="QToolButton" name="mw_2">
-     <property name="geometry">
-      <rect>
-       <x>650</x>
-       <y>470</y>
-       <width>141</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>微软雅黑</family>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">border:0px;
+        </property>
+        <property name="text">
+         <string>Creat New Wallet</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="import_Keystore">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>50</y>
+          <width>181</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>9</pointsize>
+          <weight>9</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-width: 1px;
+border-color: rgb(230, 230, 230);
+background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
+border-radius:20px;
+border-style:solid; 
+font: 75 9pt &quot;Arial&quot;;</string>
+        </property>
+        <property name="text">
+         <string>By Passphras + Keystore</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="import_MP">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>150</y>
+          <width>181</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>9</pointsize>
+          <weight>9</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-width: 1px;
+border-color: rgb(230, 230, 230);
+background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
+border-radius:20px;
+border-style:solid; 
+font: 75 9pt &quot;Arial&quot;;</string>
+        </property>
+        <property name="text">
+         <string>By Mnemonic Phrase</string>
+        </property>
+       </widget>
+       <zorder>mw_2</zorder>
+       <zorder>label_4</zorder>
+       <zorder>line_28</zorder>
+       <zorder>import_Pri</zorder>
+       <zorder>creat_new_wallet</zorder>
+       <zorder>import_Keystore</zorder>
+       <zorder>import_MP</zorder>
+       <zorder>cnwForm</zorder>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="page_2">
+      <widget class="QWidget" name="cnwForm" native="true">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>30</y>
+         <width>261</width>
+         <height>321</height>
+        </rect>
+       </property>
+       <widget class="QPushButton" name="creat_new_wallet_2">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>260</y>
+          <width>181</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>9</pointsize>
+          <weight>9</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-width: 1px;
+border-color: rgb(170, 0, 255);
+background-color: rgb(170, 0, 255);
+font: 75 9pt &quot;Arial&quot;;
+color: rgb(255, 255, 255);
+border-radius:20px;
+border-style:solid; 
 </string>
-     </property>
-     <property name="text">
-      <string>  My Wallets</string>
-     </property>
-     <property name="icon">
-      <iconset>
-       <normaloff>pic/mw0.png</normaloff>pic/mw0.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>200</width>
-       <height>200</height>
-      </size>
-     </property>
-     <property name="popupMode">
-      <enum>QToolButton::DelayedPopup</enum>
-     </property>
-     <property name="toolButtonStyle">
-      <enum>Qt::ToolButtonTextBesideIcon</enum>
-     </property>
-     <property name="autoRaise">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="Line" name="line_28">
-     <property name="geometry">
-      <rect>
-       <x>630</x>
-       <y>390</y>
-       <width>181</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
+        </property>
+        <property name="text">
+         <string>Generate Keys</string>
+        </property>
+       </widget>
+       <widget class="QToolButton" name="back_to_import">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>0</y>
+          <width>91</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>14</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:0px;
+color: rgb(109, 109, 109);
+font: 14pt &quot;Arial&quot;;
+</string>
+        </property>
+        <property name="text">
+         <string>Back</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>pic/walton_app_source20180213导图切割_53.png</normaloff>pic/walton_app_source20180213导图切割_53.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>200</width>
+          <height>200</height>
+         </size>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::DelayedPopup</enum>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_4">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>100</y>
+          <width>191</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>等线</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="toolTip">
+         <string/>
+        </property>
+        <property name="statusTip">
+         <string/>
+        </property>
+        <property name="whatsThis">
+         <string/>
+        </property>
+        <property name="accessibleName">
+         <string/>
+        </property>
+        <property name="accessibleDescription">
+         <string/>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">
+QLineEdit[echoMode=&quot;2&quot;] {
+    lineedit-password-character:42;
+}
+</string>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="placeholderText">
+         <string>Enter Passphrase Here</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_5">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>140</y>
+          <width>191</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>等线</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLineEdit[echoMode=&quot;2&quot;] {
+    lineedit-password-character: 42;
+}</string>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="placeholderText">
+         <string>Enter Passphrase Again</string>
+        </property>
+       </widget>
+       <widget class="Line" name="line_36">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>125</y>
+          <width>225</width>
+          <height>10</height>
+         </rect>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+       <widget class="Line" name="line_37">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>165</y>
+          <width>225</width>
+          <height>10</height>
+         </rect>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="turn2visible1">
+        <property name="geometry">
+         <rect>
+          <x>220</x>
+          <y>100</y>
+          <width>31</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>pic/02.png</normaloff>pic/02.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="turn2visible2">
+        <property name="geometry">
+         <rect>
+          <x>220</x>
+          <y>140</y>
+          <width>31</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>pic/02.png</normaloff>pic/02.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <zorder>creat_new_wallet_2</zorder>
+       <zorder>back_to_import</zorder>
+       <zorder>lineEdit_4</zorder>
+       <zorder>lineEdit_5</zorder>
+       <zorder>line_36</zorder>
+       <zorder>line_37</zorder>
+       <zorder>turn2visible1</zorder>
+       <zorder>turn2visible2</zorder>
+       <zorder>importMnemForm</zorder>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="page_3">
+      <widget class="QWidget" name="importPriForm" native="true">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>30</y>
+         <width>261</width>
+         <height>321</height>
+        </rect>
+       </property>
+       <widget class="QPushButton" name="login_pri">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>260</y>
+          <width>181</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>9</pointsize>
+          <weight>9</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-width: 1px;
+border-color: rgb(170, 0, 255);
+background-color: rgb(170, 0, 255);
+font: 75 9pt &quot;Arial&quot;;
+color: rgb(255, 255, 255);
+border-radius:20px;
+border-style:solid; 
+</string>
+        </property>
+        <property name="text">
+         <string>Login</string>
+        </property>
+       </widget>
+       <widget class="QToolButton" name="back_to_import_7">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>0</y>
+          <width>91</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>14</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:0px;
+color: rgb(109, 109, 109);
+font: 14pt &quot;Arial&quot;;
+</string>
+        </property>
+        <property name="text">
+         <string>Back</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>pic/walton_app_source20180213导图切割_53.png</normaloff>pic/walton_app_source20180213导图切割_53.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>200</width>
+          <height>200</height>
+         </size>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::DelayedPopup</enum>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_18">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>125</y>
+          <width>191</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>等线</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="toolTip">
+         <string/>
+        </property>
+        <property name="statusTip">
+         <string/>
+        </property>
+        <property name="whatsThis">
+         <string/>
+        </property>
+        <property name="accessibleName">
+         <string/>
+        </property>
+        <property name="accessibleDescription">
+         <string/>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">
+QLineEdit[echoMode=&quot;2&quot;] {
+    lineedit-password-character:42;
+}
+</string>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="placeholderText">
+         <string>Enter Passphrase</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_19">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>165</y>
+          <width>191</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>等线</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLineEdit[echoMode=&quot;2&quot;] {
+    lineedit-password-character: 42;
+}</string>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="placeholderText">
+         <string>Enter Passphrase Again</string>
+        </property>
+       </widget>
+       <widget class="Line" name="line_47">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>150</y>
+          <width>225</width>
+          <height>10</height>
+         </rect>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+       <widget class="Line" name="line_48">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>190</y>
+          <width>225</width>
+          <height>10</height>
+         </rect>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="turn2visible1_8">
+        <property name="geometry">
+         <rect>
+          <x>220</x>
+          <y>125</y>
+          <width>31</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>pic/02.png</normaloff>pic/02.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="turn2visible2_5">
+        <property name="geometry">
+         <rect>
+          <x>220</x>
+          <y>165</y>
+          <width>31</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>pic/02.png</normaloff>pic/02.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="Line" name="line_49">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>110</y>
+          <width>225</width>
+          <height>10</height>
+         </rect>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_20">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>90</y>
+          <width>191</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>等线</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="toolTip">
+         <string/>
+        </property>
+        <property name="statusTip">
+         <string/>
+        </property>
+        <property name="whatsThis">
+         <string/>
+        </property>
+        <property name="accessibleName">
+         <string/>
+        </property>
+        <property name="accessibleDescription">
+         <string/>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">
+QLineEdit[echoMode=&quot;2&quot;] {
+    lineedit-password-character:42;
+}
+</string>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="placeholderText">
+         <string>Enter Private Key</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="turn2visible1_9">
+        <property name="geometry">
+         <rect>
+          <x>220</x>
+          <y>90</y>
+          <width>31</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>pic/02.png</normaloff>pic/02.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="page_4">
+      <widget class="QWidget" name="importMnemForm" native="true">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>30</y>
+         <width>261</width>
+         <height>321</height>
+        </rect>
+       </property>
+       <widget class="QPushButton" name="login_mnem">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>260</y>
+          <width>181</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>9</pointsize>
+          <weight>9</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-width: 1px;
+border-color: rgb(170, 0, 255);
+background-color: rgb(170, 0, 255);
+font: 75 9pt &quot;Arial&quot;;
+color: rgb(255, 255, 255);
+border-radius:20px;
+border-style:solid; 
+</string>
+        </property>
+        <property name="text">
+         <string>Login</string>
+        </property>
+       </widget>
+       <widget class="QToolButton" name="back_to_import_6">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>0</y>
+          <width>91</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>14</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:0px;
+color: rgb(109, 109, 109);
+font: 14pt &quot;Arial&quot;;
+</string>
+        </property>
+        <property name="text">
+         <string>Back</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>pic/walton_app_source20180213导图切割_53.png</normaloff>pic/walton_app_source20180213导图切割_53.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>200</width>
+          <height>200</height>
+         </size>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::DelayedPopup</enum>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_15">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>125</y>
+          <width>191</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>等线</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="toolTip">
+         <string/>
+        </property>
+        <property name="statusTip">
+         <string/>
+        </property>
+        <property name="whatsThis">
+         <string/>
+        </property>
+        <property name="accessibleName">
+         <string/>
+        </property>
+        <property name="accessibleDescription">
+         <string/>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">
+QLineEdit[echoMode=&quot;2&quot;] {
+    lineedit-password-character:42;
+}
+</string>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="placeholderText">
+         <string>Enter Passphrase</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_16">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>165</y>
+          <width>191</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>等线</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QLineEdit[echoMode=&quot;2&quot;] {
+    lineedit-password-character: 42;
+}</string>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="placeholderText">
+         <string>Enter Passphrase Again</string>
+        </property>
+       </widget>
+       <widget class="Line" name="line_44">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>150</y>
+          <width>225</width>
+          <height>10</height>
+         </rect>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+       <widget class="Line" name="line_45">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>190</y>
+          <width>225</width>
+          <height>10</height>
+         </rect>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="turn2visible1_6">
+        <property name="geometry">
+         <rect>
+          <x>220</x>
+          <y>125</y>
+          <width>31</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>pic/02.png</normaloff>pic/02.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="turn2visible2_4">
+        <property name="geometry">
+         <rect>
+          <x>220</x>
+          <y>165</y>
+          <width>31</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>pic/02.png</normaloff>pic/02.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="Line" name="line_46">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>110</y>
+          <width>225</width>
+          <height>10</height>
+         </rect>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_17">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>90</y>
+          <width>191</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>等线</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="toolTip">
+         <string/>
+        </property>
+        <property name="statusTip">
+         <string/>
+        </property>
+        <property name="whatsThis">
+         <string/>
+        </property>
+        <property name="accessibleName">
+         <string/>
+        </property>
+        <property name="accessibleDescription">
+         <string/>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">
+QLineEdit[echoMode=&quot;2&quot;] {
+    lineedit-password-character:42;
+}
+</string>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="placeholderText">
+         <string>Enter Mnemonic Phrase</string>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="turn2visible1_7">
+        <property name="geometry">
+         <rect>
+          <x>220</x>
+          <y>90</y>
+          <width>31</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>pic/02.png</normaloff>pic/02.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="page_5">
+      <widget class="QWidget" name="imporyKeyForm" native="true">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>30</y>
+         <width>261</width>
+         <height>321</height>
+        </rect>
+       </property>
+       <widget class="QPushButton" name="login_keys">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>260</y>
+          <width>181</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>9</pointsize>
+          <weight>9</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-width: 1px;
+border-color: rgb(170, 0, 255);
+background-color: rgb(170, 0, 255);
+font: 75 9pt &quot;Arial&quot;;
+color: rgb(255, 255, 255);
+border-radius:20px;
+border-style:solid; 
+</string>
+        </property>
+        <property name="text">
+         <string>Login</string>
+        </property>
+       </widget>
+       <widget class="QToolButton" name="back_to_import_2">
+        <property name="geometry">
+         <rect>
+          <x>10</x>
+          <y>0</y>
+          <width>91</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>14</pointsize>
+          <weight>50</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border:0px;
+color: rgb(109, 109, 109);
+font: 14pt &quot;Arial&quot;;
+</string>
+        </property>
+        <property name="text">
+         <string>Back</string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>pic/walton_app_source20180213导图切割_53.png</normaloff>pic/walton_app_source20180213导图切割_53.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>200</width>
+          <height>200</height>
+         </size>
+        </property>
+        <property name="popupMode">
+         <enum>QToolButton::DelayedPopup</enum>
+        </property>
+        <property name="toolButtonStyle">
+         <enum>Qt::ToolButtonTextBesideIcon</enum>
+        </property>
+        <property name="autoRaise">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_6">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>100</y>
+          <width>191</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>等线</family>
+          <pointsize>10</pointsize>
+         </font>
+        </property>
+        <property name="toolTip">
+         <string/>
+        </property>
+        <property name="statusTip">
+         <string/>
+        </property>
+        <property name="whatsThis">
+         <string/>
+        </property>
+        <property name="accessibleName">
+         <string/>
+        </property>
+        <property name="accessibleDescription">
+         <string/>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">
+QLineEdit[echoMode=&quot;2&quot;] {
+    lineedit-password-character:42;
+}
+</string>
+        </property>
+        <property name="frame">
+         <bool>false</bool>
+        </property>
+        <property name="echoMode">
+         <enum>QLineEdit::Password</enum>
+        </property>
+        <property name="placeholderText">
+         <string>Enter Passphrase Here</string>
+        </property>
+       </widget>
+       <widget class="Line" name="line_38">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>125</y>
+          <width>225</width>
+          <height>10</height>
+         </rect>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="turn2visible1_2">
+        <property name="geometry">
+         <rect>
+          <x>220</x>
+          <y>100</y>
+          <width>31</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="autoFillBackground">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>pic/02.png</normaloff>pic/02.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>40</width>
+          <height>40</height>
+         </size>
+        </property>
+        <property name="flat">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="import_Keystore_2">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>150</y>
+          <width>181</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Arial</family>
+          <pointsize>9</pointsize>
+          <weight>9</weight>
+          <italic>false</italic>
+          <bold>false</bold>
+         </font>
+        </property>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">border-width: 1px;
+border-color: rgb(230, 230, 230);
+background-color: rgb(255, 255, 255);
+color: rgb(0, 0, 0);
+border-radius:20px;
+border-style:solid; 
+font: 75 9pt &quot;Arial&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Import Keystore</string>
+        </property>
+       </widget>
+      </widget>
+     </widget>
     </widget>
    </widget>
    <widget class="QWidget" name="p1">
@@ -1451,7 +2710,7 @@ color: rgb(100, 100, 100);</string>
      </property>
      <property name="icon">
       <iconset>
-       <normaloff>../../../.designer/backup/pic/sdO8tAw.png</normaloff>../../../.designer/backup/pic/sdO8tAw.png</iconset>
+       <normaloff>../.designer/backup/pic/sdO8tAw.png</normaloff>../.designer/backup/pic/sdO8tAw.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -1477,7 +2736,7 @@ color: rgb(100, 100, 100);</string>
      </property>
      <property name="icon">
       <iconset>
-       <normaloff>../../../.designer/backup/pic/03.png</normaloff>../../../.designer/backup/pic/03.png</iconset>
+       <normaloff>../.designer/backup/pic/03.png</normaloff>../.designer/backup/pic/03.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -1503,7 +2762,7 @@ color: rgb(100, 100, 100);</string>
      </property>
      <property name="icon">
       <iconset>
-       <normaloff>../../../.designer/backup/pic/04.png</normaloff>../../../.designer/backup/pic/04.png</iconset>
+       <normaloff>../.designer/backup/pic/04.png</normaloff>../.designer/backup/pic/04.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -1529,7 +2788,7 @@ color: rgb(100, 100, 100);</string>
      </property>
      <property name="icon">
       <iconset>
-       <normaloff>../../../.designer/backup/pic/05.png</normaloff>../../../.designer/backup/pic/05.png</iconset>
+       <normaloff>../.designer/backup/pic/05.png</normaloff>../.designer/backup/pic/05.png</iconset>
      </property>
      <property name="iconSize">
       <size>
@@ -3854,7 +5113,7 @@ border-style:solid;
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>../../../.designer/backup/pic/图表.png</pixmap>
+      <pixmap>../.designer/backup/pic/图表.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
