@@ -127,6 +127,9 @@ class Example(QDialog,QWidget):
             self.ui.lineEdit_22.setText(ret.address)
             self.ui.lineEdit_23.setText(w3.toHex(ret.privateKey))
             encrypted = Account.encrypt(w3.toHex(ret.privateKey), ret.address)
+
+            m_wallet = Wallet
+            m_wallet.password = ret.
             #fh = open('Data\Keystore\\'+'ret.address[2:18]'+'.Keystore', 'w')
             #fh.write(encrypted)
             #fh.close()
@@ -134,11 +137,15 @@ class Example(QDialog,QWidget):
     def importsecret(self):
         ret = Core_func.Import_secret(self.ui.lineEdit_18.text(), self.ui.lineEdit_19.text(), self.ui.lineEdit_20.text())
 
+
     def importmnemonic(self):
         ret = Core_func.Import_mnemonic(self.ui.lineEdit_15.text(), self.ui.lineEdit_16.text(), self.ui.lineEdit_17.text())
 
     def importKetstore(self):
         ret = Core_func.Import_Ketstore(self.ui.lineEdit_6 .text(), self.ui.lineEdit_26.text())
+
+    def seepublickey(self):
+        self.ui.lineEdit_21.setText()
 
 
 
@@ -206,7 +213,8 @@ class Example(QDialog,QWidget):
 
         #new wallet page
         btneye1 = self.ui.pushButton_41
-        btneye1.clicked.cconnect(self.pressbtn0)
+        btneye1.clicked.cconnect(self.seepublickey)
+        #*4
 
 
         self.ui.LogMessage.horizontalHeader().setVisible(0)
@@ -345,6 +353,13 @@ class Example(QDialog,QWidget):
 
 
         #self.show()  # show()方法在屏幕上显示出widget。一个widget对象在这里第一次被在内存中创建，并且之后在屏幕上显示。
+class Wallet:
+    password = ''
+    privateKey = ''
+    mnem = ''
+    address = ''
+
+
 
 
 if __name__ == '__main__':

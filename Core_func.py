@@ -24,7 +24,7 @@ def Generate_Key(password1, password2):
         print('wrong')
         return 1
 
-
+# wuc
 def Import_secret(passphrase1, passphrase2, secret):
     if passphrase1 == passphrase2:
         print(passphrase1, secret)
@@ -46,4 +46,6 @@ def Import_mnemonic(passphrase1, passphrase2, mnemonicwords):
     else:
         print('wrong')
 
+def Transaction_out(fromaddr,toaddr,value,gas,gasprice):
+    print(' ')
 
