@@ -6,6 +6,8 @@ import Core_func
 from web3.auto import w3
 import json
 import os
+import webbrowser
+import sys
 import time
 import shutil
 import cytoolz._signatures
@@ -30,6 +32,7 @@ class Example(QDialog,QWidget):
 
     def __init__(self):
         super().__init__()
+
 
         self.initUI()
 
@@ -104,21 +107,36 @@ class Example(QDialog,QWidget):
         self.ui.mw.setIcon(QIcon("pic/mw0.png"))
         self.ui.cw.setIcon(QIcon("pic/cw1.png"))
         self.ui.stackedWidget.setCurrentIndex(0)
+        self.ui.importstack.setCurrentIndex(0)
+        self.ui.lineEdit_5.clear()
+        self.ui.lineEdit_4.clear()
 
     def pressCreatNewWallet(self):
         self.ui.importstack.setCurrentIndex(1)
+        self.ui.lineEdit_5.clear()
+        self.ui.lineEdit_4.clear()
 
     def pressimportbykeystore(self):
         self.ui.importstack.setCurrentIndex(4)
+        self.ui.lineEdit_26.clear()
+        self.ui.lineEdit_6.clear()
 
     def presspressimportbyPri(self):
         self.ui.importstack.setCurrentIndex(2)
+        self.ui.lineEdit_20.clear()
+        self.ui.lineEdit_18.clear()
+        self.ui.lineEdit_19.clear()
+
 
     def presspressimportbyMnem(self):
         self.ui.importstack.setCurrentIndex(3)
+        self.ui.lineEdit_15.clear()
+        self.ui.lineEdit_16.clear()
+        self.ui.lineEdit_17.clear()
 
     def pressback2import(self):
         self.ui.importstack.setCurrentIndex(0)
+
 
     def generateKey(self):
         ret = Core_func.Generate_Key(self.ui.lineEdit_4.text(), self.ui.lineEdit_5.text())
@@ -130,17 +148,26 @@ class Example(QDialog,QWidget):
             self.ui.lineEdit_23.setText(w3.toHex(ret.privateKey))
             self.ui.lineEdit_25.setText(ret.address[0:10])
             encrypted = Account.encrypt(w3.toHex(ret.privateKey), ret.address)
-
-            self.m_wallet = Wallet
+            #self.m_wallet = Wallet
             self.m_wallet.password = self.ui.lineEdit_4.text()
             self.m_wallet.address = ret.address
             self.m_wallet.privateKey = w3.toHex(ret.privateKey)
             self.m_wallet.accountname = self.ui.lineEdit_25.text()
             self.addWallet()
-            
-            #fh = open('Data\Keystore\\'+'ret.address[2:18]'+'.Keystore', 'w')
-            #fh.write(encrypted)
-            #fh.close()
+            self.ui.lineEdit_8.setText(ret.address)
+            self.ui.lineEdit_9.setText(w3.toHex(ret.privateKey))
+            DataKeystore = "Data\\Keystore\\"+ret.address[2:18]+".keystore"
+            fh = open(DataKeystore, "w")
+            fh.write(str(encrypted))
+            fh.close()
+            self.imgpub = qrcode.make(self.m_wallet.address)
+            self.imgpub.save("pic\\public.png")
+            self.ui.label_10.setPixmap(QPixmap("pic\\public.png"))
+            self.ui.label_10.setAutoFillBackground(1)
+            self.imgpri = qrcode.make(w3.toHex(ret.privateKey))
+            self.imgpri.save("pic\\private.png")
+            #self.ui.label_10.setPixmap(QPixmap("pic\\private.png"))
+            #self.ui.label_10.setAutoFillBackground(1)
 
     def importsecret(self):
         ret = Core_func.Import_secret(self.ui.lineEdit_18.text(), self.ui.lineEdit_19.text(), self.ui.lineEdit_20.text())
@@ -152,10 +179,45 @@ class Example(QDialog,QWidget):
     def importKetstore(self):
         ret = Core_func.Import_Ketstore(self.ui.lineEdit_6 .text(), self.ui.lineEdit_26.text())
 
-    def seepublickey(self):
-        self.ui.lineEdit_21.setText()
+    def seepassword(self):
+        if self.passwordeye == 1:
+            self.ui.lineEdit_21.setEchoMode(0)
+            self.ui.lineEdit_21.setText(self.m_wallet.password)
+            self.ui.pushButton_41.setIcon(QIcon("pic/01.png"))
+            self.passwordeye = 0
+        else:
+            self.ui.lineEdit_21.setEchoMode(QLineEdit.Password)
+            self.ui.pushButton_41.setIcon(QIcon("pic/08.png"))
+            self.passwordeye = 1
+
+    def seeprivatekey(self):
+        if self.privatekeyeye == 1:
+            self.ui.lineEdit_9.setEchoMode(0)
+            self.ui.lineEdit_9.setText(self.m_wallet.privateKey)
+            self.ui.pushButton_35.setIcon(QIcon("pic/01.png"))
+            self.privatekeyeye = 0
+        else:
+            self.ui.lineEdit_9.setEchoMode(QLineEdit.Password)
+            self.ui.pushButton_35.setIcon(QIcon("pic/08.png"))
+            self.privatekeyeye = 1
+
+    def seeprikey(self):
+        if self.prieye == 1:
+            self.ui.lineEdit_23.setEchoMode(0)
+            self.ui.lineEdit_23.setText(self.m_wallet.privateKey)
+            self.ui.pushButton_40.setIcon(QIcon("pic/01.png"))
+            self.prieye = 0
+            self.ui.label_11.setPixmap(QPixmap("pic\\private.png"))
+        else:
+            self.ui.lineEdit_23.setEchoMode(QLineEdit.Password)
+            self.ui.pushButton_40.setIcon(QIcon("pic/08.png"))
+            self.prieye = 1
+            self.ui.label_11.setPixmap(QPixmap("pic\\disvispri.png"))
 
     def addWallet(self):
+        ################
+        #waiting to add checking same wallet already existed
+        ################
         Rcount = self.ui.multWallet.rowCount()
         self.ui.multWallet.setRowCount(Rcount+1)
         newItemAddr = QTableWidgetItem(self.m_wallet.address)
@@ -163,13 +225,43 @@ class Example(QDialog,QWidget):
         self.ui.multWallet.setItem(Rcount, 1, newItemAddr)
         self.ui.multWallet.setItem(Rcount, 0, newItemName)
 
+    def savekey(self):
+        encrypted = Account.encrypt(self.m_wallet.privateKey, self.m_wallet.password)
 
+        fsave_keystore = QFileDialog.getSaveFileName(self, 'Save Your Keystore File', '.','keystore(*.keystore)')
+        if fsave_keystore[0]:
+            file_save_keystore = open(fsave_keystore[0], 'w')
+            with file_save_keystore:
+                data = file_save_keystore.write(json.dumps(encrypted))
+
+    def savename(self):
+        self.m_wallet.accountname = self.ui.lineEdit_25.text()
+
+    def copyPublicKey(self):
+        self.clipboard_public_key = QApplication.clipboard()
+        self.clipboard_public_key.setText(self.m_wallet.address)
+
+    def copymnemword(self):
+        self.clipboard_public_key = QApplication.clipboard()
+        self.clipboard_public_key.setText(self.m_wallet.mnem)
+
+    def toreddit(self):
+        webbrowser.open('https://www.reddit.com/r/waltonchain/')
+
+    def totwitter(self):
+        webbrowser.open('https://twitter.com/Waltonchain')
+
+    def totme(self):
+        webbrowser.open('https://t.me/waltonchain_en')
+
+    def tostack(self):
+        webbrowser.open('https://join.slack.com/t/waltonchain/shared_invite/enQtMjgxMDcxNzU5MDEwLWI1ZTc3MDZlNmI4ZjA1YjhiMDEzN2VlZmY2M2EzNmM4Yjg1NjFjYjlmNTcxOGVlMGRiNWE2M2NlYTg2MWNmNWQ')
 
     def initUI(self):
         '显示窗口'
         self.ui = Ui_Form()
         self.ui.setupUi(self)
-
+        self.m_wallet = Wallet
         #Page of Create Wallet
         stackedW = self.ui.stackedWidget
         btncnw = self.ui.creat_new_wallet
@@ -180,6 +272,8 @@ class Example(QDialog,QWidget):
         btnimportPri.clicked.connect(self.presspressimportbyPri)
         btnimportMnem = self.ui.import_MP
         btnimportMnem.clicked.connect(self.presspressimportbyMnem)
+        btnmywallet = self.ui.mw_2
+        btnmywallet.clicked.connect(self.pressbtn1)
 
         btnback1 = self.ui.back_to_import
         btnback1.clicked.connect(self.pressback2import)
@@ -228,9 +322,37 @@ class Example(QDialog,QWidget):
 
         #new wallet page
         btneye1 = self.ui.pushButton_41
-        btneye1.clicked.connect(self.seepublickey)
+        self.passwordeye = 1
+        btneye1.clicked.connect(self.seepassword)
+        btnsavekey = self.ui.SaveKey
+        btnsavekey.clicked.connect(self.savekey)
+        btnsavename = self.ui.SaveName
+        btnsavename.clicked.connect(self.savename)
+
+        btneye2 = self.ui.pushButton_40
+        self.prieye = 1
+        btneye2.clicked.connect(self.seeprikey)
+
+        btncopy1 = self.ui.pushButton_39
+        btncopy1.clicked.connect(self.copyPublicKey)
+        btncopy2 = self.ui.pushButton_42
+        btncopy2.clicked.connect(self.copymnemword)
         #*4
 
+        #my wallet page
+        btneyepri = self.ui.pushButton_35
+        self.privatekeyeye = 1
+        btneyepri.clicked.connect(self.seeprivatekey)
+        btncopypub = self.ui.pushButton_34
+        btncopypub.clicked.connect(self.copyPublicKey)
+        btnreb = self.ui.pushButton_6
+        btnreb.clicked.connect(self.toreddit)
+        btntwi = self.ui.pushButton_7
+        btntwi.clicked.connect(self.totwitter)
+        btntme = self.ui.pushButton_5
+        btntme.clicked.connect(self.totme)
+        btnsta = self.ui.pushButton_8
+        btnsta.clicked.connect(self.tostack)
 
         self.ui.LogMessage.horizontalHeader().setVisible(0)
         self.ui.LogMessage.verticalHeader().setVisible(0)
