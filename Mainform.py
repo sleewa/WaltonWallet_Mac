@@ -1,4 +1,6 @@
 import sys
+from typing import Type
+
 import Warning_Form
 import Core_func
 from web3.auto import w3
@@ -15,7 +17,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (QWidget, QToolTip, QDesktopWidget, QMessageBox, QTextEdit, QLabel,
                              QPushButton, QApplication, QMainWindow, QAction, qApp, QHBoxLayout, QVBoxLayout,
-                             QGridLayout,QDialog,QFileDialog,
+                             QGridLayout,QDialog,QFileDialog,QTableWidgetItem,
                              QLineEdit, QFrame, QAbstractItemView)
 from PyQt5.QtGui import *
 from PyQt5.QtCore import QCoreApplication
@@ -126,10 +128,16 @@ class Example(QDialog,QWidget):
             self.ui.lineEdit_21.setText('******')
             self.ui.lineEdit_22.setText(ret.address)
             self.ui.lineEdit_23.setText(w3.toHex(ret.privateKey))
+            self.ui.lineEdit_25.setText(ret.address[0:10])
             encrypted = Account.encrypt(w3.toHex(ret.privateKey), ret.address)
 
-            m_wallet = Wallet
-            m_wallet.password = ret.
+            self.m_wallet = Wallet
+            self.m_wallet.password = self.ui.lineEdit_4.text()
+            self.m_wallet.address = ret.address
+            self.m_wallet.privateKey = w3.toHex(ret.privateKey)
+            self.m_wallet.accountname = self.ui.lineEdit_25.text()
+            self.addWallet()
+            
             #fh = open('Data\Keystore\\'+'ret.address[2:18]'+'.Keystore', 'w')
             #fh.write(encrypted)
             #fh.close()
@@ -147,6 +155,13 @@ class Example(QDialog,QWidget):
     def seepublickey(self):
         self.ui.lineEdit_21.setText()
 
+    def addWallet(self):
+        Rcount = self.ui.multWallet.rowCount()
+        self.ui.multWallet.setRowCount(Rcount+1)
+        newItemAddr = QTableWidgetItem(self.m_wallet.address)
+        newItemName = QTableWidgetItem(self.m_wallet.accountname)
+        self.ui.multWallet.setItem(Rcount, 1, newItemAddr)
+        self.ui.multWallet.setItem(Rcount, 0, newItemName)
 
 
 
@@ -213,7 +228,7 @@ class Example(QDialog,QWidget):
 
         #new wallet page
         btneye1 = self.ui.pushButton_41
-        btneye1.clicked.cconnect(self.seepublickey)
+        btneye1.clicked.connect(self.seepublickey)
         #*4
 
 
@@ -358,6 +373,7 @@ class Wallet:
     privateKey = ''
     mnem = ''
     address = ''
+    accountname = ''
 
 
 
