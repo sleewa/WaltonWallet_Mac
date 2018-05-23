@@ -1,11 +1,21 @@
 import sys
 import Warning_Form
-
+import Core_func
+from web3.auto import w3
+import json
+import os
+import time
+import shutil
+import cytoolz._signatures
+import cytoolz.utils
+import qrcode
+import datetime
+from eth_account import Account
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (QWidget, QToolTip, QDesktopWidget, QMessageBox, QTextEdit, QLabel,
                              QPushButton, QApplication, QMainWindow, QAction, qApp, QHBoxLayout, QVBoxLayout,
-                             QGridLayout,QDialog,
+                             QGridLayout,QDialog,QFileDialog,
                              QLineEdit, QFrame, QAbstractItemView)
 from PyQt5.QtGui import *
 from PyQt5.QtCore import QCoreApplication
@@ -21,6 +31,7 @@ class Example(QDialog,QWidget):
 
         self.initUI()
 
+    #shift Pages tool btn
     def pressbtn1(self):
         self.ui.mywallet.setIcon(QIcon("pic/mywallet1.png"))
         self.ui.statistic.setIcon(QIcon("pic/statistics0.png"))
@@ -30,6 +41,7 @@ class Example(QDialog,QWidget):
         self.ui.mw.setIcon(QIcon("pic/mw0.png"))
         self.ui.cw.setIcon(QIcon("pic/cw0.png"))
         self.ui.stackedWidget.setCurrentIndex(1)
+        self.ui.NewWalletstacked.setCurrentIndex(0)
 
     def pressbtn2(self):
         self.ui.mywallet.setIcon(QIcon("pic/mywallet0.png"))
@@ -106,6 +118,27 @@ class Example(QDialog,QWidget):
     def pressback2import(self):
         self.ui.importstack.setCurrentIndex(0)
 
+    def generateKey(self):
+        ret = Core_func.Generate_Key(self.ui.lineEdit_4.text(), self.ui.lineEdit_5.text())
+        if ret != 1:
+            self.ui.NewWalletstacked.setCurrentIndex(1)
+            self.ui.stackedWidget.setCurrentIndex(1)
+            self.ui.lineEdit_21.setText('******')
+            self.ui.lineEdit_22.setText(ret.address)
+            self.ui.lineEdit_23.setText(w3.toHex(ret.privateKey))
+            encrypted = Account.encrypt(w3.toHex(ret.privateKey), ret.address)
+            #fh = open('Data\Keystore\\'+'ret.address[2:18]'+'.Keystore', 'w')
+            #fh.write(encrypted)
+            #fh.close()
+
+    def importsecret(self):
+        ret = Core_func.Import_secret(self.ui.lineEdit_18.text(), self.ui.lineEdit_19.text(), self.ui.lineEdit_20.text())
+
+    def importmnemonic(self):
+        ret = Core_func.Import_mnemonic(self.ui.lineEdit_15.text(), self.ui.lineEdit_16.text(), self.ui.lineEdit_17.text())
+
+    def importKetstore(self):
+        ret = Core_func.Import_Ketstore(self.ui.lineEdit_6 .text(), self.ui.lineEdit_26.text())
 
 
 
@@ -114,8 +147,8 @@ class Example(QDialog,QWidget):
         '显示窗口'
         self.ui = Ui_Form()
         self.ui.setupUi(self)
-        #s = Warning_Form.SecondWindow()
 
+        #Page of Create Wallet
         stackedW = self.ui.stackedWidget
         btncnw = self.ui.creat_new_wallet
         btncnw.clicked.connect(self.pressCreatNewWallet)
@@ -135,8 +168,27 @@ class Example(QDialog,QWidget):
         btnback4 = self.ui.back_to_import_7
         btnback4.clicked.connect(self.pressback2import)
 
+        btngenerate = self.ui.Gene_Key
+        btngenerate.clicked.connect(lambda :self.generateKey())
+        btnloginpri = self.ui.login_pri
+        btnloginpri.clicked.connect(lambda :self.importsecret())
+        btnloginmnem = self.ui.login_mnem
+        btnloginmnem.clicked.connect(lambda :self.importmnemonic())
+        #btnimportfile = self.ui.import_Keystore_2
+        #btnimportfile.clicked.connect()
+        btnloginkeys = self.ui.login_keys
+
+        btnloginkeys.clicked.connect(lambda :self.importKetstore())
+
         self.ui.importstack.setCurrentIndex(0)
 
+
+        #all pages shift
+        self.ui.NewWalletstacked.setCurrentIndex(0)
+
+
+        #all pages shift
+        stackedW.setCurrentIndex(0)
         btn1 = self.ui.mywallet
         btn1.clicked.connect(self.pressbtn1)
         btn2 = self.ui.statistic
@@ -151,9 +203,11 @@ class Example(QDialog,QWidget):
         btn6.clicked.connect(self.pressbtn6)
         btn0 = self.ui.cw
         btn0.clicked.connect(self.pressbtn0)
-        #btn0.clicked.connect(s.handle_click())
 
-        stackedW.setCurrentIndex(1)
+        #new wallet page
+        btneye1 = self.ui.pushButton_41
+        btneye1.clicked.cconnect(self.pressbtn0)
+
 
         self.ui.LogMessage.horizontalHeader().setVisible(0)
         self.ui.LogMessage.verticalHeader().setVisible(0)
