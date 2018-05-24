@@ -38,7 +38,11 @@ def Import_Ketstore(passphrase, filename):
     else:
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
         print('keystore1', passphrase)
+=======
+        print('keystore', passphrase)
+>>>>>>> parent of 52800d2... 20180524_wuchou_1
 =======
         print('keystore', passphrase)
 >>>>>>> parent of 52800d2... 20180524_wuchou_1
