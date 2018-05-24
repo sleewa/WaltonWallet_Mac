@@ -36,7 +36,11 @@ def Import_Ketstore(passphrase, filename):
     if filename.len == 0:
         print('no file')
     else:
+<<<<<<< HEAD
         print('keystore1', passphrase)
+=======
+        print('keystore', passphrase)
+>>>>>>> parent of 52800d2... 20180524_wuchou_1
 
 
 def Import_mnemonic(passphrase1, passphrase2, mnemonicwords):
