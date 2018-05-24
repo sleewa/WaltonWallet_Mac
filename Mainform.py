@@ -29,6 +29,134 @@ from PyQt5.QtCore import QCoreApplication
 from Mainform_QT import *
 from SendForm import Ui_SendForm
 from RecieveForm import Ui_ReceiveForm
+from MulWalForm import Ui_MulWalForm
+from ConInfoForm import Ui_ConInfoForm
+from PubAddrForm import Ui_PubAddrForm
+from NewContactForm import Ui_NewContactForm
+
+class newcontactform(QWidget, Ui_NewContactForm):
+    def __init__(self):
+        super().__init__()
+        self.ui = Ui_NewContactForm()
+        self.ui.setupUi(self)
+        self.setWindowFlags(Qt.CustomizeWindowHint)
+        btnc = self.ui.closeenterpsw
+        btnc.clicked.connect(self.closeform)
+        btnsave = self.ui.pushButton_9
+        btnsave.clicked.connect(self.savechange)
+        #self.ui.lineEdit_6.changeEvent.connect(self.showqrcode)
+        #self.ui.lineEdit_6.keyPressEvent(self,self.showqrcode)
+
+    def show_w2(self):  # 显示窗体2
+        self.show()
+
+    def savechange(self):
+        ################
+        # waiting to add checking same wallet already existed
+        ################
+        Rcount = ex.ui.ContactsT.rowCount()
+        ex.ui.ContactsT.setRowCount(Rcount + 1)
+        newItemAddr = QTableWidgetItem(self.ui.lineEdit_6.text())
+        newItemName = QTableWidgetItem(self.ui.lineEdit_7.text())
+
+        ex.ui.ContactsT.setItem(Rcount, 1, newItemAddr)
+        ex.ui.ContactsT.setItem(Rcount, 0, newItemName)
+        ex.ui.ContactsT.setCellWidget(Rcount, 2, ex.consend)
+        ex.ui.ContactsT.setCellWidget(Rcount, 3, ex.conedit)
+        ex.ui.ContactsT.setCellWidget(Rcount, 4, ex.condelete)
+
+
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.dragPosition = event.globalPos() - self.frameGeometry().topLeft()
+            QApplication.postEvent(self, Core_func.QEvent(174))
+            event.accept()
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() == Qt.LeftButton:
+            self.move(event.globalPos() - self.dragPosition)
+            event.accept()
+
+    def closeform(self):
+        self.close()
+
+class pubaddrForm(QWidget, Ui_PubAddrForm):
+    def __init__(self):
+        super().__init__()
+        self.ui = Ui_PubAddrForm()
+        self.ui.setupUi(self)
+        self.setWindowFlags(Qt.CustomizeWindowHint)
+        btnc = self.ui.closeenterpsw
+        btnc.clicked.connect(self.closeform)
+        btncopy = self.ui.pushButton_35
+        btncopy.clicked.connect(self.copyaddr)
+        #self.ui.lineEdit_6.changeEvent.connect(self.showqrcode)
+        #self.ui.lineEdit_6.keyPressEvent(self,self.showqrcode)
+
+    def show_w2(self):  # 显示窗体2
+        self.show()
+        self.showqrcode()
+
+    def showqrcode(self):
+        self.ui.lineEdit_8.setText(ex.m_wallet.address)
+        strAddressAndAmount = ex.m_wallet.address# + "," + value
+        self.imgpub = qrcode.make(strAddressAndAmount)
+        self.imgpub.save("pic\\recieve.png")
+        self.ui.label.setPixmap(QPixmap("pic\\recieve.png"))
+        self.ui.label.setAutoFillBackground(1)
+
+    def copyaddr(self):
+        self.clipboard_public_key = QApplication.clipboard()
+        self.clipboard_public_key.setText(ex.m_wallet.address)
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.dragPosition = event.globalPos() - self.frameGeometry().topLeft()
+            QApplication.postEvent(self, Core_func.QEvent(174))
+            event.accept()
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() == Qt.LeftButton:
+            self.move(event.globalPos() - self.dragPosition)
+            event.accept()
+
+    def closeform(self):
+        self.close()
+
+class mulwalform(QWidget, Ui_MulWalForm):
+    def __init__(self):
+        super().__init__()
+        self.ui = Ui_MulWalForm()
+        self.ui.setupUi(self)
+        self.setWindowFlags(Qt.CustomizeWindowHint)
+        btnc = self.ui.closeenterpsw
+        btnc.clicked.connect(self.closeform)
+        btnsave = self.ui.pushButton_9
+        btnsave.clicked.connect(self.savechange)
+        #self.ui.lineEdit_6.changeEvent.connect(self.showqrcode)
+        #self.ui.lineEdit_6.keyPressEvent(self,self.showqrcode)
+
+    def show_w2(self):  # 显示窗体2
+        self.show()
+
+    def savechange(self):
+        ex.m_wallet.accountname = self.ui.lineEdit_7.text()
+
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.dragPosition = event.globalPos() - self.frameGeometry().topLeft()
+            QApplication.postEvent(self, Core_func.QEvent(174))
+            event.accept()
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() == Qt.LeftButton:
+            self.move(event.globalPos() - self.dragPosition)
+            event.accept()
+
+    def closeform(self):
+        self.close()
 
 class recieveform(QWidget, Ui_ReceiveForm):
     def __init__(self):
@@ -90,12 +218,18 @@ class sendform(QWidget, Ui_SendForm):
         self.Trans = Transaction
         self.ui.radioButton.toggle()
         self.ui.radioButton.toggled.connect(self.change2Eco)
+        self.ui.radioButton.setChecked(0)
         self.ui.radioButton_2.toggle()
         self.ui.radioButton_2.toggled.connect(self.change2Sta)
+        self.ui.radioButton_2.setChecked(1)
+        self.ui.radioButton_2.isChecked()
         self.ui.radioButton_3.toggle()
         self.ui.radioButton_3.toggled.connect(self.change2Qui)
+        self.ui.radioButton_3.setChecked(0)
         self.ui.radioButton_4.toggle()
         self.ui.radioButton_4.toggled.connect(self.change2Cus)
+        self.ui.radioButton_4.setChecked(0)
+
 
     def change2Eco(self):
         if self.ui.radioButton.isChecked():
@@ -120,12 +254,13 @@ class sendform(QWidget, Ui_SendForm):
             self.ui.lineEdit_9.setPlaceholderText('Enter Gas Price')
 
     def show_w2(self):  # 显示窗体2
-        self.show()
-
         balance = requests.get(
             "https://waltonchain.net:18950/api/getBalance/" + ex.m_wallet.address).json()
         a = str(balance)
         self.ui.label_52.setText(a.split(',')[1][11:] + 'WTCT')
+        self.show()
+
+
 
     def showenterphrase(self):
         #waiting to add passsword checking
@@ -172,19 +307,36 @@ class Example(QDialog,QWidget):
         self.mwEdit.setStyleSheet(''' border:0px; ''')
         self.mwEdit.setIcon(QIcon("pic/editA.png"))
         self.mwEdit.setIconSize(QSize(70, 50))
-        self.mwEdit.clicked.connect(self.pressbtn1)
+
 
         self.mwDelete = QPushButton(self)  # type: QPushButton
         self.mwDelete.setStyleSheet(''' border:0px; ''')
         self.mwDelete.setIcon(QIcon("pic/deleteA.png"))
         self.mwDelete.setIconSize(QSize(70, 50))
-        self.mwDelete.clicked.connect(self.pressbtn1)
+        self.mwDelete.clicked.connect(self.delWallet)
 
         self.mwSaveKey = QPushButton(self)  # type: QPushButton
         self.mwSaveKey.setStyleSheet(''' border:0px; ''')
         self.mwSaveKey.setIcon(QIcon("pic/saveA.png"))
         self.mwSaveKey.setIconSize(QSize(70, 50))
         self.mwSaveKey.clicked.connect(self.savekey)
+
+        self.consend = QPushButton(self)  # type: QPushButton
+        self.consend.setStyleSheet(''' border:0px; ''')
+        self.consend.setIcon(QIcon("pic/sendA.png"))
+        self.consend.setIconSize(QSize(70, 50))
+        self.consend.clicked.connect(self.pressbtn1)
+
+        self.conedit = QPushButton(self)  # type: QPushButton
+        self.conedit.setStyleSheet(''' border:0px; ''')
+        self.conedit.setIcon(QIcon("pic/editA.png"))
+        self.conedit.setIconSize(QSize(70, 50))
+
+        self.condelete = QPushButton(self)  # type: QPushButton
+        self.condelete.setStyleSheet(''' border:0px; ''')
+        self.condelete.setIcon(QIcon("pic/deleteA.png"))
+        self.condelete.setIconSize(QSize(70, 50))
+        self.condelete.clicked.connect(self.delWallet)
 
         self.initUI()
 
@@ -367,7 +519,7 @@ class Example(QDialog,QWidget):
         content = file.readline()
         enterpri = self.ui.lineEdit_20.text()
         enterpri.strip()
-        ret = Core_func.Import_Keystore(self.ui.lineEdit_20.text(), content)
+        ret = Core_func.Import_Keystore(self.ui.lineEdit_6.text(), content)
         if ret[0] ==1:
             self.m_wallet.password = self.ui.lineEdit_6.text()
             self.m_wallet.address = ret[1][0]
@@ -446,10 +598,11 @@ class Example(QDialog,QWidget):
         #waiting to add checking same wallet already existed
         ################
         Rcount = self.ui.multWallet.rowCount()
-        self.ui.multWallet.setRowCount(Rcount)
+        self.ui.multWallet.setRowCount(Rcount-1)
         os.remove(self.m_wallet.filename)
 
     def savekey(self):
+        ## need to change:copy kfile from data\keystore to specify position
         encrypted = Account.encrypt(self.m_wallet.privateKey, self.m_wallet.password)
 
         fsave_keystore = QFileDialog.getSaveFileName(self, 'Save Your Keystore File', '.','keystore(*.keystore)')
@@ -583,6 +736,7 @@ class Example(QDialog,QWidget):
             self.ui.turn2visible2_4.setIcon(QIcon("pic/02.png"))
             self.phrm2eye = 1
 
+
     def initUI(self):
         '显示窗口'
         self.ui = Ui_Form()
@@ -714,6 +868,13 @@ class Example(QDialog,QWidget):
         btnsta = self.ui.pushButton_8
         btnsta.clicked.connect(self.tostack)
 
+        #Multiple Wallet page
+        btn2create = self.ui.pushButton_32
+        btn2create.clicked.connect(self.pressbtn0)
+        btn2create1 = self.ui.pushButton_33
+        btn2create1.clicked.connect(self.pressbtn0)
+
+        # Contact page
 
         self.ui.LogMessage.horizontalHeader().setVisible(0)
         self.ui.LogMessage.verticalHeader().setVisible(0)
@@ -850,9 +1011,16 @@ if __name__ == '__main__':
     ex = Example()
     sendform = sendform()
     recieveform = recieveform()
+    mulwalform =mulwalform()
+    pubaddrForm = pubaddrForm()
+    newcontactform = newcontactform()
     #s = Warning_Form.SecondWindow()
     #ex.ui.cw.clicked.connect(s.handle_click)
     ex.show()
     ex.ui.pushButton_9.clicked.connect(sendform.show_w2)
     ex.ui.pushButton_10.clicked.connect(recieveform.show_w2)
+    ex.ui.pushButton_36.clicked.connect(pubaddrForm.show_w2)
+    ex.ui.pushButton_38.clicked.connect(newcontactform.show_w2)
+
+    ex.mwEdit.clicked.connect(mulwalform.show_w2)
     sys.exit(app.exec_())

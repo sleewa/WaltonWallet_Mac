@@ -375,7 +375,7 @@ color: rgb(93, 93, 93);</string>
     <enum>QFrame::NoFrame</enum>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="p0">
     <widget class="QLabel" name="label_3">
@@ -3322,84 +3322,6 @@ border-style:solid;
     </widget>
    </widget>
    <widget class="QWidget" name="p2">
-    <widget class="QPushButton" name="pushButton_2">
-     <property name="geometry">
-      <rect>
-       <x>740</x>
-       <y>380</y>
-       <width>51</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset>
-       <normaloff>../.designer/backup/pic/03.png</normaloff>../.designer/backup/pic/03.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>40</width>
-       <height>40</height>
-      </size>
-     </property>
-     <property name="flat">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_3">
-     <property name="geometry">
-      <rect>
-       <x>670</x>
-       <y>450</y>
-       <width>51</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset>
-       <normaloff>../.designer/backup/pic/04.png</normaloff>../.designer/backup/pic/04.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>40</width>
-       <height>40</height>
-      </size>
-     </property>
-     <property name="flat">
-      <bool>true</bool>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_4">
-     <property name="geometry">
-      <rect>
-       <x>740</x>
-       <y>450</y>
-       <width>51</width>
-       <height>51</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset>
-       <normaloff>../.designer/backup/pic/05.png</normaloff>../.designer/backup/pic/05.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>40</width>
-       <height>40</height>
-      </size>
-     </property>
-     <property name="flat">
-      <bool>true</bool>
-     </property>
-    </widget>
     <widget class="QToolButton" name="toolButton_33">
      <property name="geometry">
       <rect>

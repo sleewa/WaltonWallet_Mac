@@ -51,10 +51,8 @@ def Import_From_Private(secret,password1):
 def Import_Keystore(passphrase, filecontent):
     try:
         # content = json.loads(filecontent)
-        print('02')
         private_key = w3.toHex(Account.decrypt(filecontent, passphrase))
         public_key = Account.privateKeyToAccount(private_key).address
-        print('12')
         encrypted = Account.encrypt(private_key, passphrase)
         return (1, [public_key, private_key],json.dumps(encrypted))
     except Exception as err:
