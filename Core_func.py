@@ -40,11 +40,12 @@ failure reason for Generate_Key function
 """
 
 
-def Import_From_Private(secret):
+def Import_From_Private(secret,password1):
     print("this is imported private key", secret)
     acct = Account.privateKeyToAccount(secret)
     public_key = acct.address
-    return (1, public_key)
+    encrypted = Account.encrypt(secret, password1)
+    return (1, public_key,json.dumps(encrypted))
 
 
 def Import_Keystore(passphrase, filecontent):
@@ -52,7 +53,8 @@ def Import_Keystore(passphrase, filecontent):
         # content = json.loads(filecontent)
         private_key = w3.toHex(Account.decrypt(filecontent, passphrase))
         public_key = Account.privateKeyToAccount(private_key).address
-        return (1, [public_key, private_key])
+        encrypted = Account.encrypt(private_key, passphrase)
+        return (1, [public_key, private_key],json.dumps(encrypted))
     except Exception as err:
         print(err)
         return (0, 10000)

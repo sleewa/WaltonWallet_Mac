@@ -19,7 +19,7 @@ import requests
 import datetime
 from eth_account import Account
 from PyQt5 import QtWidgets
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QSize
 from PyQt5.QtWidgets import (QWidget, QToolTip, QDesktopWidget, QMessageBox, QTextEdit, QLabel,
                              QPushButton, QApplication, QMainWindow, QAction, qApp, QHBoxLayout, QVBoxLayout,
                              QGridLayout,QDialog,QFileDialog,QTableWidgetItem,
@@ -162,6 +162,29 @@ class Example(QDialog,QWidget):
     def __init__(self):
         super().__init__()
 
+        self.mwOpen = QPushButton(self)  # type: QPushButton
+        self.mwOpen.setStyleSheet(''' border:0px; ''')
+        self.mwOpen.setIcon(QIcon("pic/open1233.png"))
+        self.mwOpen.setIconSize(QSize(70, 50))
+        self.mwOpen.clicked.connect(self.pressbtn1)
+
+        self.mwEdit = QPushButton(self)  # type: QPushButton
+        self.mwEdit.setStyleSheet(''' border:0px; ''')
+        self.mwEdit.setIcon(QIcon("pic/editA.png"))
+        self.mwEdit.setIconSize(QSize(70, 50))
+        self.mwEdit.clicked.connect(self.pressbtn1)
+
+        self.mwDelete = QPushButton(self)  # type: QPushButton
+        self.mwDelete.setStyleSheet(''' border:0px; ''')
+        self.mwDelete.setIcon(QIcon("pic/deleteA.png"))
+        self.mwDelete.setIconSize(QSize(70, 50))
+        self.mwDelete.clicked.connect(self.pressbtn1)
+
+        self.mwSaveKey = QPushButton(self)  # type: QPushButton
+        self.mwSaveKey.setStyleSheet(''' border:0px; ''')
+        self.mwSaveKey.setIcon(QIcon("pic/saveA.png"))
+        self.mwSaveKey.setIconSize(QSize(70, 50))
+        self.mwSaveKey.clicked.connect(self.savekey)
 
         self.initUI()
 
@@ -291,6 +314,7 @@ class Example(QDialog,QWidget):
             fh = open(DataKeystore, "w")
             fh.write(str(encrypted))
             fh.close()
+            self.m_wallet.filename = DataKeystore
             self.imgpub = qrcode.make(self.m_wallet.address)
             self.imgpub.save("pic\\public.png")
             self.ui.label_10.setPixmap(QPixmap("pic\\public.png"))
@@ -304,7 +328,7 @@ class Example(QDialog,QWidget):
         if  self.ui.lineEdit_18.text() ==  self.ui.lineEdit_19.text():
             enterpri = self.ui.lineEdit_20.text()
             enterpri.strip()
-            ret = Core_func.Import_From_Private(enterpri.strip())
+            ret = Core_func.Import_From_Private(enterpri.strip(),self.ui.lineEdit_19.text())
             if ret[0] == 1:
                 self.m_wallet.password = self.ui.lineEdit_18.text()
                 self.m_wallet.address = ret[1]
@@ -402,6 +426,14 @@ class Example(QDialog,QWidget):
         self.ui.multWallet.setCellWidget(Rcount, 3, self.mwEdit)
         self.ui.multWallet.setCellWidget(Rcount, 4, self.mwDelete)
         self.ui.multWallet.setCellWidget(Rcount, 5, self.mwSaveKey)
+
+    def delWallet(self):
+        ################
+        #waiting to add checking same wallet already existed
+        ################
+        Rcount = self.ui.multWallet.rowCount()
+        self.ui.multWallet.setRowCount(Rcount)
+        os.remove(self.m_wallet.filename)
 
     def savekey(self):
         encrypted = Account.encrypt(self.m_wallet.privateKey, self.m_wallet.password)
@@ -779,29 +811,7 @@ class Example(QDialog,QWidget):
             "QScrollBar::sub-line{background:transparent;}"
             "QScrollBar::add-line{background:transparent;}")
 
-        self.mwOpen = QPushButton(self)  # type: QPushButton
-        #self.mwOpen.setStyleSheet(''' background-color: rgb(255, 255, 255);color: rgb(170, 0, 255);
-        #                                                    height : 19px; width:70px;border-color: rgb(170, 0, 255);
-        #                                                    font : 12px "Bahnschrift Light"; ''')
-        self.mwOpen.setIcon(QIcon("pic/open1233.png"))
 
-        #self.mwOpen.setIconSize(self,QSize=[16,16])
-        self.mwOpen.clicked.connect(self.pressbtn1)
-
-        #self.mwOpen.setAutoFillBackground(1)
-
-        self.mwEdit = QPushButton("Edit")  # type: QPushButton
-        self.mwEdit.setStyleSheet('''background-color: rgb(255, 255, 255);color: rgb(170, 0, 255);
-                                                    height : 19px; width:70px;border-color: rgb(170, 0, 255);
-                                                    font : 12px "Bahnschrift Light"; ''')
-        self.mwDelete = QPushButton("Delete")  # type: QPushButton
-        self.mwDelete.setStyleSheet(''' background-color: rgb(255, 255, 255);color: rgb(170, 0, 255);
-                                                    height : 19px; width:70px;border-color: rgb(170, 0, 255);
-                                                    font : 12px "Bahnschrift Light"; ''')
-        self.mwSaveKey = QPushButton("Save Key")  # type: QPushButton
-        self.mwSaveKey.setStyleSheet(''' background-color: rgb(255, 255, 255);color: rgb(170, 0, 255); 
-                                                    height : 19px; width:70px;border-color: rgb(170, 0, 255);
-                                                    font : 12px "Bahnschrift Light"; ''')
 
 
 
@@ -813,6 +823,7 @@ class Wallet:
     mnem = ''
     address = ''
     accountname = ''
+    filename = ''
 
 class Transaction:
     rawTransaction = ''
