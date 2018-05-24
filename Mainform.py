@@ -1,5 +1,7 @@
 import sys
 from typing import Type
+from tkinter import *
+import tkinter.filedialog
 
 import Warning_Form
 import Core_func
@@ -141,24 +143,24 @@ class Example(QDialog,QWidget):
 
 
     def generateKey(self):
-        ret = Core_func.Generate_Key(self.ui.lineEdit_4.text(), self.ui.lineEdit_5.text())
-        if ret != 1:
+        ret = Core_func.Generate_Three_Key(self.ui.lineEdit_4.text(), self.ui.lineEdit_5.text())
+        if ret[0]== 1:
             self.ui.NewWalletstacked.setCurrentIndex(1)
             self.ui.stackedWidget.setCurrentIndex(1)
             self.ui.lineEdit_21.setText('******')
-            self.ui.lineEdit_22.setText(ret.address)
-            self.ui.lineEdit_23.setText(w3.toHex(ret.privateKey))
-            self.ui.lineEdit_25.setText(ret.address[0:10])
-            encrypted = Account.encrypt(w3.toHex(ret.privateKey), ret.address)
+            self.ui.lineEdit_22.setText(ret[1][0])
+            self.ui.lineEdit_23.setText(ret[1][1])
+            self.ui.lineEdit_25.setText(ret[1][0][0:10])
+            encrypted = ret[1][2]
             #self.m_wallet = Wallet
             self.m_wallet.password = self.ui.lineEdit_4.text()
-            self.m_wallet.address = ret.address
-            self.m_wallet.privateKey = w3.toHex(ret.privateKey)
+            self.m_wallet.address = ret[1][0]
+            self.m_wallet.privateKey = ret[1][1]
             self.m_wallet.accountname = self.ui.lineEdit_25.text()
             self.addWallet()
-            self.ui.lineEdit_8.setText(ret.address)
-            self.ui.lineEdit_9.setText(w3.toHex(ret.privateKey))
-            DataKeystore = "Data\\Keystore\\"+ret.address[2:18]+".keystore"
+            self.ui.lineEdit_8.setText(ret[1][0])
+            self.ui.lineEdit_9.setText(ret[1][1])
+            DataKeystore = "Data\\Keystore\\"+ret[1][0][2:18]+".keystore"
             fh = open(DataKeystore, "w")
             fh.write(str(encrypted))
             fh.close()
@@ -166,20 +168,53 @@ class Example(QDialog,QWidget):
             self.imgpub.save("pic\\public.png")
             self.ui.label_10.setPixmap(QPixmap("pic\\public.png"))
             self.ui.label_10.setAutoFillBackground(1)
-            self.imgpri = qrcode.make(w3.toHex(ret.privateKey))
+            self.imgpri = qrcode.make(ret[1][1])
             self.imgpri.save("pic\\private.png")
             #self.ui.label_10.setPixmap(QPixmap("pic\\private.png"))
             #self.ui.label_10.setAutoFillBackground(1)
 
     def importsecret(self):
-        ret = Core_func.Import_secret(self.ui.lineEdit_18.text(), self.ui.lineEdit_19.text(), self.ui.lineEdit_20.text())
+        if  self.ui.lineEdit_18.text() ==  self.ui.lineEdit_19.text():
+
+            ret = Core_func.Import_From_Private( self.ui.lineEdit_20.text())
+            if ret[0] == 1:
+                self.m_wallet.password = self.ui.lineEdit_18.text()
+                self.m_wallet.address = ret[1]
+                self.m_wallet.privateKey = self.ui.lineEdit_20.text()
+                self.m_wallet.accountname = ret[1][0:10]
+                self.addWallet()
+                self.ui.lineEdit_8.setText(ret[1])
+                self.ui.lineEdit_9.setText(self.ui.lineEdit_20.text())
+                self.imgpub = qrcode.make(self.m_wallet.address)
+                self.imgpub.save("pic\\public.png")
+                self.ui.stackedWidget.setCurrentIndex(1)
 
 
     def importmnemonic(self):
         ret = Core_func.Import_mnemonic(self.ui.lineEdit_15.text(), self.ui.lineEdit_16.text(), self.ui.lineEdit_17.text())
 
+    def importfile(self):
+        filenames = tkinter.filedialog.askopenfilenames()
+        if len(filenames) != 0:
+            string_filename = ""
+            for i in range(0, len(filenames)):
+                string_filename += str(filenames[i]) + "\n"
+            self.ui.lineEdit_26.setText(string_filename)
+
     def importKetstore(self):
-        ret = Core_func.Import_Ketstore(self.ui.lineEdit_6 .text(), self.ui.lineEdit_26.text())
+        ret = Core_func.Import_Keystore(self.ui.lineEdit_6 .text(), self.ui.lineEdit_26.text())
+        if ret[0] ==1:
+            self.m_wallet.password = self.ui.lineEdit_6.text()
+            self.m_wallet.address = ret[1][0]
+            self.m_wallet.privateKey = ret[1][1]
+            self.m_wallet.accountname = ret[1][0][0:10]
+            self.addWallet()
+            self.ui.lineEdit_8.setText(ret[1][0])
+            self.ui.lineEdit_9.setText(ret[1][1])
+            self.imgpub = qrcode.make(self.m_wallet.address)
+            self.imgpub.save("pic\\public.png")
+            self.ui.stackedWidget.setCurrentIndex(1)
+
 
     def seepassword(self):
         if self.passwordeye == 1:
@@ -394,8 +429,8 @@ class Example(QDialog,QWidget):
         btnloginpri.clicked.connect(lambda :self.importsecret())
         btnloginmnem = self.ui.login_mnem
         btnloginmnem.clicked.connect(lambda :self.importmnemonic())
-        #btnimportfile = self.ui.import_Keystore_2
-        #btnimportfile.clicked.connect()
+        btnimportfile = self.ui.import_Keystore_2
+        btnimportfile.clicked.connect(self.importfile)
         #enter password
         btntosee1 = self.ui.turn2visible1
         btntosee1.clicked.connect(self.seepass1)
