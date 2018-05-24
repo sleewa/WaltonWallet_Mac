@@ -3,6 +3,67 @@
   <component name="ChangeListManager">
     <list default="true" id="2cb5a557-5c71-4f3d-abef-ea3994e1e70c" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/Core_func.py" beforeDir="false" afterPath="$PROJECT_DIR$/Core_func.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/02213e80665FC272.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/0381CEEa3a4aD5ef.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/04d34BFF16941bF0.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/054D952A2437ef13.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/067447Bc0fcd451d.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/10c4a209429F897c.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/16A2587Bb226bE22.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/1C039008472956Ec.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/1e4b8370751a230a.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/1f4C05B41387a53f.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/241C6Ec814e27bB5.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/27a3d72b37347664.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/3571C781f602dCcE.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/3C9E79436DC854ea.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/3b5aFA3DCd678723.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/4383119Ebf105975.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/45Ff00DDA53e1cbC.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/4c71411Aa1972Dea.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/4d176F52488b6aF2.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/4eA82c8fceaD5E00.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/54fDA31C29855ea3.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/5537381C89EEEDFd.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/55b820D04890280B.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/589D7C9913e4545F.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/59fbB32D45E3704E.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/5Bc42e25578eC117.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/5ff8778548F21D62.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/6617924DDDA319C9.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/6C43a69439DbBB37.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/73c4757e88a511D2.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/76B73252Ec0912cc.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/80aFDa0AAe11b479.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/820909Ae95B315C0.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/9173870d5e4E42ae.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/9262cEB345CB3a9c.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/9320EE542837f0f4.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/93BF7874Df2F4668.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/97d8d69cE3b6AFaf.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/9Cb5E04e8fD73B0b.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/9F64e3BC8C162517.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/A60ea183230bBb23.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/B29C6e5fceDCef0f.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/C2e2858bFf37693b.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/C3d851e8D1B5a62A.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/D7BB2874F5ED2ACA.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/Ef69FebB3681E54d.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/F5561Ff1092E7f41.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/F65dB89A7FEf471b.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/F77Dd9E858Ea5CE5.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/a0a49f885fE5957A.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/ae719e330CF1DAE9.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/bD9853923B973981.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/be46E0D774e0C8e1.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/bf1A61E8E2feA767.Keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/c4ce131C2FEBF28a.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/ce83ef986A04DFb1.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/d007BC113CbEa5E4.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/d7D2C5182FBF7413.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/e70A187F2C833Cb4.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/e90dc2ffD974BbD1.keystore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/f18D6A27124BF579.keystore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Mainform.py" beforeDir="false" afterPath="$PROJECT_DIR$/Mainform.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pic/private.png" beforeDir="false" afterPath="$PROJECT_DIR$/pic/private.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pic/public.png" beforeDir="false" afterPath="$PROJECT_DIR$/pic/public.png" afterDir="false" />
@@ -227,11 +288,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Mainform.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Mainform.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Mainform.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="274">
-              <caret line="330" column="91" selection-start-line="330" selection-start-column="91" selection-end-line="330" selection-end-column="91" />
+            <state relative-caret-position="527">
+              <caret line="385" column="47" lean-forward="true" selection-start-line="385" selection-start-column="47" selection-end-line="385" selection-end-column="47" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
                 <element signature="e#1322#1684#0" />
@@ -253,13 +314,12 @@
                 <element signature="e#4723#4832#0" />
                 <element signature="e#4879#5025#0" />
                 <element signature="e#5074#5220#0" />
+                <element signature="e#13113#14287#0" />
                 <element signature="e#7117#7232#0" />
                 <element signature="e#7802#8076#0" />
-                <element signature="e#8249#9040#0" />
                 <element signature="e#7396#7802#0" />
                 <element signature="e#7841#8252#0" />
                 <element signature="e#8287#8818#0" />
-                <element signature="e#15657#16346#0" />
                 <element signature="e#17515#17739#0" />
                 <element signature="e#9330#9722#0" />
                 <element signature="e#10614#11035#0" />
@@ -347,11 +407,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Core_func.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Core_func.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Core_func.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="532">
-              <caret line="56" column="66" selection-start-line="56" selection-start-column="66" selection-end-line="56" selection-end-column="66" />
+            <state relative-caret-position="208">
+              <caret line="53" column="17" selection-start-line="53" selection-start-column="17" selection-end-line="53" selection-end-column="17" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -450,7 +510,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.Mainform">
+  <component name="RunManager" selected="Python.Core_func">
     <configuration name="Core_func" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="wtc_py" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -550,8 +610,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.Mainform" />
         <item itemvalue="Python.Core_func" />
+        <item itemvalue="Python.Mainform" />
         <item itemvalue="Python.main" />
         <item itemvalue="Python.new 1" />
         <item itemvalue="Python.Mainform_QT" />
@@ -573,17 +633,16 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18229716" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18020834" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32969433" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.30011198" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.29257643" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Python Console" order="7" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.19708847" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.19650654" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39847162" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -685,13 +744,12 @@
             <element signature="e#4723#4832#0" />
             <element signature="e#4879#5025#0" />
             <element signature="e#5074#5220#0" />
+            <element signature="e#13113#14287#0" />
             <element signature="e#7117#7232#0" />
             <element signature="e#7802#8076#0" />
-            <element signature="e#8249#9040#0" />
             <element signature="e#7396#7802#0" />
             <element signature="e#7841#8252#0" />
             <element signature="e#8287#8818#0" />
-            <element signature="e#15657#16346#0" />
             <element signature="e#17515#17739#0" />
             <element signature="e#9330#9722#0" />
             <element signature="e#10614#11035#0" />
@@ -745,13 +803,12 @@
             <element signature="e#4723#4832#0" />
             <element signature="e#4879#5025#0" />
             <element signature="e#5074#5220#0" />
+            <element signature="e#13113#14287#0" />
             <element signature="e#7117#7232#0" />
             <element signature="e#7802#8076#0" />
-            <element signature="e#8249#9040#0" />
             <element signature="e#7396#7802#0" />
             <element signature="e#7841#8252#0" />
             <element signature="e#8287#8818#0" />
-            <element signature="e#15657#16346#0" />
             <element signature="e#17515#17739#0" />
             <element signature="e#9330#9722#0" />
             <element signature="e#10614#11035#0" />
@@ -816,13 +873,12 @@
             <element signature="e#4723#4832#0" />
             <element signature="e#4879#5025#0" />
             <element signature="e#5074#5220#0" />
+            <element signature="e#13113#14287#0" />
             <element signature="e#7117#7232#0" />
             <element signature="e#7802#8076#0" />
-            <element signature="e#8249#9040#0" />
             <element signature="e#7396#7802#0" />
             <element signature="e#7841#8252#0" />
             <element signature="e#8287#8818#0" />
-            <element signature="e#15657#16346#0" />
             <element signature="e#17515#17739#0" />
             <element signature="e#9330#9722#0" />
             <element signature="e#10614#11035#0" />
@@ -867,13 +923,12 @@
             <element signature="e#4723#4832#0" />
             <element signature="e#4879#5025#0" />
             <element signature="e#5074#5220#0" />
+            <element signature="e#13113#14287#0" />
             <element signature="e#7117#7232#0" />
             <element signature="e#7802#8076#0" />
-            <element signature="e#8249#9040#0" />
             <element signature="e#7396#7802#0" />
             <element signature="e#7841#8252#0" />
             <element signature="e#8287#8818#0" />
-            <element signature="e#15657#16346#0" />
             <element signature="e#17515#17739#0" />
             <element signature="e#9330#9722#0" />
             <element signature="e#10614#11035#0" />
@@ -1059,10 +1114,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Core_func.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="53" column="17" selection-start-line="53" selection-start-column="17" selection-end-line="53" selection-end-column="17" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Mainform.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="330" column="91" selection-start-line="330" selection-start-column="91" selection-end-line="330" selection-end-column="91" />
+        <state relative-caret-position="527">
+          <caret line="385" column="47" lean-forward="true" selection-start-line="385" selection-start-column="47" selection-end-line="385" selection-end-column="47" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
             <element signature="e#1322#1684#0" />
@@ -1084,13 +1149,12 @@
             <element signature="e#4723#4832#0" />
             <element signature="e#4879#5025#0" />
             <element signature="e#5074#5220#0" />
+            <element signature="e#13113#14287#0" />
             <element signature="e#7117#7232#0" />
             <element signature="e#7802#8076#0" />
-            <element signature="e#8249#9040#0" />
             <element signature="e#7396#7802#0" />
             <element signature="e#7841#8252#0" />
             <element signature="e#8287#8818#0" />
-            <element signature="e#15657#16346#0" />
             <element signature="e#17515#17739#0" />
             <element signature="e#9330#9722#0" />
             <element signature="e#10614#11035#0" />
@@ -1105,16 +1169,6 @@
             <element signature="e#13849#14278#0" />
             <element signature="e#14311#14740#0" />
             <element signature="e#32042#32092#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Core_func.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="56" column="66" selection-start-line="56" selection-start-column="66" selection-end-line="56" selection-end-column="66" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>

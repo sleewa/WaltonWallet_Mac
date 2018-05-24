@@ -334,13 +334,19 @@ class Example(QDialog,QWidget):
                 self.m_wallet.address = ret[1]
                 self.m_wallet.privateKey = self.ui.lineEdit_20.text()
                 self.m_wallet.accountname = ret[1][0:10]
+                encrypted = ret[2]
+                DataKeystore = "Data\\Keystore\\" + ret[1][2:18] + ".keystore"
+                fh = open(DataKeystore, "w")
+                fh.write(str(encrypted))
+                fh.close()
+                self.m_wallet.filename = DataKeystore
                 self.addWallet()
                 self.ui.lineEdit_8.setText(ret[1])
                 self.ui.lineEdit_9.setText(self.ui.lineEdit_20.text())
                 self.imgpub = qrcode.make(self.m_wallet.address)
                 self.imgpub.save("pic\\public.png")
                 self.ui.stackedWidget.setCurrentIndex(1)
-
+                self.ui.NewWalletstacked.setCurrentIndex(0)
 
     def importmnemonic(self):
         ret = Core_func.Import_mnemonic(self.ui.lineEdit_15.text(), self.ui.lineEdit_16.text(), self.ui.lineEdit_17.text())
@@ -361,18 +367,26 @@ class Example(QDialog,QWidget):
         content = file.readline()
         enterpri = self.ui.lineEdit_20.text()
         enterpri.strip()
-        ret = Core_func.Import_Keystore(enterpri.strip(), content)
+        ret = Core_func.Import_Keystore(self.ui.lineEdit_20.text(), content)
         if ret[0] ==1:
             self.m_wallet.password = self.ui.lineEdit_6.text()
             self.m_wallet.address = ret[1][0]
             self.m_wallet.privateKey = ret[1][1]
             self.m_wallet.accountname = ret[1][0][0:10]
+            encrypted = ret[2]
+            DataKeystore = "Data\\Keystore\\" + ret[1][0][2:18] + ".keystore"
+            fh = open(DataKeystore, "w")
+            fh.write(str(encrypted))
+            fh.close()
+            self.m_wallet.filename = DataKeystore
             self.addWallet()
             self.ui.lineEdit_8.setText(ret[1][0])
             self.ui.lineEdit_9.setText(ret[1][1])
             self.imgpub = qrcode.make(self.m_wallet.address)
             self.imgpub.save("pic\\public.png")
             self.ui.stackedWidget.setCurrentIndex(1)
+            self.ui.NewWalletstacked.setCurrentIndex(0)
+
         else:
             print('no')
 
