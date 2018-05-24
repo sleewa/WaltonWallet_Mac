@@ -41,6 +41,7 @@ failure reason for Generate_Key function
 
 
 def Import_From_Private(secret):
+    print("this is imported private key", secret)
     acct = Account.privateKeyToAccount(secret)
     public_key = acct.address
     return (1, public_key)
@@ -66,16 +67,18 @@ def Import_mnemonic(passphrase1, passphrase2, mnemonicwords):
 
 
 def Transaction_out(private_key, toaddr, value, gas, gasprice):
+    print(private_key)
     acct = Account.privateKeyToAccount(private_key)
+    print(acct)
     public_key = acct.address
     nonce = requests.get(
         "https://waltonchain.net:18950/api/getSendTransactionNonce/"+public_key).json()["send_nonce"]
     print(nonce)
     transaction = {
         'to': toaddr,
-        'value': value * (10 ** 18),
-        'gas': gas * (10 ** 18),
-        'gasPrice': gasprice * (10 ** 18),
+        'value': int(float(value) * (10 ** 18)),
+        'gas': int(gas),
+        'gasPrice': int(float(gasprice) * (10 ** 18)),
         'nonce': nonce,
         'chainId': 15
     }
@@ -99,3 +102,5 @@ def Transaction_out(private_key, toaddr, value, gas, gasprice):
 # test_public_key = out[1][0]
 # test_private_key = out[1][1]
 # print(Transaction_out(test_private_key, test_public_key, 1, 1, 1))
+
+# print(Import_From_Private('e8671e48e23b728717a43b888612f324ad96177396dcc9a1f3616c6c3c3e6429'))

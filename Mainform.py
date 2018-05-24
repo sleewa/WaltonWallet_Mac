@@ -14,6 +14,8 @@ import shutil
 import cytoolz._signatures
 import cytoolz.utils
 import qrcode
+import requests
+
 import datetime
 from eth_account import Account
 from PyQt5 import QtWidgets
@@ -25,9 +27,135 @@ from PyQt5.QtWidgets import (QWidget, QToolTip, QDesktopWidget, QMessageBox, QTe
 from PyQt5.QtGui import *
 from PyQt5.QtCore import QCoreApplication
 from Mainform_QT import *
+from SendForm import Ui_SendForm
+from RecieveForm import Ui_ReceiveForm
+
+class recieveform(QWidget, Ui_ReceiveForm):
+    def __init__(self):
+        super().__init__()
+        self.ui = Ui_ReceiveForm()
+        self.ui.setupUi(self)
+        self.setWindowFlags(Qt.CustomizeWindowHint)
+        btnc = self.ui.closeenterpsw
+        btnc.clicked.connect(self.closeform)
+        btncopy = self.ui.pushButton_34
+        btncopy.clicked.connect(self.copyaddr)
+        #self.ui.lineEdit_6.changeEvent.connect(self.showqrcode)
+        #self.ui.lineEdit_6.keyPressEvent(self,self.showqrcode)
 
 
 
+    def showqrcode(self):
+        self.ui.lineEdit_8.setText(ex.m_wallet.address)
+        value = self.ui.lineEdit_6.text()
+        strAddressAndAmount = ex.m_wallet.address# + "," + value
+        self.imgpub = qrcode.make(strAddressAndAmount)
+        self.imgpub.save("pic\\recieve.png")
+        self.ui.label.setPixmap(QPixmap("pic\\recieve.png"))
+        self.ui.label.setAutoFillBackground(1)
+
+    def show_w2(self):  # 显示窗体2
+        self.show()
+        self.showqrcode()
+
+    def copyaddr(self):
+        self.clipboard_public_key = QApplication.clipboard()
+        self.clipboard_public_key.setText(ex.m_wallet.address)
+
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.dragPosition = event.globalPos() - self.frameGeometry().topLeft()
+            QApplication.postEvent(self, Core_func.QEvent(174))
+            event.accept()
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() == Qt.LeftButton:
+            self.move(event.globalPos() - self.dragPosition)
+            event.accept()
+
+    def closeform(self):
+        self.close()
+
+class sendform(QWidget, Ui_SendForm):
+    def __init__(self):
+        super().__init__()
+        self.ui = Ui_SendForm()
+        self.ui.setupUi(self)
+        self.setWindowFlags(Qt.CustomizeWindowHint)
+        btnc = self.ui.closeenterpsw
+        btnc.clicked.connect(self.closeform)
+        btnsend = self.ui.pushButton_9
+        btnsend.clicked.connect(self.showenterphrase)
+        self.Trans = Transaction
+        self.ui.radioButton.toggle()
+        self.ui.radioButton.toggled.connect(self.change2Eco)
+        self.ui.radioButton_2.toggle()
+        self.ui.radioButton_2.toggled.connect(self.change2Sta)
+        self.ui.radioButton_3.toggle()
+        self.ui.radioButton_3.toggled.connect(self.change2Qui)
+        self.ui.radioButton_4.toggle()
+        self.ui.radioButton_4.toggled.connect(self.change2Cus)
+
+    def change2Eco(self):
+        if self.ui.radioButton.isChecked():
+            self.ui.lineEdit_8.setText('60000')
+            self.ui.lineEdit_9.setText('0.000000018')
+
+    def change2Sta(self):
+        if self.ui.radioButton_2.isChecked():
+            self.ui.lineEdit_8.setText('200000')
+            self.ui.lineEdit_9.setText('0.000000036')
+
+    def change2Qui(self):
+        if self.ui.radioButton_3.isChecked():
+            self.ui.lineEdit_8.setText('1000000')
+            self.ui.lineEdit_9.setText('0.000000072')
+
+    def change2Cus(self):
+        if self.ui.radioButton_4.isChecked():
+            self.ui.lineEdit_8.clear()
+            self.ui.lineEdit_9.clear()
+            self.ui.lineEdit_8.setPlaceholderText('Enter Gas Limit')
+            self.ui.lineEdit_9.setPlaceholderText('Enter Gas Price')
+
+    def show_w2(self):  # 显示窗体2
+        self.show()
+
+        balance = requests.get(
+            "https://waltonchain.net:18950/api/getBalance/" + ex.m_wallet.address).json()
+        a = str(balance)
+        self.ui.label_52.setText(a.split(',')[1][11:] + 'WTCT')
+
+    def showenterphrase(self):
+        #waiting to add passsword checking
+        self.Trans.value = '-'+self.ui.lineEdit_6.text()+'WTCT'
+        ret = Core_func.Transaction_out(ex.m_wallet.privateKey, self.ui.lineEdit_7.text(), self.ui.lineEdit_6.text(), self.ui.lineEdit_8.text(), self.ui.lineEdit_9.text())
+        self.Trans.rawTransaction = ret[1]
+        Rcount = ex.ui.TransactionHistory.rowCount()
+        ex.ui.TransactionHistory.setRowCount(Rcount + 1)
+        newItemTime = QTableWidgetItem(time.strftime('%Y/%m/%d',time.localtime(time.time())))
+        newItemAddr = QTableWidgetItem(ex.m_wallet.address)
+        newItemStatus = QTableWidgetItem(self.Trans.status)
+        newItemValue = QTableWidgetItem(self.Trans.value)
+        ex.ui.TransactionHistory.setItem(Rcount, 0, newItemTime)
+        ex.ui.TransactionHistory.setItem(Rcount, 1, newItemAddr)
+        ex.ui.TransactionHistory.setItem(Rcount, 2, newItemStatus)
+        ex.ui.TransactionHistory.setItem(Rcount, 3, newItemValue)
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.dragPosition = event.globalPos() - self.frameGeometry().topLeft()
+            QApplication.postEvent(self, Core_func.QEvent(174))
+            event.accept()
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() == Qt.LeftButton:
+            self.move(event.globalPos() - self.dragPosition)
+            event.accept()
+
+    def closeform(self):
+        self.close()
 
 class Example(QDialog,QWidget):
 
@@ -174,8 +302,9 @@ class Example(QDialog,QWidget):
 
     def importsecret(self):
         if  self.ui.lineEdit_18.text() ==  self.ui.lineEdit_19.text():
-
-            ret = Core_func.Import_From_Private( self.ui.lineEdit_20.text())
+            enterpri = self.ui.lineEdit_20.text()
+            enterpri.strip()
+            ret = Core_func.Import_From_Private(enterpri.strip())
             if ret[0] == 1:
                 self.m_wallet.password = self.ui.lineEdit_18.text()
                 self.m_wallet.address = ret[1]
@@ -206,7 +335,9 @@ class Example(QDialog,QWidget):
     def importKetstore(self):
         file = open(self.ui.lineEdit_26.text(), 'r')
         content = file.readline()
-        ret = Core_func.Import_Keystore(self.ui.lineEdit_6 .text(), content)
+        enterpri = self.ui.lineEdit_20.text()
+        enterpri.strip()
+        ret = Core_func.Import_Keystore(enterpri.strip(), content)
         if ret[0] ==1:
             self.m_wallet.password = self.ui.lineEdit_6.text()
             self.m_wallet.address = ret[1][0]
@@ -267,6 +398,10 @@ class Example(QDialog,QWidget):
         newItemName = QTableWidgetItem(self.m_wallet.accountname)
         self.ui.multWallet.setItem(Rcount, 1, newItemAddr)
         self.ui.multWallet.setItem(Rcount, 0, newItemName)
+        self.ui.multWallet.setCellWidget(Rcount, 2, self.mwOpen)
+        self.ui.multWallet.setCellWidget(Rcount, 3, self.mwEdit)
+        self.ui.multWallet.setCellWidget(Rcount, 4, self.mwDelete)
+        self.ui.multWallet.setCellWidget(Rcount, 5, self.mwSaveKey)
 
     def savekey(self):
         encrypted = Account.encrypt(self.m_wallet.privateKey, self.m_wallet.password)
@@ -533,6 +668,7 @@ class Example(QDialog,QWidget):
         btnsta = self.ui.pushButton_8
         btnsta.clicked.connect(self.tostack)
 
+
         self.ui.LogMessage.horizontalHeader().setVisible(0)
         self.ui.LogMessage.verticalHeader().setVisible(0)
         self.ui.LogMessage.setShowGrid(0)
@@ -643,28 +779,30 @@ class Example(QDialog,QWidget):
             "QScrollBar::sub-line{background:transparent;}"
             "QScrollBar::add-line{background:transparent;}")
 
-        mwOpen = QPushButton("Open")  # type: QPushButton
-        mwOpen.setStyleSheet(''' background-color: rgb(255, 255, 255);color: rgb(170, 0, 255); 
-                                                            height : 19px; width:70px;border-color: rgb(170, 0, 255);
-                                                            font : 12px "Bahnschrift Light"; ''')
-        #mwOpen.setIconSize(QSize(41,21))
+        self.mwOpen = QPushButton(self)  # type: QPushButton
+        #self.mwOpen.setStyleSheet(''' background-color: rgb(255, 255, 255);color: rgb(170, 0, 255);
+        #                                                    height : 19px; width:70px;border-color: rgb(170, 0, 255);
+        #                                                    font : 12px "Bahnschrift Light"; ''')
+        self.mwOpen.setIcon(QIcon("pic/open1233.png"))
 
-        mwEdit = QPushButton("Edit")  # type: QPushButton
-        mwEdit.setStyleSheet('''background-color: rgb(255, 255, 255);color: rgb(170, 0, 255);
+        #self.mwOpen.setIconSize(self,QSize=[16,16])
+        self.mwOpen.clicked.connect(self.pressbtn1)
+
+        #self.mwOpen.setAutoFillBackground(1)
+
+        self.mwEdit = QPushButton("Edit")  # type: QPushButton
+        self.mwEdit.setStyleSheet('''background-color: rgb(255, 255, 255);color: rgb(170, 0, 255);
                                                     height : 19px; width:70px;border-color: rgb(170, 0, 255);
                                                     font : 12px "Bahnschrift Light"; ''')
-        mwDelete = QPushButton("Delete")  # type: QPushButton
-        mwDelete.setStyleSheet(''' background-color: rgb(255, 255, 255);color: rgb(170, 0, 255);
+        self.mwDelete = QPushButton("Delete")  # type: QPushButton
+        self.mwDelete.setStyleSheet(''' background-color: rgb(255, 255, 255);color: rgb(170, 0, 255);
                                                     height : 19px; width:70px;border-color: rgb(170, 0, 255);
                                                     font : 12px "Bahnschrift Light"; ''')
-        mwSaveKey = QPushButton("Save Key")  # type: QPushButton
-        mwSaveKey.setStyleSheet(''' background-color: rgb(255, 255, 255);color: rgb(170, 0, 255); 
+        self.mwSaveKey = QPushButton("Save Key")  # type: QPushButton
+        self.mwSaveKey.setStyleSheet(''' background-color: rgb(255, 255, 255);color: rgb(170, 0, 255); 
                                                     height : 19px; width:70px;border-color: rgb(170, 0, 255);
                                                     font : 12px "Bahnschrift Light"; ''')
-        self.ui.multWallet.setCellWidget(1, 2, mwOpen)
-        self.ui.multWallet.setCellWidget(1, 3, mwEdit)
-        self.ui.multWallet.setCellWidget(1, 4, mwDelete)
-        self.ui.multWallet.setCellWidget(1, 5, mwSaveKey)
+
 
 
 
@@ -676,13 +814,20 @@ class Wallet:
     address = ''
     accountname = ''
 
-
+class Transaction:
+    rawTransaction = ''
+    status = ''
+    value = ''
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = Example()
+    sendform = sendform()
+    recieveform = recieveform()
     #s = Warning_Form.SecondWindow()
     #ex.ui.cw.clicked.connect(s.handle_click)
     ex.show()
+    ex.ui.pushButton_9.clicked.connect(sendform.show_w2)
+    ex.ui.pushButton_10.clicked.connect(recieveform.show_w2)
     sys.exit(app.exec_())
