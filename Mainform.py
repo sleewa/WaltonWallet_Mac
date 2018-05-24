@@ -47,6 +47,8 @@ class Example(QDialog,QWidget):
         self.ui.cw.setIcon(QIcon("pic/cw0.png"))
         self.ui.stackedWidget.setCurrentIndex(1)
         self.ui.NewWalletstacked.setCurrentIndex(0)
+        self.ui.lineEdit_8.setText(self.m_wallet.address)
+        self.ui.lineEdit_9.setText(self.m_wallet.privateKey)
 
     def pressbtn2(self):
         self.ui.mywallet.setIcon(QIcon("pic/mywallet0.png"))
@@ -257,6 +259,108 @@ class Example(QDialog,QWidget):
     def tostack(self):
         webbrowser.open('https://join.slack.com/t/waltonchain/shared_invite/enQtMjgxMDcxNzU5MDEwLWI1ZTc3MDZlNmI4ZjA1YjhiMDEzN2VlZmY2M2EzNmM4Yjg1NjFjYjlmNTcxOGVlMGRiNWE2M2NlYTg2MWNmNWQ')
 
+    def seepass1(self):
+        if self.pass1eye == 1:
+            PASS = self.ui.lineEdit_4.text()
+            self.ui.lineEdit_4.setEchoMode(0)
+            self.ui.lineEdit_4.setText(PASS)
+            self.ui.turn2visible1.setIcon(QIcon("pic/01.png"))
+            self.pass1eye = 0
+        else:
+            self.ui.lineEdit_4.setEchoMode(QLineEdit.Password)
+            self.ui.turn2visible1.setIcon(QIcon("pic/02.png"))
+            self.pass1eye = 1
+    def seepass2(self):
+        if self.pass2eye == 1:
+            PASS = self.ui.lineEdit_5.text()
+            self.ui.lineEdit_5.setEchoMode(0)
+            self.ui.lineEdit_5.setText(PASS)
+            self.ui.turn2visible2.setIcon(QIcon("pic/01.png"))
+            self.pass2eye = 0
+        else:
+            self.ui.lineEdit_5.setEchoMode(QLineEdit.Password)
+            self.ui.turn2visible2.setIcon(QIcon("pic/02.png"))
+            self.pass2eye = 1
+
+    def seepri1(self):
+        if self.pri1eye == 1:
+            #time.sleep(5)
+            PASS = self.ui.lineEdit_20.text()
+            self.ui.lineEdit_20.setEchoMode(0)
+            self.ui.lineEdit_20.setText(PASS)
+            self.ui.turn2visible1_9.setIcon(QIcon("pic/01.png"))
+            self.pri1eye = 0
+        else:
+            self.ui.lineEdit_20.setEchoMode(QLineEdit.Password)
+            self.ui.turn2visible1_9.setIcon(QIcon("pic/02.png"))
+            self.pri1eye = 1
+    def seephrs1(self):
+        if self.phrs1eye == 1:
+            PASS = self.ui.lineEdit_18.text()
+            self.ui.lineEdit_18.setEchoMode(0)
+            self.ui.lineEdit_18.setText(PASS)
+            self.ui.turn2visible1_8.setIcon(QIcon("pic/01.png"))
+            self.phrs1eye = 0
+        else:
+            self.ui.lineEdit_18.setEchoMode(QLineEdit.Password)
+            self.ui.turn2visible1_8.setIcon(QIcon("pic/02.png"))
+            self.phrs1eye = 1
+    def seephrs2(self):
+        if self.phrs1eye == 1:
+            PASS = self.ui.lineEdit_19.text()
+            self.ui.lineEdit_19.setEchoMode(0)
+            self.ui.lineEdit_19.setText(PASS)
+            self.ui.turn2visible2_5.setIcon(QIcon("pic/01.png"))
+            self.phrs1eye = 0
+        else:
+            self.ui.lineEdit_19.setEchoMode(QLineEdit.Password)
+            self.ui.turn2visible2_5.setIcon(QIcon("pic/02.png"))
+            self.phrs1eye = 1
+    def seepassK(self):
+        if self.passKeye == 1:
+            PASS = self.ui.lineEdit_6.text()
+            self.ui.lineEdit_6.setEchoMode(0)
+            self.ui.lineEdit_6.setText(PASS)
+            self.ui.turn2visible1_2.setIcon(QIcon("pic/01.png"))
+            self.passKeye = 0
+        else:
+            self.ui.lineEdit_6.setEchoMode(QLineEdit.Password)
+            self.ui.turn2visible1_2.setIcon(QIcon("pic/02.png"))
+            self.passKeye = 1
+    def seemnem1(self):
+        if self.mnemeye == 1:
+            PASS = self.ui.lineEdit_17.text()
+            self.ui.lineEdit_17.setEchoMode(0)
+            self.ui.lineEdit_17.setText(PASS)
+            self.ui.turn2visible1_7.setIcon(QIcon("pic/01.png"))
+            self.mnemeye = 0
+        else:
+            self.ui.lineEdit_17.setEchoMode(QLineEdit.Password)
+            self.ui.turn2visible1_7.setIcon(QIcon("pic/02.png"))
+            self.mnemeye = 1
+    def seephrm1(self):
+        if self.phrm1eye == 1:
+            PASS = self.ui.lineEdit_15.text()
+            self.ui.lineEdit_15.setEchoMode(0)
+            self.ui.lineEdit_15.setText(PASS)
+            self.ui.turn2visible1_6.setIcon(QIcon("pic/01.png"))
+            self.phrm1eye = 0
+        else:
+            self.ui.lineEdit_15.setEchoMode(QLineEdit.Password)
+            self.ui.turn2visible1_6.setIcon(QIcon("pic/02.png"))
+            self.phrm1eye = 1
+    def seephrm2(self):
+        if self.phrm2eye == 1:
+            PASS = self.ui.lineEdit_16.text()
+            self.ui.lineEdit_16.setEchoMode(0)
+            self.ui.lineEdit_16.setText(PASS)
+            self.ui.turn2visible2_4.setIcon(QIcon("pic/01.png"))
+            self.phrm2eye = 0
+        else:
+            self.ui.lineEdit_16.setEchoMode(QLineEdit.Password)
+            self.ui.turn2visible2_4.setIcon(QIcon("pic/02.png"))
+            self.phrm2eye = 1
+
     def initUI(self):
         '显示窗口'
         self.ui = Ui_Form()
@@ -292,6 +396,40 @@ class Example(QDialog,QWidget):
         btnloginmnem.clicked.connect(lambda :self.importmnemonic())
         #btnimportfile = self.ui.import_Keystore_2
         #btnimportfile.clicked.connect()
+        #enter password
+        btntosee1 = self.ui.turn2visible1
+        btntosee1.clicked.connect(self.seepass1)
+        self.pass1eye = 1
+        btntosee2 = self.ui.turn2visible2
+        btntosee2.clicked.connect(self.seepass2)
+        self.pass2eye = 1
+        #enter secret
+        btntosee3 = self.ui.turn2visible1_9
+        btntosee3.clicked.connect(self.seepri1)
+        self.pri1eye = 1
+        btntosee4 = self.ui.turn2visible1_8
+        btntosee4.clicked.connect(self.seephrs1)
+        self.phrs1eye = 1
+        btntosee5 = self.ui.turn2visible2_5
+        btntosee5.clicked.connect(self.seephrs2)
+        self.phrs2eye = 1
+
+        #enter mnem
+        btntosee6 = self.ui.turn2visible1_7
+        btntosee6.clicked.connect(self.seemnem1)
+        self.mnemeye = 1
+        btntosee7 = self.ui.turn2visible1_6
+        btntosee7.clicked.connect(self.seephrm1)
+        self.phrm1eye = 1
+        btntosee8 = self.ui.turn2visible2_4
+        btntosee8.clicked.connect(self.seephrm2)
+        self.phrm2eye = 1
+
+        #enter keystore
+        btntosee9 = self.ui.turn2visible1_2
+        btntosee9.clicked.connect(self.seepassK)
+        self.passKeye = 1
+
         btnloginkeys = self.ui.login_keys
 
         btnloginkeys.clicked.connect(lambda :self.importKetstore())
