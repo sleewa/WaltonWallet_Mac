@@ -36,7 +36,7 @@ def Import_Ketstore(passphrase, filename):
     if filename.len == 0:
         print('no file')
     else:
-        print('keystore', passphrase)
+        print('keystore1', passphrase)
 
 
 def Import_mnemonic(passphrase1, passphrase2, mnemonicwords):
