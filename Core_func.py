@@ -2,6 +2,7 @@ import getpass
 import json
 import sys
 
+import requests
 from eth_account import Account
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -64,8 +65,23 @@ def Import_mnemonic(passphrase1, passphrase2, mnemonicwords):
         print('wrong')
 
 
-def Transaction_out(fromaddr, toaddr, value, gas, gasprice):
-    print(' ')
+def Transaction_out(private_key, toaddr, value, gas, gasprice):
+    acct = Account.privateKeyToAccount(private_key)
+    public_key = acct.address
+    nonce = requests.get(
+        "https://waltonchain.net:18950/api/getSendTransactionNonce/"+public_key).json()["send_nonce"]
+    print(nonce)
+    transaction = {
+        'to': toaddr,
+        'value': value * (10 ** 18),
+        'gas': gas * (10 ** 18),
+        'gasPrice': gasprice * (10 ** 18),
+        'nonce': nonce,
+        'chainId': 15
+    }
+    key = '0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318'
+    signed = w3.eth.account.signTransaction(transaction, private_key)
+    return (1, w3.toHex(signed.rawTransaction))
 
 
 # test for Generate_Two_Key()
@@ -76,4 +92,8 @@ print(test_account)
 test_keystore = test_account[1][2]
 
 # test for Import_Keystore
-print(Import_Keystore("123456", test_keystore))
+out = (Import_Keystore("123456", test_keystore))
+print(out)
+test_public_key = out[1][0]
+test_private_key = out[1][1]
+print(Transaction_out(test_private_key, test_public_key, 1, 1, 1))
