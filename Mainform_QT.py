@@ -764,10 +764,10 @@ class Ui_Form(object):
         self.line_51.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_51.setObjectName("line_51")
         self.lineEdit_26 = QtWidgets.QLineEdit(self.imporyKeyForm)
-        self.lineEdit_26.setGeometry(QtCore.QRect(20, 140, 191, 31))
+        self.lineEdit_26.setGeometry(QtCore.QRect(20, 150, 221, 21))
         font = QtGui.QFont()
-        font.setFamily("等线")
-        font.setPointSize(10)
+        font.setFamily("Arial")
+        font.setPointSize(9)
         self.lineEdit_26.setFont(font)
         self.lineEdit_26.setToolTip("")
         self.lineEdit_26.setStatusTip("")
@@ -780,7 +780,7 @@ class Ui_Form(object):
 "}\n"
 "")
         self.lineEdit_26.setFrame(False)
-        self.lineEdit_26.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.lineEdit_26.setEchoMode(QtWidgets.QLineEdit.Normal)
         self.lineEdit_26.setObjectName("lineEdit_26")
         self.importstack.addWidget(self.page_5)
         self.toolButton_39 = QtWidgets.QToolButton(self.p0)
@@ -1059,12 +1059,23 @@ class Ui_Form(object):
         self.lineEdit_9.setGeometry(QtCore.QRect(370, 250, 381, 41))
         font = QtGui.QFont()
         font.setFamily("微软雅黑")
-        font.setPointSize(10)
+        font.setPointSize(11)
         self.lineEdit_9.setFont(font)
-        self.lineEdit_9.setStyleSheet("border:0px;\n"
+        self.lineEdit_9.setStyleSheet("QLineEdit[echoMode=\"2\"] {\n"
+"    lineedit-password-character:42;\n"
+"border:0px;\n"
 "border-radius:20px;\n"
 "\n"
-"background-color: rgb(230, 238, 255);")
+"background-color: rgb(230, 238, 255);\n"
+"\n"
+"}\n"
+"border:0px;\n"
+"border-radius:20px;\n"
+"\n"
+"background-color: rgb(230, 238, 255);\n"
+"\n"
+"")
+        self.lineEdit_9.setText("")
         self.lineEdit_9.setEchoMode(QtWidgets.QLineEdit.Password)
         self.lineEdit_9.setObjectName("lineEdit_9")
         self.pushButton_8 = QtWidgets.QPushButton(self.page_6)
@@ -1082,12 +1093,13 @@ class Ui_Form(object):
         self.lineEdit_8.setGeometry(QtCore.QRect(370, 160, 381, 41))
         font = QtGui.QFont()
         font.setFamily("微软雅黑")
-        font.setPointSize(10)
+        font.setPointSize(11)
         self.lineEdit_8.setFont(font)
         self.lineEdit_8.setStyleSheet("border:0px;\n"
 "border-radius:20px;\n"
 "\n"
 "background-color: rgb(230, 238, 255);")
+        self.lineEdit_8.setText("")
         self.lineEdit_8.setObjectName("lineEdit_8")
         self.pushButton_6 = QtWidgets.QPushButton(self.page_6)
         self.pushButton_6.setGeometry(QtCore.QRect(660, 370, 51, 51))
@@ -2305,7 +2317,7 @@ class Ui_Form(object):
         self.line_27.setObjectName("line_27")
 
         self.retranslateUi(Form)
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(0)
         self.importstack.setCurrentIndex(4)
         self.NewWalletstacked.setCurrentIndex(0)
         self.tabWidget.setCurrentIndex(0)
@@ -2368,8 +2380,6 @@ class Ui_Form(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("Form", "Market"))
         self.pushButton_10.setText(_translate("Form", "Receive"))
         self.label_51.setText(_translate("Form", "My Public Address:"))
-        self.lineEdit_9.setText(_translate("Form", "0xadf52d43868b5596ea95a84af6ec7e3ddf5cc727"))
-        self.lineEdit_8.setText(_translate("Form", "0x0000000000000000000000000000000000000000"))
         self.label_59.setText(_translate("Form", "Public Address"))
         self.label_60.setText(_translate("Form", "Encrypted Private Key"))
         self.label_25.setText(_translate("Form", "Public Address :"))

@@ -1,8 +1,7 @@
 import sys
+import win32ui
 from typing import Type
-from tkinter import *
-import tkinter.filedialog
-
+import win32gui
 import Warning_Form
 import Core_func
 from web3.auto import w3
@@ -194,15 +193,20 @@ class Example(QDialog,QWidget):
         ret = Core_func.Import_mnemonic(self.ui.lineEdit_15.text(), self.ui.lineEdit_16.text(), self.ui.lineEdit_17.text())
 
     def importfile(self):
-        filenames = tkinter.filedialog.askopenfilenames()
+        dlg = win32ui.CreateFileDialog(1)  # 1表示打开文件对话框
+        dlg.SetOFNInitialDir('C:')  # 设置打开文件对话框中的初始显示目录
+        dlg.DoModal()
+        filenames = dlg.GetPathName()
         if len(filenames) != 0:
             string_filename = ""
             for i in range(0, len(filenames)):
-                string_filename += str(filenames[i]) + "\n"
+                string_filename += str(filenames[i])
             self.ui.lineEdit_26.setText(string_filename)
 
     def importKetstore(self):
-        ret = Core_func.Import_Keystore(self.ui.lineEdit_6 .text(), self.ui.lineEdit_26.text())
+        file = open(self.ui.lineEdit_26.text(), 'r')
+        content = file.readline()
+        ret = Core_func.Import_Keystore(self.ui.lineEdit_6 .text(), content)
         if ret[0] ==1:
             self.m_wallet.password = self.ui.lineEdit_6.text()
             self.m_wallet.address = ret[1][0]
@@ -214,6 +218,8 @@ class Example(QDialog,QWidget):
             self.imgpub = qrcode.make(self.m_wallet.address)
             self.imgpub.save("pic\\public.png")
             self.ui.stackedWidget.setCurrentIndex(1)
+        else:
+            print('no')
 
 
     def seepassword(self):

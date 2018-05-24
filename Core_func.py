@@ -87,13 +87,15 @@ def Transaction_out(private_key, toaddr, value, gas, gasprice):
 # test for Generate_Two_Key()
 # print(Generate_Two_Key("12345", "12345"))
 # print(Generate_Two_Key("1234567", "123456"))
-test_account = (Generate_Three_Key("123456", "123456"))
-print(test_account)
-test_keystore = test_account[1][2]
 
-# test for Import_Keystore
-out = (Import_Keystore("123456", test_keystore))
-print(out)
-test_public_key = out[1][0]
-test_private_key = out[1][1]
-print(Transaction_out(test_private_key, test_public_key, 1, 1, 1))
+# test case
+# test_account = (Generate_Three_Key("123456", "123456"))
+# print(test_account)
+# test_keystore = test_account[1][2]
+#
+# # test for Import_Keystore
+# out = (Import_Keystore("123456", test_keystore))
+# print(out)
+# test_public_key = out[1][0]
+# test_private_key = out[1][1]
+# print(Transaction_out(test_private_key, test_public_key, 1, 1, 1))
