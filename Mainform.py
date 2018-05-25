@@ -145,19 +145,7 @@ class accountform(QWidget, Ui_AccountForm):
         btnconfirm.clicked.connect(self.closeform)
 
     def show_w2(self):  # 显示窗体2
-        Rcount = ex.ui.ContactsT.rowCount()
-        print(Rcount)
-        for i in range(Rcount):
-            Rcount1 = self.ui.Account.rowCount()
-            print(i)
-            self.ui.Account.setRowCount(Rcount1 + 1)
-            print(ex.ui.ContactsT.item.text())
-            print(ex.ui.ContactsT.item(i, 0))
 
-            newItemAddr = QTableWidgetItem(ex.ui.ContactsT.item(i, 1))
-            newItemName = QTableWidgetItem(ex.ui.ContactsT.item(i, 0))
-            self.ui.Account.setItem(Rcount, 1, newItemAddr)
-            self.ui.Account.setItem(Rcount, 0, newItemName)
         self.show()
 
 
@@ -187,9 +175,10 @@ class messform(QWidget, Ui_MessForm):
         btnconfirm = self.ui.pushButton_9
         btnconfirm.clicked.connect(self.closeform)
 
-    def show_w2(self):  # 显示窗体2
-        rownum = ex.ui.LogMessage.currentIndex()
-        print(rownum)
+    def show_w2(self,QTableWidgetItem):  # 显示窗体2
+        ind = Core_func.QTableWidget.indexFromItem(ex.ui.LogMessage,QTableWidgetItem)
+        #rownum = ex.ui.LogMessage.selectedItems().index
+        print(ind.data())
         self.show()
 
     def savechange(self):
@@ -240,7 +229,9 @@ class newcontactform(QWidget, Ui_NewContactForm):
         ex.ui.ContactsT.setCellWidget(Rcount, 2, ex.consend)
         ex.ui.ContactsT.setCellWidget(Rcount, 3, ex.conedit)
         ex.ui.ContactsT.setCellWidget(Rcount, 4, ex.condelete)
-
+        #print(ex.ui.ContactsT.currentIndex())
+        #self.accountform.ui.Account.setItem(Rcount, 1, newItemAddr)
+        #self.accountform.ui.Account.setItem(Rcount, 0, newItemName)
 
 
     def mousePressEvent(self, event):
