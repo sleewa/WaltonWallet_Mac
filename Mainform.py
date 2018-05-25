@@ -34,7 +34,147 @@ from ConInfoForm import Ui_ConInfoForm
 from PubAddrForm import Ui_PubAddrForm
 from NewContactForm import Ui_NewContactForm
 from MessForm import  Ui_MessForm
+from PublishForm import Ui_publishForm
+from AccountForm import Ui_AccountForm
+import matplotlib
+matplotlib.use("Qt5Agg")  # 声明使用QT5
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
+from matplotlib.figure import Figure
 
+class Figure_Canvas(FigureCanvas):   # 通过继承FigureCanvas类，使得该类既是一个PyQt5的Qwidget，又是一个matplotlib的FigureCanvas，这是连接pyqt5与matplot                                          lib的关键
+
+    def __init__(self, parent=None, width=5, height=2, dpi=100):
+        fig = Figure(figsize=(width, height), dpi=70)  # 创建一个Figure，注意：该Figure为matplotlib下的figure，不是matplotlib.pyplot下面的figure
+
+        FigureCanvas.__init__(self, fig) # 初始化父类
+        self.setParent(parent)
+
+        self.axes = fig.add_subplot(111) # 调用figure下面的add_subplot方法，类似于matplotlib.pyplot下面的subplot方法
+
+    def test(self):
+        x = [0,1,2,3,4,5,6,7,8,9]
+        y = [7,2,1,4,5,5,4,3,3,1]
+
+        self.axes.plot(x, y,'r-')
+        self.axes.set_axis_off()
+
+    def testM(self):
+        x = [0,1,2,3,4,5,6,7,8,9]
+        y = [2,2,1,4,2,2,4,3,3,1]
+
+        self.axes.plot(x, y,'r-')
+        self.axes.set_axis_off()
+
+    def testB(self):
+        x = [0,1,2,3,4,5,6,7,8,9]
+        y = [2,2,1,3,2,2,4,3,3,1]
+
+        self.axes.plot(x, y,'r-')
+        self.axes.set_axis_off()
+
+    def testR(self):
+        x = [0,1,2,3,4,5,6,7,8,9]
+        y = [2,2,3,4,4,4,4,5,6,6]
+
+        self.axes.plot(x, y,'r-')
+        self.axes.set_axis_off()
+
+class publishform(QWidget, Ui_publishForm):
+    def __init__(self):
+        super().__init__()
+        self.ui = Ui_publishForm()
+        self.ui.setupUi(self)
+        self.setWindowFlags(Qt.CustomizeWindowHint)
+        btnc = self.ui.closeenterpsw
+        btnc.clicked.connect(self.closeform)
+        btnconfirm = self.ui.pushButton_9
+        btnconfirm.clicked.connect(self.closeform)
+
+    def show_w2(self,str):  # 显示窗体2
+        self.ui.textEdit.setText(str)
+        self.show()
+
+
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.dragPosition = event.globalPos() - self.frameGeometry().topLeft()
+            QApplication.postEvent(self, Core_func.QEvent(174))
+            event.accept()
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() == Qt.LeftButton:
+            self.move(event.globalPos() - self.dragPosition)
+            event.accept()
+
+    def closeform(self):
+        self.close()
+
+class accountform(QWidget, Ui_AccountForm):
+    def __init__(self):
+        super().__init__()
+        self.ui = Ui_AccountForm()
+        self.ui.setupUi(self)
+        self.setWindowFlags(Qt.CustomizeWindowHint)
+
+        self.ui.Account.horizontalHeader().setVisible(0)
+        self.ui.Account.verticalHeader().setVisible(0)
+        self.ui.Account.setShowGrid(0)
+        self.ui.Account.horizontalHeader().setStretchLastSection(1)
+        self.ui.Account.verticalHeader().setDefaultSectionSize(45)
+        self.ui.Account.setColumnWidth(0, 200)  # 将设置第1列的单元格成20宽度
+        self.ui.Account.setColumnWidth(1, 310)  # 将设置第2列的单元格成30宽度
+
+        self.ui.Account.setFrameShape(QFrame.NoFrame)  # 表格无边框
+        self.ui.Account.setEditTriggers(QAbstractItemView.NoEditTriggers)  # 不可编辑
+        self.ui.Account.setSelectionMode(QAbstractItemView.NoSelection)  # 单元不可选
+        self.ui.Account.setFocusPolicy(Qt.NoFocus)  # 无选中虚线框
+        self.ui.Account.verticalScrollBar().setStyleSheet(
+            "QScrollBar{background:transparent; width: 10px;}"
+            "QScrollBar::handle{background:lightgray; border:2px solid transparent; border-radius:5px; }"
+            "QScrollBar::handle:hover{background:#9e9e9e; }"
+            "QScrollBar::handle:pressed{background:#9e9e9e;}"
+            "QScrollBar::sub-line{background:transparent;}"
+            "QScrollBar::add-line{background:transparent;}")
+
+
+
+        btnc = self.ui.closeenterpsw
+        btnc.clicked.connect(self.closeform)
+        btnconfirm = self.ui.pushButton_9
+        btnconfirm.clicked.connect(self.closeform)
+
+    def show_w2(self):  # 显示窗体2
+        Rcount = ex.ui.ContactsT.rowCount()
+        print(Rcount)
+        for i in range(Rcount):
+            Rcount1 = self.ui.Account.rowCount()
+            print(i)
+            self.ui.Account.setRowCount(Rcount1 + 1)
+            print(ex.ui.ContactsT.item.text())
+            print(ex.ui.ContactsT.item(i, 0))
+
+            newItemAddr = QTableWidgetItem(ex.ui.ContactsT.item(i, 1))
+            newItemName = QTableWidgetItem(ex.ui.ContactsT.item(i, 0))
+            self.ui.Account.setItem(Rcount, 1, newItemAddr)
+            self.ui.Account.setItem(Rcount, 0, newItemName)
+        self.show()
+
+
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.dragPosition = event.globalPos() - self.frameGeometry().topLeft()
+            QApplication.postEvent(self, Core_func.QEvent(174))
+            event.accept()
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() == Qt.LeftButton:
+            self.move(event.globalPos() - self.dragPosition)
+            event.accept()
+
+    def closeform(self):
+        self.close()
 
 class messform(QWidget, Ui_MessForm):
     def __init__(self):
@@ -90,6 +230,7 @@ class newcontactform(QWidget, Ui_NewContactForm):
         # waiting to add checking same wallet already existed
         ################
         Rcount = ex.ui.ContactsT.rowCount()
+        print(Rcount)
         ex.ui.ContactsT.setRowCount(Rcount + 1)
         newItemAddr = QTableWidgetItem(self.ui.lineEdit_6.text())
         newItemName = QTableWidgetItem(self.ui.lineEdit_7.text())
@@ -244,11 +385,15 @@ class sendform(QWidget, Ui_SendForm):
         super().__init__()
         self.ui = Ui_SendForm()
         self.ui.setupUi(self)
+        self.accountform =accountform()
+        self.publishform = publishform()
         self.setWindowFlags(Qt.CustomizeWindowHint)
         btnc = self.ui.closeenterpsw
         btnc.clicked.connect(self.closeform)
         btnsend = self.ui.pushButton_9
         btnsend.clicked.connect(self.showenterphrase)
+        btncont = self.ui.pushButton_34
+        btncont.clicked.connect(self.accountform.show_w2)
         self.Trans = Transaction
         self.ui.radioButton.toggle()
         self.ui.radioButton.toggled.connect(self.change2Eco)
@@ -288,13 +433,14 @@ class sendform(QWidget, Ui_SendForm):
             self.ui.lineEdit_9.setPlaceholderText('Enter Gas Price')
 
     def show_w2(self):  # 显示窗体2
-        balance = requests.get(
-            "https://waltonchain.net:18950/api/getBalance/" + ex.m_wallet.address).json()
-        a = str(balance)
-        self.ui.label_52.setText(a.split(',')[1][11:] + 'WTCT')
-        self.show()
-
-
+        if len(ex.m_wallet.address) <= 40 :
+            self.publishform.show_w2('Please Choose Wallet')
+        else:
+            balance = requests.get(
+                "https://waltonchain.net:18950/api/getBalance/" + ex.m_wallet.address).json()
+            a = str(balance)
+            self.ui.label_52.setText(a.split(',')[1][11:] + 'WTCT')
+            self.show()
 
     def showenterphrase(self):
         #waiting to add passsword checking
@@ -328,14 +474,14 @@ class sendform(QWidget, Ui_SendForm):
             ex.ui.LogMessage.setItem(Rcount, 0, newItemType)
             ex.ui.LogMessage.setItem(Rcount, 1, newItemTime)
             ex.ui.LogMessage.setItem(Rcount, 2, newItemContent)
-
+            self.publishform.show_w2('transaction successfully')
             self.closeform()
             self.ui.lineEdit_7.clear()
             self.ui.lineEdit_6.clear()
 
 
         else:
-            print('err')
+            self.publishform.show_w2('transaction failed')
 
 
     def mousePressEvent(self, event):
@@ -353,10 +499,8 @@ class sendform(QWidget, Ui_SendForm):
         self.close()
 
 class Example(QDialog,QWidget):
-
     def __init__(self):
         super().__init__()
-
         self.mwOpen = QPushButton(self)  # type: QPushButton
         self.mwOpen.setStyleSheet(''' border:0px; ''')
         self.mwOpen.setIcon(QIcon("pic/open1233.png"))
@@ -505,60 +649,74 @@ class Example(QDialog,QWidget):
 
 
     def generateKey(self):
-        ret = Core_func.Generate_Three_Key(self.ui.lineEdit_4.text(), self.ui.lineEdit_5.text())
-        if ret[0]== 1:
-            self.ui.NewWalletstacked.setCurrentIndex(1)
-            self.ui.stackedWidget.setCurrentIndex(1)
-            self.ui.lineEdit_21.setText('******')
-            self.ui.lineEdit_22.setText(ret[1][0])
-            self.ui.lineEdit_23.setText(ret[1][1])
-            self.ui.lineEdit_25.setText(ret[1][0][0:10])
-            encrypted = ret[1][2]
-            #self.m_wallet = Wallet
-            self.m_wallet.password = self.ui.lineEdit_4.text()
-            self.m_wallet.address = ret[1][0]
-            self.m_wallet.privateKey = ret[1][1]
-            self.m_wallet.accountname = self.ui.lineEdit_25.text()
-            self.addWallet()
-            self.ui.lineEdit_8.setText(ret[1][0])
-            self.ui.lineEdit_9.setText(ret[1][1])
-            DataKeystore = "Data\\Keystore\\"+ret[1][0][2:18]+".keystore"
-            fh = open(DataKeystore, "w")
-            fh.write(str(encrypted))
-            fh.close()
-            self.m_wallet.filename = DataKeystore
-            self.imgpub = qrcode.make(self.m_wallet.address)
-            self.imgpub.save("pic\\public.png")
-            self.ui.label_10.setPixmap(QPixmap("pic\\public.png"))
-            self.ui.label_10.setAutoFillBackground(1)
-            self.imgpri = qrcode.make(ret[1][1])
-            self.imgpri.save("pic\\private.png")
-            #self.ui.label_10.setPixmap(QPixmap("pic\\private.png"))
-            #self.ui.label_10.setAutoFillBackground(1)
+        if len(self.ui.lineEdit_4.text()) < 6:
+            self.publishform.show_w2('Please enter at least 6 characters')
+        elif self.ui.lineEdit_4.text() != self.ui.lineEdit_5.text():
+            self.publishform.show_w2('Passphrases do not match')
+        else:
+            ret = Core_func.Generate_Three_Key(self.ui.lineEdit_4.text(), self.ui.lineEdit_5.text())
+            if ret[0]== 1:
+                self.ui.NewWalletstacked.setCurrentIndex(1)
+                self.ui.stackedWidget.setCurrentIndex(1)
+                self.ui.lineEdit_21.setText('******')
+                self.ui.lineEdit_22.setText(ret[1][0])
+                self.ui.lineEdit_23.setText(ret[1][1])
+                self.ui.lineEdit_25.setText(ret[1][0][0:10])
+                encrypted = ret[1][2]
+                #self.m_wallet = Wallet
+                self.m_wallet.password = self.ui.lineEdit_4.text()
+                self.m_wallet.address = ret[1][0]
+                self.m_wallet.privateKey = ret[1][1]
+                self.m_wallet.accountname = self.ui.lineEdit_25.text()
+                self.addWallet()
+                self.ui.lineEdit_8.setText(ret[1][0])
+                self.ui.lineEdit_9.setText(ret[1][1])
+                DataKeystore = "Data\\Keystore\\"+ret[1][0][2:18]+".keystore"
+                fh = open(DataKeystore, "w")
+                fh.write(str(encrypted))
+                fh.close()
+                self.m_wallet.filename = DataKeystore
+                self.imgpub = qrcode.make(self.m_wallet.address)
+                self.imgpub.save("pic\\public.png")
+                self.ui.label_10.setPixmap(QPixmap("pic\\public.png"))
+                self.ui.label_10.setAutoFillBackground(1)
+                self.imgpri = qrcode.make(ret[1][1])
+                self.imgpri.save("pic\\private.png")
+                #self.ui.label_10.setPixmap(QPixmap("pic\\private.png"))
+                #self.ui.label_10.setAutoFillBackground(1)
+            else:
+                self.publishform.show_w2('error')
 
     def importsecret(self):
         if  self.ui.lineEdit_18.text() ==  self.ui.lineEdit_19.text():
             enterpri = self.ui.lineEdit_20.text()
             enterpri.strip()
-            ret = Core_func.Import_From_Private(enterpri.strip(),self.ui.lineEdit_19.text())
-            if ret[0] == 1:
-                self.m_wallet.password = self.ui.lineEdit_18.text()
-                self.m_wallet.address = ret[1]
-                self.m_wallet.privateKey = self.ui.lineEdit_20.text()
-                self.m_wallet.accountname = ret[1][0:10]
-                encrypted = ret[2]
-                DataKeystore = "Data\\Keystore\\" + ret[1][2:18] + ".keystore"
-                fh = open(DataKeystore, "w")
-                fh.write(str(encrypted))
-                fh.close()
-                self.m_wallet.filename = DataKeystore
-                self.addWallet()
-                self.ui.lineEdit_8.setText(ret[1])
-                self.ui.lineEdit_9.setText(self.ui.lineEdit_20.text())
-                self.imgpub = qrcode.make(self.m_wallet.address)
-                self.imgpub.save("pic\\public.png")
-                self.ui.stackedWidget.setCurrentIndex(1)
-                self.ui.NewWalletstacked.setCurrentIndex(0)
+            if len(enterpri.strip())== 64:
+                ret = Core_func.Import_From_Private(enterpri.strip(),self.ui.lineEdit_19.text())
+                if ret[0] == 1:
+                    self.m_wallet.password = self.ui.lineEdit_18.text()
+                    self.m_wallet.address = ret[1]
+                    self.m_wallet.privateKey = self.ui.lineEdit_20.text()
+                    self.m_wallet.accountname = ret[1][0:10]
+                    encrypted = ret[2]
+                    DataKeystore = "Data\\Keystore\\" + ret[1][2:18] + ".keystore"
+                    fh = open(DataKeystore, "w")
+                    fh.write(str(encrypted))
+                    fh.close()
+                    self.m_wallet.filename = DataKeystore
+                    self.addWallet()
+                    self.ui.lineEdit_8.setText(ret[1])
+                    self.ui.lineEdit_9.setText(self.ui.lineEdit_20.text())
+                    self.imgpub = qrcode.make(self.m_wallet.address)
+                    self.imgpub.save("pic\\public.png")
+                    self.ui.stackedWidget.setCurrentIndex(1)
+                    self.ui.NewWalletstacked.setCurrentIndex(0)
+                else:
+                    self.publishform.show_w2('Please enter right password')
+            else:
+                self.publishform.show_w2('Private Key is illegal')
+        else:
+            self.publishform.show_w2('Passphrases do not match')
 
     def importmnemonic(self):
         ret = Core_func.Import_mnemonic(self.ui.lineEdit_15.text(), self.ui.lineEdit_16.text(), self.ui.lineEdit_17.text())
@@ -573,35 +731,42 @@ class Example(QDialog,QWidget):
             for i in range(0, len(filenames)):
                 string_filename += str(filenames[i])
             self.ui.lineEdit_26.setText(string_filename)
+        else:
+            self.publishform.show_w2('Please choose a right Keystore')
 
     def importKetstore(self):
         file = open(self.ui.lineEdit_26.text(), 'r')
         content = file.readline()
-        enterpri = self.ui.lineEdit_20.text()
-        enterpri.strip()
-        ret = Core_func.Import_Keystore(self.ui.lineEdit_6.text(), content)
-        if ret[0] ==1:
-            self.m_wallet.password = self.ui.lineEdit_6.text()
-            self.m_wallet.address = ret[1][0]
-            self.m_wallet.privateKey = ret[1][1]
-            self.m_wallet.accountname = ret[1][0][0:10]
-            encrypted = ret[2]
-            DataKeystore = "Data\\Keystore\\" + ret[1][0][2:18] + ".keystore"
-            fh = open(DataKeystore, "w")
-            fh.write(str(encrypted))
-            fh.close()
-            self.m_wallet.filename = DataKeystore
-            self.addWallet()
-            self.ui.lineEdit_8.setText(ret[1][0])
-            self.ui.lineEdit_9.setText(ret[1][1])
-            self.imgpub = qrcode.make(self.m_wallet.address)
-            self.imgpub.save("pic\\public.png")
-            self.ui.stackedWidget.setCurrentIndex(1)
-            self.ui.NewWalletstacked.setCurrentIndex(0)
+        if content[-5:] == 'store':
+            enterpri = self.ui.lineEdit_20.text()
+            enterpri.strip()
+            if len(enterpri.strip()) < 6:
+                ret = Core_func.Import_Keystore(self.ui.lineEdit_6.text(), content)
+                if ret[0] ==1:
+                    self.m_wallet.password = self.ui.lineEdit_6.text()
+                    self.m_wallet.address = ret[1][0]
+                    self.m_wallet.privateKey = ret[1][1]
+                    self.m_wallet.accountname = ret[1][0][0:10]
+                    encrypted = ret[2]
+                    DataKeystore = "Data\\Keystore\\" + ret[1][0][2:18] + ".keystore"
+                    fh = open(DataKeystore, "w")
+                    fh.write(str(encrypted))
+                    fh.close()
+                    self.m_wallet.filename = DataKeystore
+                    self.addWallet()
+                    self.ui.lineEdit_8.setText(ret[1][0])
+                    self.ui.lineEdit_9.setText(ret[1][1])
+                    self.imgpub = qrcode.make(self.m_wallet.address)
+                    self.imgpub.save("pic\\public.png")
+                    self.ui.stackedWidget.setCurrentIndex(1)
+                    self.ui.NewWalletstacked.setCurrentIndex(0)
 
+                else:
+                    self.publishform.show_w2('Please enter right password')
+            else:
+                self.publishform.show_w2('Please enter at least 6 characters')
         else:
-            print('no')
-
+            self.publishform.show_w2('Please choose a right Keystore')
 
     def seepassword(self):
         if self.passwordeye == 1:
@@ -673,6 +838,18 @@ class Example(QDialog,QWidget):
 
     def savename(self):
         self.m_wallet.accountname = self.ui.lineEdit_25.text()
+        Rcount = self.ui.multWallet.rowCount()
+        self.ui.multWallet.setRowCount(Rcount )
+        newItemAddr = QTableWidgetItem(self.m_wallet.address)
+        newItemName = QTableWidgetItem(self.m_wallet.accountname)
+        self.ui.multWallet.setItem(Rcount-1, 1, newItemAddr)
+        self.ui.multWallet.setItem(Rcount-1, 0, newItemName)
+        self.ui.multWallet.setCellWidget(Rcount-1, 2, self.mwOpen)
+        self.ui.multWallet.setCellWidget(Rcount-1, 3, self.mwEdit)
+        self.ui.multWallet.setCellWidget(Rcount-1, 4, self.mwDelete)
+        self.ui.multWallet.setCellWidget(Rcount-1, 5, self.mwSaveKey)
+
+        self.publishform.show_w2('Saved successfully')
 
     def copyPublicKey(self):
         self.clipboard_public_key = QApplication.clipboard()
@@ -889,10 +1066,69 @@ class Example(QDialog,QWidget):
     def refresh(self):
         print('time out')
 
+    def refreshTop(self):
+        if self.syncstatus == 0:
+            self.ui.toolButton_25.setText(' Syncing')
+            self.ui.toolButton_25.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
+            self.ui.toolButton_25.setIcon(QIcon("pic/grayqukuai.png"))
+        else:
+            self.ui.toolButton_25.setText(' Completed')
+            self.ui.toolButton_25.setStyleSheet('color: #aa00ff;border:0px;')
+            self.ui.toolButton_25.setIcon(QIcon("pic/purperqukuai.png"))
+        if self.miningtatus == 0:
+            self.ui.toolButton_26.setText(' Mining')
+            self.ui.toolButton_26.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
+            self.ui.toolButton_26.setIcon(QIcon("pic/graymining.png"))
+        else:
+            self.ui.toolButton_26.setText(' Mining')
+            self.ui.toolButton_26.setStyleSheet('color: #aa00ff;border:0px;')
+            self.ui.toolButton_26.setIcon(QIcon("pic/mining1.png"))
+        if self.peers == 0:
+            self.ui.toolButton_24.setText(' Peers Connected:0')
+            self.ui.toolButton_24.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
+            self.ui.toolButton_24.setIcon(QIcon("pic/tubiaoer.png"))
+        else:
+            self.ui.toolButton_24.setText(' Peers Connected:'+'')
+            self.ui.toolButton_24.setStyleSheet('color: #aa00ff;border:0px;')
+            self.ui.toolButton_24.setIcon(QIcon("pic/tubiao1.png"))
+
+    def initchart(self):
+        ###########
+        dr = Figure_Canvas()
+        dr.test()  # 画图
+        graphicscene = QtWidgets.QGraphicsScene()  # 第三步，创建一个QGraphicsScene，因为加载的图形（FigureCanvas）不能直接放到graphicview控件中，必须先放到graphicScene，然后再把graphicscene放到graphicview中
+        graphicscene.addWidget(dr)  # 第四步，把图形放到QGraphicsScene中，注意：图形是作为一个QWidget放到QGraphicsScene中的
+        self.ui.graphicsView.setScene(graphicscene)  # 第五步，把QGraphicsScene放入QGraphicsView
+        self.ui.graphicsView.show()  # 最后，调用show方法呈现图形！Voila!!
+        ###########
+        drMarket = Figure_Canvas()
+        drMarket.testM()  # 画图
+        graphicsceneM = QtWidgets.QGraphicsScene()  # 第三步，创建一个QGraphicsScene，因为加载的图形（FigureCanvas）不能直接放到graphicview控件中，必须先放到graphicScene，然后再把graphicscene放到graphicview中
+        graphicsceneM.addWidget(drMarket)  # 第四步，把图形放到QGraphicsScene中，注意：图形是作为一个QWidget放到QGraphicsScene中的
+        self.ui.graphicsView_2.setScene(graphicsceneM)  # 第五步，把QGraphicsScene放入QGraphicsView
+        self.ui.graphicsView_2.show()  # 最后，调用show方法呈现图形！Voila!!
+        ###########
+        drB = Figure_Canvas()
+        drB.testB()  # 画图
+        graphicsceneB = QtWidgets.QGraphicsScene()  # 第三步，创建一个QGraphicsScene，因为加载的图形（FigureCanvas）不能直接放到graphicview控件中，必须先放到graphicScene，然后再把graphicscene放到graphicview中
+        graphicsceneB.addWidget(drB)  # 第四步，把图形放到QGraphicsScene中，注意：图形是作为一个QWidget放到QGraphicsScene中的
+        self.ui.graphicsView_5.setScene(graphicsceneB)  # 第五步，把QGraphicsScene放入QGraphicsView
+        self.ui.graphicsView_5.show()  # 最后，调用show方法呈现图形！Voila!!
+        ###########
+        drR = Figure_Canvas()
+        drR.testR()  # 画图
+        graphicsceneR = QtWidgets.QGraphicsScene()  # 第三步，创建一个QGraphicsScene，因为加载的图形（FigureCanvas）不能直接放到graphicview控件中，必须先放到graphicScene，然后再把graphicscene放到graphicview中
+        graphicsceneR.addWidget(drR)  # 第四步，把图形放到QGraphicsScene中，注意：图形是作为一个QWidget放到QGraphicsScene中的
+        self.ui.graphicsView_6.setScene(graphicsceneR)  # 第五步，把QGraphicsScene放入QGraphicsView
+        self.ui.graphicsView_6.show()  # 最后，调用show方法呈现图形！Voila!!
+        ###########
+
     def initUI(self):
         '显示窗口'
         self.ui = Ui_Form()
         self.ui.setupUi(self)
+        self.publishform = publishform()
+        self.initchart()
 
         self.timer = QTimer(self)  # 初始化一个定时器
         self.timer.timeout.connect(self.operate)  # 计时结束调用operate()方法
@@ -902,6 +1138,13 @@ class Example(QDialog,QWidget):
         btnminHisrefresh.clicked.connect(self.refresh)
         btntraHisrefresh = self.ui.pushButton_46
         btntraHisrefresh.clicked.connect(self.refresh)
+
+        self.timertop = QTimer(self)  # 初始化一个定时器  topstatus
+        self.timertop.timeout.connect(self.refreshTop)  # 计时结束调用operate()方法
+        self.timertop.start(2000)  # 设置计时间隔并启动
+        self.miningtatus = 0
+        self.syncstatus = 0
+        self.peers = 0
 
         self.m_wallet = Wallet
         #Page of Create Wallet
@@ -1036,6 +1279,7 @@ class Example(QDialog,QWidget):
         btn2create1 = self.ui.pushButton_33
         btn2create1.clicked.connect(self.pressbtn0)
 
+
         # Message page
         btnMark = self.ui.pushButton_37
         btnMark.clicked.connect(self.purple2black)
@@ -1112,7 +1356,7 @@ class Example(QDialog,QWidget):
         self.ui.ContactsT.setColumnWidth(2, 100)  # 将设置第3列的单元格成50宽度
         self.ui.ContactsT.setColumnWidth(3, 100)  # 将设置第2列的单元格成30宽度
         self.ui.ContactsT.setColumnWidth(4, 100)
-        self.ui.ContactsT.setFrameShape(QFrame.Box)  # 表格无边框
+        self.ui.ContactsT.setFrameShape(QFrame.NoFrame)  # 表格无边框
         self.ui.ContactsT.setEditTriggers(QAbstractItemView.NoEditTriggers)  # 不可编辑
         self.ui.ContactsT.setSelectionMode(QAbstractItemView.NoSelection)  # 单元不可选
         self.ui.ContactsT.setFocusPolicy(Qt.NoFocus)  # 无选中虚线框
@@ -1133,7 +1377,7 @@ class Example(QDialog,QWidget):
         self.ui.TransactionHistory.setColumnWidth(1, 300)  # 将设置第2列的单元格成30宽度
         self.ui.TransactionHistory.setColumnWidth(2, 105)  # 将设置第3列的单元格成50宽度
         self.ui.TransactionHistory.setColumnWidth(3, 105)  # 将设置第2列的单元格成30宽度
-        self.ui.TransactionHistory.setFrameShape(QFrame.Box)  # 表格无边框
+        self.ui.TransactionHistory.setFrameShape(QFrame.NoFrame)  # 表格无边框
         self.ui.TransactionHistory.setEditTriggers(QAbstractItemView.NoEditTriggers)  # 不可编辑
         self.ui.TransactionHistory.setSelectionMode(QAbstractItemView.NoSelection)  # 单元不可选
         self.ui.TransactionHistory.setFocusPolicy(Qt.NoFocus)  # 无选中虚线框
@@ -1151,7 +1395,7 @@ class Example(QDialog,QWidget):
         self.ui.miningHistory.horizontalHeader().setStretchLastSection(1)
         self.ui.miningHistory.horizontalHeader().setDefaultSectionSize(200)
         self.ui.miningHistory.verticalHeader().setDefaultSectionSize(40)
-        self.ui.miningHistory.setFrameShape(QFrame.Box)  # 表格无边框
+        self.ui.miningHistory.setFrameShape(QFrame.NoFrame)  # 表格无边框
         self.ui.miningHistory.setEditTriggers(QAbstractItemView.NoEditTriggers)  # 不可编辑
         self.ui.miningHistory.setSelectionMode(QAbstractItemView.NoSelection)  # 单元不可选
         self.ui.miningHistory.setFocusPolicy(Qt.NoFocus)  # 无选中虚线框
@@ -1217,10 +1461,14 @@ class Transaction:
     Time = ''
 
 
+#class Communicate(Core_func.QObject):
+#    closeApp = Core_func.pyqtSignal()
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = Example()
     sendform = sendform()
+    #publishform = publishform()
     recieveform = recieveform()
     mulwalform =mulwalform()
     pubaddrForm = pubaddrForm()
