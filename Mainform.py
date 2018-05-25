@@ -19,7 +19,7 @@ import requests
 import datetime
 from eth_account import Account
 from PyQt5 import QtWidgets
-from PyQt5.QtCore import Qt, QSize
+from PyQt5.QtCore import Qt, QSize, QTimer
 from PyQt5.QtWidgets import (QWidget, QToolTip, QDesktopWidget, QMessageBox, QTextEdit, QLabel,
                              QPushButton, QApplication, QMainWindow, QAction, qApp, QHBoxLayout, QVBoxLayout,
                              QGridLayout,QDialog,QFileDialog,QTableWidgetItem,
@@ -33,6 +33,41 @@ from MulWalForm import Ui_MulWalForm
 from ConInfoForm import Ui_ConInfoForm
 from PubAddrForm import Ui_PubAddrForm
 from NewContactForm import Ui_NewContactForm
+from MessForm import  Ui_MessForm
+
+
+class messform(QWidget, Ui_MessForm):
+    def __init__(self):
+        super().__init__()
+        self.ui = Ui_MessForm()
+        self.ui.setupUi(self)
+        self.setWindowFlags(Qt.CustomizeWindowHint)
+        btnc = self.ui.closeenterpsw
+        btnc.clicked.connect(self.closeform)
+        btnconfirm = self.ui.pushButton_9
+        btnconfirm.clicked.connect(self.closeform)
+
+    def show_w2(self):  # 显示窗体2
+        rownum = ex.ui.LogMessage.currentIndex()
+        print(rownum)
+        self.show()
+
+    def savechange(self):
+        ex.m_wallet.accountname = self.ui.lineEdit_7.text()
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.dragPosition = event.globalPos() - self.frameGeometry().topLeft()
+            QApplication.postEvent(self, Core_func.QEvent(174))
+            event.accept()
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() == Qt.LeftButton:
+            self.move(event.globalPos() - self.dragPosition)
+            event.accept()
+
+    def closeform(self):
+        self.close()
 
 class newcontactform(QWidget, Ui_NewContactForm):
     def __init__(self):
@@ -134,8 +169,7 @@ class mulwalform(QWidget, Ui_MulWalForm):
         btnc.clicked.connect(self.closeform)
         btnsave = self.ui.pushButton_9
         btnsave.clicked.connect(self.savechange)
-        #self.ui.lineEdit_6.changeEvent.connect(self.showqrcode)
-        #self.ui.lineEdit_6.keyPressEvent(self,self.showqrcode)
+
 
     def show_w2(self):  # 显示窗体2
         self.show()
@@ -264,19 +298,45 @@ class sendform(QWidget, Ui_SendForm):
 
     def showenterphrase(self):
         #waiting to add passsword checking
-        self.Trans.value = '-'+self.ui.lineEdit_6.text()+'WTCT'
-        ret = Core_func.Transaction_out(ex.m_wallet.privateKey, self.ui.lineEdit_7.text(), self.ui.lineEdit_6.text(), self.ui.lineEdit_8.text(), self.ui.lineEdit_9.text())
-        self.Trans.rawTransaction = ret[1]
-        Rcount = ex.ui.TransactionHistory.rowCount()
-        ex.ui.TransactionHistory.setRowCount(Rcount + 1)
-        newItemTime = QTableWidgetItem(time.strftime('%Y/%m/%d',time.localtime(time.time())))
-        newItemAddr = QTableWidgetItem(ex.m_wallet.address)
-        newItemStatus = QTableWidgetItem(self.Trans.status)
-        newItemValue = QTableWidgetItem(self.Trans.value)
-        ex.ui.TransactionHistory.setItem(Rcount, 0, newItemTime)
-        ex.ui.TransactionHistory.setItem(Rcount, 1, newItemAddr)
-        ex.ui.TransactionHistory.setItem(Rcount, 2, newItemStatus)
-        ex.ui.TransactionHistory.setItem(Rcount, 3, newItemValue)
+        self.Trans.value = self.ui.lineEdit_6.text().strip()
+        self.Trans.Type = 'Send'
+        self.Trans.Gas = self.ui.lineEdit_8.text().strip()
+        self.Trans.Gasprice = self.ui.lineEdit_9.text().strip()
+        #need to get blocknumber and time
+        ret = Core_func.Transaction_out(ex.m_wallet.privateKey, self.ui.lineEdit_7.text().strip(), self.ui.lineEdit_6.text().strip(), self.ui.lineEdit_8.text().strip(), self.ui.lineEdit_9.text().strip())
+        if ret[0] == 1:
+            self.Trans.rawTransaction = ret[1]
+            self.Trans.toaddr = self.ui.lineEdit_7.text().strip()
+            self.Trans.fromaddr = ex.m_wallet.address
+            Rcount = ex.ui.TransactionHistory.rowCount()
+            ex.ui.TransactionHistory.setRowCount(Rcount + 1)
+            newItemTime = QTableWidgetItem(time.strftime('%Y/%m/%d',time.localtime(time.time())))
+            newItemAddr = QTableWidgetItem(ex.m_wallet.address)
+            newItemStatus = QTableWidgetItem(self.Trans.status)
+            newItemValue = QTableWidgetItem('-'+self.Trans.value+'WTCT')
+            ex.ui.TransactionHistory.setItem(Rcount, 0, newItemTime)
+            ex.ui.TransactionHistory.setItem(Rcount, 1, newItemAddr)
+            ex.ui.TransactionHistory.setItem(Rcount, 2, newItemStatus)
+            ex.ui.TransactionHistory.setItem(Rcount, 3, newItemValue)
+
+            Rcount = ex.ui.LogMessage.rowCount()
+            ex.ui.LogMessage.setRowCount(Rcount + 1)
+            #time needs to be confirmed
+            newItemTime = QTableWidgetItem(time.strftime('%Y/%m/%d',time.localtime(time.time())))
+            newItemContent = QTableWidgetItem('From:'+self.Trans.fromaddr +'\n'+ 'To:'+self.Trans.toaddr +'\n'+ 'Value:'+self.Trans.value)
+            newItemType = QTableWidgetItem(self.Trans.Type)
+            ex.ui.LogMessage.setItem(Rcount, 0, newItemType)
+            ex.ui.LogMessage.setItem(Rcount, 1, newItemTime)
+            ex.ui.LogMessage.setItem(Rcount, 2, newItemContent)
+
+            self.closeform()
+            self.ui.lineEdit_7.clear()
+            self.ui.lineEdit_6.clear()
+
+
+        else:
+            print('err')
+
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -735,12 +795,114 @@ class Example(QDialog,QWidget):
             self.ui.lineEdit_16.setEchoMode(QLineEdit.Password)
             self.ui.turn2visible2_4.setIcon(QIcon("pic/02.png"))
             self.phrm2eye = 1
+    def purple2black(self):
+        self.ui.LogMessage.setStyleSheet("color:#000000")
+        self.ui.LogMessage.setSelectionBehavior(Core_func.QTableWidget.SelectRows)
+        self.ui.LogMessage.horizontalHeader().setVisible(0)
+        self.ui.LogMessage.verticalHeader().setVisible(0)
+        self.ui.LogMessage.setShowGrid(0)
+        self.ui.LogMessage.horizontalHeader().setStretchLastSection(1)
+        self.ui.LogMessage.verticalHeader().setDefaultSectionSize(57)
+        self.ui.LogMessage.setColumnWidth(0, 150)  # 将设置第1列的单元格成20宽度
+        self.ui.LogMessage.setColumnWidth(1, 150)  # 将设置第2列的单元格成30宽度
+        self.ui.LogMessage.setColumnWidth(2, 100)  # 将设置第3列的单元格成50宽度
+        self.ui.LogMessage.setFrameShape(QFrame.NoFrame)  # 表格无边框
+        self.ui.LogMessage.setEditTriggers(QAbstractItemView.NoEditTriggers)  # 不可编辑
+        self.ui.LogMessage.setFocusPolicy(Qt.NoFocus)  # 无选中虚线框
+        self.ui.LogMessage.verticalScrollBar().setStyleSheet(
+            "QScrollBar{background:transparent; width: 10px;}"
+            "QScrollBar::handle{background:lightgray; border:2px solid transparent; border-radius:5px; }"
+            "QScrollBar::handle:hover{background:#9e9e9e; }"
+            "QScrollBar::handle:pressed{background:#9e9e9e;}"
+            "QScrollBar::sub-line{background:transparent;}"
+            "QScrollBar::add-line{background:transparent;}")
+    def startmining(self):
+        if self.startstop == 1:
+            self.startstop = 0
+            self.ui.pushButton_30.setStyleSheet("border-width: 1px;"
+                                                "border-color: rgb(170, 0, 255);"
+                                                "background-color: rgb(170, 0, 255);"
+                                                "color: rgb(255, 255, 255);"
+                                                "border-radius:20px;"
+                                                "border-style:solid; ")
+            self.ui.pushButton_30.setText('Stop Mining')
 
+
+            self.ui.radioButton.setEnabled(0)
+            self.ui.radioButton_2.setEnabled(0)
+            self.ui.radioButton_3.setEnabled(0)
+            self.ui.radioButton_4.setEnabled(0)
+            self.ui.radioButton_5.setEnabled(0)
+            self.ui.radioButton_6.setEnabled(0)
+            self.ui.horizontalSlider.setEnabled(0)
+            if self.cpumode == 1:
+                print('cpu')
+            else:
+                print('gpu')
+        else:
+            self.startstop = 1
+            self.ui.pushButton_30.setStyleSheet("border-width: 1px;"
+                                                "border-color: rgb(170, 0, 255);"
+                                                "background-color: rgb(255, 255, 255);"
+                                                "color: rgb(170, 0, 255);"
+                                                "border-radius:20px;"
+                                                "border-style:solid; ")
+            self.ui.pushButton_30.setText('Start Mining')
+            self.ui.radioButton.setEnabled(1)
+            self.ui.radioButton_2.setEnabled(1)
+            self.ui.radioButton_3.setEnabled(1)
+            self.ui.radioButton_4.setEnabled(1)
+            self.ui.radioButton_5.setEnabled(1)
+            self.ui.radioButton_6.setEnabled(1)
+            self.ui.horizontalSlider.setEnabled(1)
+    def changecpu(self):
+        self.ui.radioButton_3.setEnabled(1)
+        self.ui.radioButton_4.setEnabled(1)
+        self.ui.radioButton_5.setEnabled(1)
+        self.ui.radioButton_6.setEnabled(1)
+        self.ui.horizontalSlider.setEnabled(1)
+        self.cpumode = 1
+
+    def changegpu(self):
+        self.ui.radioButton_3.setEnabled(0)
+        self.ui.radioButton_4.setEnabled(0)
+        self.ui.radioButton_5.setEnabled(0)
+        self.ui.radioButton_6.setEnabled(0)
+        self.ui.horizontalSlider.setEnabled(0)
+        self.cpumode = 0
+
+    def changereg(self):
+        self.cpures = ''
+
+    def changefast(self):
+        self.cpures = ''
+
+    def changesfast(self):
+        self.cpures = ''
+
+    def changeefast(self):
+        self.cpures = ''
+
+    def operate(self):
+        self.refresh()
+
+    def refresh(self):
+        print('time out')
 
     def initUI(self):
         '显示窗口'
         self.ui = Ui_Form()
         self.ui.setupUi(self)
+
+        self.timer = QTimer(self)  # 初始化一个定时器
+        self.timer.timeout.connect(self.operate)  # 计时结束调用operate()方法
+        self.timer.start(20000)  # 设置计时间隔并启动
+
+        btnminHisrefresh = self.ui.pushButton_45
+        btnminHisrefresh.clicked.connect(self.refresh)
+        btntraHisrefresh = self.ui.pushButton_46
+        btntraHisrefresh.clicked.connect(self.refresh)
+
         self.m_wallet = Wallet
         #Page of Create Wallet
         stackedW = self.ui.stackedWidget
@@ -874,21 +1036,63 @@ class Example(QDialog,QWidget):
         btn2create1 = self.ui.pushButton_33
         btn2create1.clicked.connect(self.pressbtn0)
 
-        # Contact page
+        # Message page
+        btnMark = self.ui.pushButton_37
+        btnMark.clicked.connect(self.purple2black)
 
+        #mining page
+        btnrebm = self.ui.pushButton_12
+        btnrebm.clicked.connect(self.toreddit)
+        btntwim = self.ui.pushButton_13
+        btntwim.clicked.connect(self.totwitter)
+        btntmem = self.ui.pushButton_14
+        btntmem.clicked.connect(self.totme)
+        btnstam = self.ui.pushButton_11
+        btnstam.clicked.connect(self.tostack)
+
+        btnmining = self.ui.pushButton_30
+        self.startstop = 1
+        btnmining.clicked.connect(self.startmining)
+
+        self.cpumode = 1
+
+
+        self.ui.radioButton.toggle()
+        self.ui.radioButton.toggled.connect(self.changecpu)
+        self.ui.radioButton_2.toggle()
+        self.ui.radioButton_2.toggled.connect(self.changegpu)
+        self.ui.radioButton_3.toggle()
+        self.ui.radioButton_3.toggled.connect(self.changereg)
+        self.ui.radioButton_4.toggle()
+        self.ui.radioButton_4.toggled.connect(self.changefast)
+        self.ui.radioButton_5.toggle()
+        self.ui.radioButton_5.toggled.connect(self.changesfast)
+        self.ui.radioButton_6.toggle()
+        self.ui.radioButton_6.toggled.connect(self.changeefast)
+
+
+        #statistics page
+        btnrebs = self.ui.pushButton_17
+        btnrebs.clicked.connect(self.toreddit)
+        btntwis = self.ui.pushButton_16
+        btntwis.clicked.connect(self.totwitter)
+        btntmes = self.ui.pushButton_18
+        btntmes.clicked.connect(self.totme)
+        btnstas = self.ui.pushButton_15
+        btnstas.clicked.connect(self.tostack)
+
+        self.ui.LogMessage.setStyleSheet("color:#aa00ff")
+        self.ui.LogMessage.setSelectionBehavior(Core_func.QTableWidget.SelectRows)
         self.ui.LogMessage.horizontalHeader().setVisible(0)
         self.ui.LogMessage.verticalHeader().setVisible(0)
         self.ui.LogMessage.setShowGrid(0)
         self.ui.LogMessage.horizontalHeader().setStretchLastSection(1)
         self.ui.LogMessage.verticalHeader().setDefaultSectionSize(57)
-        self.ui.LogMessage.setColumnWidth(0, 200)  # 将设置第1列的单元格成20宽度
-        self.ui.LogMessage.setColumnWidth(1, 310)  # 将设置第2列的单元格成30宽度
+        self.ui.LogMessage.setColumnWidth(0, 150)  # 将设置第1列的单元格成20宽度
+        self.ui.LogMessage.setColumnWidth(1, 150)  # 将设置第2列的单元格成30宽度
         self.ui.LogMessage.setColumnWidth(2, 100)  # 将设置第3列的单元格成50宽度
-        self.ui.LogMessage.setColumnWidth(3, 100)  # 将设置第2列的单元格成30宽度
-        self.ui.LogMessage.setColumnWidth(4, 100)
-        self.ui.LogMessage.setFrameShape(QFrame.Box)  # 表格无边框
+        self.ui.LogMessage.setFrameShape(QFrame.NoFrame)  # 表格无边框
         self.ui.LogMessage.setEditTriggers(QAbstractItemView.NoEditTriggers)  # 不可编辑
-        self.ui.LogMessage.setSelectionMode(QAbstractItemView.NoSelection)  # 单元不可选
         self.ui.LogMessage.setFocusPolicy(Qt.NoFocus)  # 无选中虚线框
         self.ui.LogMessage.verticalScrollBar().setStyleSheet(
             "QScrollBar{background:transparent; width: 10px;}"
@@ -1004,6 +1208,13 @@ class Transaction:
     rawTransaction = ''
     status = ''
     value = ''
+    fromaddr = ''
+    toaddr = ''
+    Type = ''
+    Gas = ''
+    Gasprice = ''
+    Blocknumber = ''
+    Time = ''
 
 
 if __name__ == '__main__':
@@ -1014,6 +1225,7 @@ if __name__ == '__main__':
     mulwalform =mulwalform()
     pubaddrForm = pubaddrForm()
     newcontactform = newcontactform()
+    messform =messform()
     #s = Warning_Form.SecondWindow()
     #ex.ui.cw.clicked.connect(s.handle_click)
     ex.show()
@@ -1021,6 +1233,6 @@ if __name__ == '__main__':
     ex.ui.pushButton_10.clicked.connect(recieveform.show_w2)
     ex.ui.pushButton_36.clicked.connect(pubaddrForm.show_w2)
     ex.ui.pushButton_38.clicked.connect(newcontactform.show_w2)
-
+    ex.ui.LogMessage.itemClicked.connect(messform.show_w2)
     ex.mwEdit.clicked.connect(mulwalform.show_w2)
     sys.exit(app.exec_())

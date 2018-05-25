@@ -375,7 +375,7 @@ color: rgb(93, 93, 93);</string>
     <enum>QFrame::NoFrame</enum>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>5</number>
    </property>
    <widget class="QWidget" name="p0">
     <widget class="QLabel" name="label_3">
@@ -3833,7 +3833,8 @@ border-style:solid;
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">border:0px;</string>
+      <string notr="true">border:0px;
+color: rgb(170, 0, 255);</string>
      </property>
      <column>
       <property name="text">
@@ -3921,9 +3922,9 @@ border-style:solid;
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>341</y>
+       <y>344</y>
        <width>811</width>
-       <height>16</height>
+       <height>10</height>
       </rect>
      </property>
      <property name="orientation">
@@ -3934,9 +3935,9 @@ border-style:solid;
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>170</y>
+       <y>173</y>
        <width>811</width>
-       <height>16</height>
+       <height>10</height>
       </rect>
      </property>
      <property name="orientation">
@@ -3947,9 +3948,9 @@ border-style:solid;
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>284</y>
+       <y>287</y>
        <width>811</width>
-       <height>16</height>
+       <height>10</height>
       </rect>
      </property>
      <property name="orientation">
@@ -3960,9 +3961,9 @@ border-style:solid;
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>455</y>
+       <y>458</y>
        <width>811</width>
-       <height>16</height>
+       <height>10</height>
       </rect>
      </property>
      <property name="orientation">
@@ -3973,9 +3974,9 @@ border-style:solid;
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>227</y>
+       <y>230</y>
        <width>811</width>
-       <height>16</height>
+       <height>10</height>
       </rect>
      </property>
      <property name="orientation">
@@ -3986,9 +3987,9 @@ border-style:solid;
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>398</y>
+       <y>401</y>
        <width>811</width>
-       <height>16</height>
+       <height>10</height>
       </rect>
      </property>
      <property name="orientation">
@@ -3999,9 +4000,9 @@ border-style:solid;
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>512</y>
+       <y>515</y>
        <width>811</width>
-       <height>16</height>
+       <height>10</height>
       </rect>
      </property>
      <property name="orientation">
@@ -4714,120 +4715,6 @@ color: rgb(100, 100, 100);</string>
       <string>CPU Resource Allocation:</string>
      </property>
     </widget>
-    <widget class="QRadioButton" name="radioButton">
-     <property name="geometry">
-      <rect>
-       <x>510</x>
-       <y>80</y>
-       <width>71</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>微软雅黑</family>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>CPU</string>
-     </property>
-    </widget>
-    <widget class="QRadioButton" name="radioButton_2">
-     <property name="geometry">
-      <rect>
-       <x>590</x>
-       <y>80</y>
-       <width>61</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>微软雅黑</family>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>GPU</string>
-     </property>
-    </widget>
-    <widget class="QRadioButton" name="radioButton_3">
-     <property name="geometry">
-      <rect>
-       <x>690</x>
-       <y>110</y>
-       <width>61</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>微软雅黑</family>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Fast</string>
-     </property>
-    </widget>
-    <widget class="QRadioButton" name="radioButton_4">
-     <property name="geometry">
-      <rect>
-       <x>570</x>
-       <y>110</y>
-       <width>81</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>微软雅黑</family>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Reguglar</string>
-     </property>
-    </widget>
-    <widget class="QRadioButton" name="radioButton_5">
-     <property name="geometry">
-      <rect>
-       <x>690</x>
-       <y>140</y>
-       <width>111</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>微软雅黑</family>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Extremely Fast</string>
-     </property>
-    </widget>
-    <widget class="QRadioButton" name="radioButton_6">
-     <property name="geometry">
-      <rect>
-       <x>570</x>
-       <y>140</y>
-       <width>91</width>
-       <height>21</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>微软雅黑</family>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>Super Fast</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_45">
      <property name="geometry">
       <rect>
@@ -4881,6 +4768,12 @@ color: rgb(100, 100, 100);</string>
        <height>22</height>
       </rect>
      </property>
+     <property name="maximum">
+      <number>10</number>
+     </property>
+     <property name="value">
+      <number>3</number>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -4929,7 +4822,7 @@ border-radius:20px;
 background-color: rgb(230, 238, 255);</string>
      </property>
      <property name="text">
-      <string>0xadf52d43868b5596ea95a84af6ec7e3ddf5cc727</string>
+      <string/>
      </property>
     </widget>
     <widget class="QPushButton" name="pushButton_29">
@@ -5232,6 +5125,146 @@ color: rgb(0, 0, 0);</string>
       <bool>true</bool>
      </property>
     </widget>
+    <widget class="QWidget" name="widget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>510</x>
+       <y>70</y>
+       <width>171</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <widget class="QRadioButton" name="radioButton">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>71</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>微软雅黑</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>CPU</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioButton_2">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>10</y>
+        <width>61</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>微软雅黑</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>GPU</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="widget_2" native="true">
+     <property name="geometry">
+      <rect>
+       <x>570</x>
+       <y>110</y>
+       <width>251</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <widget class="QRadioButton" name="radioButton_6">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>30</y>
+        <width>91</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>微软雅黑</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Super Fast</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioButton_3">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>0</y>
+        <width>61</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>微软雅黑</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Fast</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioButton_4">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>81</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>微软雅黑</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Reguglar</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="radioButton_5">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>30</y>
+        <width>111</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>微软雅黑</family>
+        <pointsize>10</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Extremely Fast</string>
+      </property>
+     </widget>
+    </widget>
     <zorder>label_6</zorder>
     <zorder>toolButton_21</zorder>
     <zorder>toolButton_22</zorder>
@@ -5249,12 +5282,6 @@ color: rgb(0, 0, 0);</string>
     <zorder>lineEdit_3</zorder>
     <zorder>label_43</zorder>
     <zorder>label_44</zorder>
-    <zorder>radioButton</zorder>
-    <zorder>radioButton_2</zorder>
-    <zorder>radioButton_3</zorder>
-    <zorder>radioButton_4</zorder>
-    <zorder>radioButton_5</zorder>
-    <zorder>radioButton_6</zorder>
     <zorder>label_45</zorder>
     <zorder>label_46</zorder>
     <zorder>horizontalSlider</zorder>
@@ -5273,6 +5300,8 @@ color: rgb(0, 0, 0);</string>
     <zorder>label_23</zorder>
     <zorder>label_24</zorder>
     <zorder>pushButton_45</zorder>
+    <zorder>widget</zorder>
+    <zorder>widget_2</zorder>
    </widget>
    <widget class="QWidget" name="p6">
     <widget class="QLabel" name="label_15">
