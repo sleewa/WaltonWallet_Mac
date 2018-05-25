@@ -40,12 +40,12 @@ failure reason for Generate_Key function
 """
 
 
-def Import_From_Private(secret,password1):
+def Import_From_Private(secret, password1):
     print("this is imported private key", secret)
     acct = Account.privateKeyToAccount(secret)
     public_key = acct.address
     encrypted = Account.encrypt(secret, password1)
-    return (1, public_key,json.dumps(encrypted))
+    return (1, public_key, json.dumps(encrypted))
 
 
 def Import_Keystore(passphrase, filecontent):
@@ -54,7 +54,7 @@ def Import_Keystore(passphrase, filecontent):
         private_key = w3.toHex(Account.decrypt(filecontent, passphrase))
         public_key = Account.privateKeyToAccount(private_key).address
         encrypted = Account.encrypt(private_key, passphrase)
-        return (1, [public_key, private_key],json.dumps(encrypted))
+        return (1, [public_key, private_key], json.dumps(encrypted))
     except Exception as err:
         print(err)
         return (0, 10000)
@@ -89,6 +89,24 @@ def Transaction_out(private_key, toaddr, value, gas, gasprice):
     return (1, w3.toHex(signed.rawTransaction))
 
 
+def startCPUMining():
+    pass
+
+
+def stopCPUMining():
+    pass
+
+
+def getAccountBalance(public_key):
+    try:
+        r1 = requests.get(
+            "https://waltonchain.net:18950/api/getAccountBalance/"+public_key).json()
+        return (1, r1)
+    except Exception as err:
+        print(err)
+        return (0, err)
+
+
 # test for Generate_Two_Key()
 # print(Generate_Two_Key("12345", "12345"))
 # print(Generate_Two_Key("1234567", "123456"))
@@ -106,3 +124,6 @@ def Transaction_out(private_key, toaddr, value, gas, gasprice):
 # print(Transaction_out(test_private_key, test_public_key, 1, 1, 1))
 
 # print(Import_From_Private('e8671e48e23b728717a43b888612f324ad96177396dcc9a1f3616c6c3c3e6429'))
+
+
+print(getAccountBalance("0x9096efd43f4b3b4e2b7920d73c0547dfe0f24d4a"))
