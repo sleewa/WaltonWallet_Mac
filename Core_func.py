@@ -100,13 +100,81 @@ def stopCPUMining():
 def getAccountBalance(public_key):
     try:
         r1 = requests.get(
-            "https://waltonchain.net:18950/api/getAccountBalance/"+public_key).json()
+            "https://waltonchain.net:18950/api/getBalance/"+public_key).json()
+        return (1, r1['Balance'])
+    except Exception as err:
+        print(err)
+        return (0, err)
+
+
+def getMiningRecord(public_key):
+    try:
+        r1 = requests.get(
+            "https://waltonchain.net:18950/api/getMinedBlocksPagination/"+public_key+"/1/12").json()
+        return (1, r1['tx_pagination_details'])
+    except Exception as err:
+        print(err)
+        return (0, err)
+
+
+def getTransactionRecord(public_key):
+    try:
+        r1 = requests.get(
+            "https://waltonchain.net:18950/api/getAccountTransactionsAllPagination/"+public_key+"/1/12").json()
+        return (1, r1['tx_pagination_details'])
+    except Exception as err:
+        print(err)
+        return (0, err)
+
+
+def getTransactionRecord(public_key, interval):
+    try:
+        r1 = requests.get(
+            "https://waltonchain.net:18950/api/getHistoryBalance/"+public_key+interval).json()
         return (1, r1)
     except Exception as err:
         print(err)
         return (0, err)
 
 
+def getCurrentNodesDistribution():
+    try:
+        r1 = requests.get(
+            "https://waltonchain.net:18950/api/getCurrentNodesDistribution"+public_key+interval).json()
+        return (1, r1)
+    except Exception as err:
+        print(err)
+        return (0, err)
+
+
+def getLatestBlock():
+    try:
+        r1 = requests.get(
+            "https://waltonchain.net:18950/api/getLatestBlock").json()
+        return (1, r1['latest_block'])
+    except Exception as err:
+        print(err)
+        return (0, err)
+
+
+def getGasPrice():
+    try:
+        r1 = requests.get(
+            "https://waltonchain.net:18950/api/getGasPrice").json()
+        return (1, r1)
+    except Exception as err:
+        print(err)
+        return (0, err)
+
+
+def getHashRate():
+    try:
+        r1 = requests.post('http://httpbin.org/post', data={
+            "jsonrpc": "2.0", "method": "eth_hashrate", "params": [], "id": 2}).json()
+        return (1, r1)
+    except Exception as err:
+        print(err)
+        return (0, err)
 # test for Generate_Two_Key()
 # print(Generate_Two_Key("12345", "12345"))
 # print(Generate_Two_Key("1234567", "123456"))
