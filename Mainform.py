@@ -1114,15 +1114,131 @@ class Example(QDialog,QWidget):
         self.ui.graphicsView_6.show()  # 最后，调用show方法呈现图形！Voila!!
         ###########
         pen = QPen()
-        pen.setColor(QColor(170, 0, 255))
-        pen.setBrush(QColor(170, 0, 255))
+        pen.setColor(QColor(255, 0, 0))
+        pen.setBrush(QColor(255, 0, 0))
         source = Core_func.getCurrentNodesDistribution()
         print(source[1])
-        graphicsceneCR = QtWidgets.QGraphicsScene()  # 第三步，创建一个QGraphicsScene，因为加载的图形（FigureCanvas）不能直接放到graphicview控件中，必须先放到graphicScene，然后再把graphicscene放到graphicview中
-        graphicsceneCR.addEllipse(40, 40, 10, 10,pen)
-        graphicsceneCR.addEllipse(10,10,10,10,pen)  # 第四步，把图形放到QGraphicsScene中，注意：图形是作为一个QWidget放到QGraphicsScene中的
+        sou = json.dumps(source[1]).strip('}')
+        #sou = sou.strip('}')
+        rce = sou.split(',')
+        graphicsceneCR = QtWidgets.QGraphicsScene()
+        print(len(rce))
+        nodemax = 0
+        self.nationlist = ('AU', 3330, 1505,
+                      'BR', 1370, 1365,
+                      'CN', 3030, 865,
+                      'CA', 690, 520,
+                      'DE', 2005, 640,
+                      'FR', 1920, 705,
+                      'GB', 1880, 620,
+                      'HK', 3115, 1000,
+                      'IN', 2730, 1000,
+                      'JP', 3375, 830,
+                      'KR', 3255, 835,
+                      'MY', 2985, 1195,
+                      'RU', 2980, 480,
+                      'SG', 3000, 1220,
+                      'TH', 2275, 1070,
+                      'US', 820, 795,
+
+                      'AE', 2485, 1000,
+                      'AR', 1225, 1635,
+                      'BE', 1960, 667,
+                      'BG', 2180, 778,
+                      'GR', 2150, 820,
+                      'RO', 2175, 730,
+                      'TR', 2260, 820,
+                      'BY', 2200, 625,
+                      'PL', 2125, 645,
+                      'DK', 2025, 590,
+                      'EE', 2185, 550,
+                      'CZ', 2070, 680,
+                      'FI', 2200, 465,
+                      'SE', 2080, 485,
+                      'NO', 1995, 515,
+                      'CH', 1998, 720,
+                      'IT', 2045, 760,
+                      'NL', 1970, 645,
+                      'IE', 1830, 630,
+                      'AT', 2065, 710,
+                      'SI', 2080, 733,
+                      'YU', 2135, 760,
+                      'ES', 1870, 805,
+                      'PT', 1825, 815,
+                      'CY ', 2265, 868,
+                      'MD', 2215, 715,
+                      'CL', 1140, 1670,
+                      'CO', 1120, 1215,
+                      'NZ', 3785, 1695,
+                      'TW', 3190, 990,
+                      'IL', 2310, 915,
+                      'DO', 1175, 1050,
+                      'LU', 1990, 680,
+                      'GE', 2375, 780,
+                      'CR', 1020, 1152,
+                      'HU', 2110, 720,
+                      'CU', 1080, 1025,
+                      'LV', 2180, 575,
+                      'LT', 2165, 602,
+                      'MA', 1830, 915,
+                      'PE', 1095, 1350,
+                      'PR', 1205, 1060,
+                      'SK', 2120, 695,
+                      'AM', 2390, 805,
+                      'TJ', 2655, 825,
+                      'TM', 2520, 815,
+                      'ZA', 2165, 1595,
+
+                      'LY', 2090, 960,
+                      'NG', 1990, 1160,
+                      'ID', 3120, 1270,
+                      'MX', 815, 1000,
+                      'PK', 2650, 930,
+                      'VN', 3065, 1125,
+                      'VE', 1210, 1180,
+                      'SA', 2380, 1000,
+                      'KH', 3025, 1125,
+                      'AZ', 2420, 803,
+                      'MM', 2930, 1025,
+                      'EC', 1075, 1270,
+                      'HN', 990, 1095,
+                      'IS', 1710, 450,
+                      'JM', 1088, 1061,
+                      'JO', 2300, 920,
+                      'SN', 1755, 1105,
+                      'SC', 2505, 1304,
+                      'UA', 2245, 690,
+                      'UY', 1315, 1615)
+        for i in rce:
+            nodei = int(i.split(':')[1])
+            if nodei> nodemax :
+                nodemax = nodei
+        print(nodemax)
+        for i in rce:
+            #nodei = (i.split(':')[1])
+            #print(int(i.split(':')[1]))
+            #nodemax += nodei
+            #print(i.split(':')[0][2:-1])
+            webnation = i.split(':')[0][2:-1]
+            for j in range(len(self.nationlist)):
+                if self.nationlist[j]==webnation:
+                    #print(float(self.nationlist[j+1])/4000*661, float(self.nationlist[j+2])/1991*241)
+                    #print(float(self.nationlist[j+1])/4000*661+50, float(self.nationlist[j+2])/1991*241+10)
+
+                    graphicsceneCR.addEllipse(float(self.nationlist[j+1])/4000*661+90, float(self.nationlist[j+2])/1991*241+20, 4+int(i.split(':')[1])/nodemax*15, 4+int(i.split(':')[1])/nodemax*10, pen)
+
+                    graphicsceneCR.addEllipse(float(self.nationlist[j+1])/4000*661, float(self.nationlist[j+2])/1991*241, 0.00001, 0.00001, pen)
+        #print(max(nodemax))
+        #print(max(nodenum))
+          # 第三步，创建一个QGraphicsScene，因为加载的图形（FigureCanvas）不能直接放到graphicview控件中，必须先放到graphicScene，然后再把graphicscene放到graphicview中
+        #for i in NODEnum:
+         #   graphicsceneCR.addEllipse(40, 40, 4, 4, pen)
+        #graphicsceneCR.addEllipse(40, 40, 4, 4,pen)
+        #graphicsceneCR.addEllipse(10,10,60,60,pen)  # 第四步，把图形放到QGraphicsScene中，注意：图形是作为一个QWidget放到QGraphicsScene中的
         self.ui.graphicsView_7.setScene(graphicsceneCR)
         self.ui.graphicsView_7.show()  # 最后，调用show方法呈现图形！Voila!!
+
+
 
 
     def initUI(self):
@@ -1131,7 +1247,7 @@ class Example(QDialog,QWidget):
         self.ui.setupUi(self)
         self.publishform = publishform()
         self.initchart()
-
+        #self.nationpos()
         self.timer = QTimer(self)  # 初始化一个定时器
         self.timer.timeout.connect(self.operate)  # 计时结束调用operate()方法
         self.timer.start(20000)  # 设置计时间隔并启动
@@ -1462,7 +1578,178 @@ class Transaction:
     Blocknumber = ''
     Time = ''
 
+class nationpos:
+    nationlist= ('AU' ,3330, 1505,
+    'BR' ,1370, 1365,
+    'CN' ,3030, 865,
+    'CA' ,690, 520,
+    'DE' ,2005, 640,
+    'FR' ,1920, 705,
+    'GB' ,1880, 620,
+    'HK' ,3115, 1000,
+    'IN' ,2730, 1000,
+    'JP' ,3375, 830,
+    'KR' ,3255, 835,
+    'MY' ,2985, 1195,
+    'RU' ,2980, 480,
+    'SG' ,3000, 1220,
+    'TH' ,2275, 1070,
+    'US' ,820, 795,
 
+    'AE' ,2485, 1000,
+    'AR' ,1225, 1635,
+    'BE' ,1960, 667,
+    'BG' ,2180, 778,
+    'GR' ,2150, 820,
+    'RO' ,2175, 730,
+    'TR' ,2260, 820,
+    'BY' ,2200, 625,
+    'PL' ,2125, 645,
+    'DK' ,2025, 590,
+    'EE',2185, 550,
+    'CZ' ,2070, 680,
+    'FI',2200, 465,
+    'SE' ,2080, 485,
+    'NO',1995, 515,
+    'CH',1998, 720,
+    'IT' ,2045, 760,
+    'NL' ,1970, 645,
+    'IE',1830, 630,
+    'AT' ,2065, 710,
+    'SI' ,2080, 733,
+    'YU',2135, 760,
+    'ES' ,1870, 805,
+    'PT' ,1825, 815,
+    'CY ',2265, 868,
+    'MD' ,2215, 715,
+    'CL' ,1140, 1670,
+    'CO',1120, 1215,
+    'NZ' ,3785, 1695,
+    'TW' ,3190, 990,
+    'IL' ,2310, 915,
+    'DO' ,1175, 1050,
+    'LU' ,1990, 680,
+    'GE' ,2375, 780,
+    'CR' ,1020, 1152,
+    'HU' ,2110, 720,
+    'CU' ,1080, 1025,
+    'LV' ,2180, 575,
+    'LT' ,2165, 602,
+    'MA' ,1830, 915,
+   'PE'  ,1095, 1350,
+    'PR' ,1205, 1060,
+    'SK' ,2120, 695,
+    'AM' ,2390, 805,
+    'TJ' ,2655, 825,
+    'TM' ,2520, 815,
+    'ZA' ,2165, 1595,
+
+    'LY' ,2090, 960,
+    'NG' ,1990, 1160,
+    'ID' ,3120, 1270,
+    'MX' ,815, 1000,
+    'PK' ,2650, 930,
+    'VN' ,3065, 1125,
+    'VE' ,1210, 1180,
+    'SA' ,2380, 1000,
+    'KH' ,3025, 1125,
+    'AZ' ,2420, 803,
+    'MM' ,2930, 1025,
+    'EC' ,1075, 1270,
+    'HN',990, 1095,
+    'IS' ,1710, 450,
+    'JM' ,1088, 1061,
+    'JO' ,2300, 920,
+    'SN',1755, 1105,
+    'SC',2505, 1304,
+    'UA' ,2245, 690,
+    'UY',1315, 1615)
+
+    AU = [3330, 1505]
+    BR = [1370, 1365]
+    CN = [3030, 865]
+    CA = [690, 520]
+    DE = [2005, 640]
+    FR = [1920, 705]
+    GB = [1880, 620]
+    HK = [3115, 1000]
+    IN = [2730, 1000]
+    JP = [3375, 830]
+    KR = [3255, 835]
+    MY = [2985, 1195]
+    RU = [2980, 480]
+    SG = [3000, 1220]
+    TH = [2275, 1070]
+    US = [820, 795]
+
+    AE = [2485, 1000]
+    AR = [1225, 1635]
+    BE = [1960, 667]
+    BG = [2180, 778]
+    GR = [2150, 820]
+    RO = [2175, 730]
+    TR = [2260, 820]
+    BY = [2200, 625]
+    PL = [2125, 645]
+    DK = [2025, 590]
+    EE = [2185, 550]
+    CZ = [2070, 680]
+    FI = [2200, 465]
+    SE = [2080, 485]
+    NO = [1995, 515]
+    CH = [1998, 720]
+    IT = [2045, 760]
+    NL = [1970, 645]
+    IE = [1830, 630]
+    AT = [2065, 710]
+    SI = [2080, 733]
+    YU = [2135, 760]
+    ES = [1870, 805]
+    PT = [1825, 815]
+    CY = [2265, 868]
+    MD = [2215, 715]
+    CL = [1140, 1670]
+    CO = [1120, 1215]
+    NZ = [3785, 1695]
+    TW = [3190, 990]
+    IL = [2310, 915]
+    DO = [1175, 1050]
+    LU = [1990, 680]
+    GE = [2375, 780]
+    CR = [1020, 1152]
+    HU = [2110, 720]
+    CU = [1080, 1025]
+    LV = [2180, 575]
+    LT = [2165, 602]
+    MA = [1830, 915]
+    PE = [1095, 1350]
+    PR = [1205, 1060]
+    SK = [2120, 695]
+    AM = [2390, 805]
+    TJ = [2655, 825]
+    TM = [2520, 815]
+    ZA = [2165, 1595]
+
+    LY = [2090, 960]
+    NG = [1990, 1160]
+    ID = [3120, 1270]
+    MX = [815, 1000]
+    PK = [2650, 930]
+    VN = [3065, 1125]
+    VE = [1210, 1180]
+    SA = [2380, 1000]
+    KH = [3025, 1125]
+    AZ = [2420, 803]
+    MM = [2930, 1025]
+    EC = [1075, 1270]
+    HN = [990, 1095]
+    IS = [1710, 450]
+    JM = [1088, 1061]
+    JO = [2300, 920]
+    SN = [1755, 1105]
+    SC = [2505, 1304]
+    UA = [2245, 690]
+    UY = [1315, 1615]
 #class Communicate(Core_func.QObject):
 #    closeApp = Core_func.pyqtSignal()
 
