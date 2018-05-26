@@ -140,7 +140,7 @@ def getTransactionRecord(public_key, interval):
 def getCurrentNodesDistribution():
     try:
         r1 = requests.get(
-            "https://waltonchain.net:18950/api/getCurrentNodesDistribution"+public_key+interval).json()
+            "https://waltonchain.net:18950/api/getCurrentNodesDistribution").json()
         return (1, r1)
     except Exception as err:
         print(err)
@@ -193,5 +193,6 @@ def getHashRate():
 
 # print(Import_From_Private('e8671e48e23b728717a43b888612f324ad96177396dcc9a1f3616c6c3c3e6429'))
 
-
+ret = getCurrentNodesDistribution()
 print(getAccountBalance("0x9096efd43f4b3b4e2b7920d73c0547dfe0f24d4a"))
+print(ret[1])

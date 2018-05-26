@@ -1113,6 +1113,17 @@ class Example(QDialog,QWidget):
         self.ui.graphicsView_6.setScene(graphicsceneR)  # 第五步，把QGraphicsScene放入QGraphicsView
         self.ui.graphicsView_6.show()  # 最后，调用show方法呈现图形！Voila!!
         ###########
+        pen = QPen()
+        pen.setColor(QColor(170, 0, 255))
+        pen.setBrush(QColor(170, 0, 255))
+        source = Core_func.getCurrentNodesDistribution()
+        print(source[1])
+        graphicsceneCR = QtWidgets.QGraphicsScene()  # 第三步，创建一个QGraphicsScene，因为加载的图形（FigureCanvas）不能直接放到graphicview控件中，必须先放到graphicScene，然后再把graphicscene放到graphicview中
+        graphicsceneCR.addEllipse(40, 40, 10, 10,pen)
+        graphicsceneCR.addEllipse(10,10,10,10,pen)  # 第四步，把图形放到QGraphicsScene中，注意：图形是作为一个QWidget放到QGraphicsScene中的
+        self.ui.graphicsView_7.setScene(graphicsceneCR)
+        self.ui.graphicsView_7.show()  # 最后，调用show方法呈现图形！Voila!!
+
 
     def initUI(self):
         '显示窗口'

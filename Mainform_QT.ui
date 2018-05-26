@@ -2118,7 +2118,7 @@ color: rgb(100, 100, 100);</string>
       </rect>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="page_6">
       <widget class="Line" name="line_19">
@@ -3976,7 +3976,7 @@ color: rgb(100, 100, 100);</string>
     <widget class="QPushButton" name="pushButton_15">
      <property name="geometry">
       <rect>
-       <x>740</x>
+       <x>780</x>
        <y>460</y>
        <width>51</width>
        <height>51</height>
@@ -4008,7 +4008,7 @@ color: rgb(100, 100, 100);</string>
     <widget class="QPushButton" name="pushButton_16">
      <property name="geometry">
       <rect>
-       <x>740</x>
+       <x>780</x>
        <y>390</y>
        <width>51</width>
        <height>51</height>
@@ -4040,7 +4040,7 @@ color: rgb(100, 100, 100);</string>
     <widget class="QPushButton" name="pushButton_17">
      <property name="geometry">
       <rect>
-       <x>670</x>
+       <x>710</x>
        <y>390</y>
        <width>51</width>
        <height>51</height>
@@ -4072,7 +4072,7 @@ color: rgb(100, 100, 100);</string>
     <widget class="QPushButton" name="pushButton_18">
      <property name="geometry">
       <rect>
-       <x>670</x>
+       <x>710</x>
        <y>460</y>
        <width>51</width>
        <height>51</height>
@@ -4107,7 +4107,7 @@ color: rgb(100, 100, 100);</string>
        <x>20</x>
        <y>40</y>
        <width>351</width>
-       <height>241</height>
+       <height>221</height>
       </rect>
      </property>
      <property name="text">
@@ -4126,7 +4126,7 @@ color: rgb(100, 100, 100);</string>
        <x>410</x>
        <y>40</y>
        <width>391</width>
-       <height>241</height>
+       <height>221</height>
       </rect>
      </property>
      <property name="text">
@@ -4142,8 +4142,8 @@ color: rgb(100, 100, 100);</string>
     <widget class="QLabel" name="label_7">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>290</y>
+       <x>30</x>
+       <y>270</y>
        <width>301</width>
        <height>21</height>
       </rect>
@@ -4158,30 +4158,11 @@ color: rgb(100, 100, 100);</string>
       <string>The Geographical Distribution Of Nodes</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_8">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>320</y>
-       <width>631</width>
-       <height>221</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="pixmap">
-      <pixmap>pic/map.jpg</pixmap>
-     </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
     <widget class="QPushButton" name="pushButton_19">
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>370</y>
+       <y>450</y>
        <width>41</width>
        <height>41</height>
       </rect>
@@ -4213,7 +4194,7 @@ color: rgb(100, 100, 100);</string>
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>320</y>
+       <y>380</y>
        <width>41</width>
        <height>41</height>
       </rect>
@@ -4375,7 +4356,7 @@ color: rgb(100, 100, 100);</string>
      <property name="geometry">
       <rect>
        <x>30</x>
-       <y>250</y>
+       <y>230</y>
        <width>101</width>
        <height>20</height>
       </rect>
@@ -4398,7 +4379,7 @@ background-color: rgb(255, 255, 255);</string>
      <property name="geometry">
       <rect>
        <x>260</x>
-       <y>250</y>
+       <y>230</y>
        <width>101</width>
        <height>20</height>
       </rect>
@@ -4421,7 +4402,7 @@ background-color: rgb(255, 255, 255);</string>
      <property name="geometry">
       <rect>
        <x>470</x>
-       <y>250</y>
+       <y>230</y>
        <width>101</width>
        <height>20</height>
       </rect>
@@ -4444,7 +4425,7 @@ background-color: rgb(255, 255, 255);</string>
      <property name="geometry">
       <rect>
        <x>690</x>
-       <y>250</y>
+       <y>230</y>
        <width>101</width>
        <height>20</height>
       </rect>
@@ -4489,6 +4470,67 @@ background-color: rgb(255, 255, 255);</string>
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
+    <widget class="QGraphicsView" name="graphicsView_7">
+     <property name="geometry">
+      <rect>
+       <x>35</x>
+       <y>301</y>
+       <width>661</width>
+       <height>241</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background:transparent</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::NoFrame</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_8">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>300</y>
+       <width>671</width>
+       <height>241</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>pic/mapA.jpg</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <zorder>label_8</zorder>
+    <zorder>graphicsView_7</zorder>
+    <zorder>toolButton_33</zorder>
+    <zorder>toolButton_34</zorder>
+    <zorder>toolButton_35</zorder>
+    <zorder>pushButton_15</zorder>
+    <zorder>pushButton_16</zorder>
+    <zorder>pushButton_17</zorder>
+    <zorder>pushButton_18</zorder>
+    <zorder>label</zorder>
+    <zorder>label_5</zorder>
+    <zorder>label_7</zorder>
+    <zorder>pushButton_19</zorder>
+    <zorder>pushButton_20</zorder>
+    <zorder>graphicsView_5</zorder>
+    <zorder>graphicsView_6</zorder>
+    <zorder>label_42</zorder>
+    <zorder>label_73</zorder>
+    <zorder>label_74</zorder>
+    <zorder>label_75</zorder>
+    <zorder>label_76</zorder>
+    <zorder>label_77</zorder>
+    <zorder>label_78</zorder>
    </widget>
    <widget class="QWidget" name="p3">
     <widget class="QLabel" name="label_18">
@@ -6549,6 +6591,8 @@ color: rgb(100, 100, 100);</string>
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="pic/mapB.qrc"/>
+ </resources>
  <connections/>
 </ui>
