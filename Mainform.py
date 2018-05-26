@@ -385,7 +385,9 @@ class sendform(QWidget, Ui_SendForm):
         btnsend.clicked.connect(self.showenterphrase)
         btncont = self.ui.pushButton_34
         btncont.clicked.connect(self.accountform.show_w2)
+
         self.Trans = Transaction
+
         self.ui.radioButton.toggle()
         self.ui.radioButton.toggled.connect(self.change2Eco)
         self.ui.radioButton.setChecked(0)
@@ -442,7 +444,7 @@ class sendform(QWidget, Ui_SendForm):
         #need to get blocknumber and time
         ret = Core_func.Transaction_out(ex.m_wallet.privateKey, self.ui.lineEdit_7.text().strip(), self.ui.lineEdit_6.text().strip(), self.ui.lineEdit_8.text().strip(), self.ui.lineEdit_9.text().strip())
         if ret[0] == 1:
-            self.Trans.rawTransaction = ret[1]
+            self.Trans.txhash = ret[1]
             self.Trans.toaddr = self.ui.lineEdit_7.text().strip()
             self.Trans.fromaddr = ex.m_wallet.address
             Rcount = ex.ui.TransactionHistory.rowCount()
@@ -994,8 +996,9 @@ class Example(QDialog,QWidget):
                                                 "border-radius:20px;"
                                                 "border-style:solid; ")
             self.ui.pushButton_30.setText('Stop Mining')
-
-
+            ######################################
+            self.miningtatus = 1
+            ######################################
             self.ui.radioButton.setEnabled(0)
             self.ui.radioButton_2.setEnabled(0)
             self.ui.radioButton_3.setEnabled(0)
@@ -1009,6 +1012,9 @@ class Example(QDialog,QWidget):
                 print('gpu')
         else:
             self.startstop = 1
+            ######################################
+            self.miningtatus = 0
+            ######################################
             self.ui.pushButton_30.setStyleSheet("border-width: 1px;"
                                                 "border-color: rgb(170, 0, 255);"
                                                 "background-color: rgb(255, 255, 255);"
@@ -1056,32 +1062,146 @@ class Example(QDialog,QWidget):
 
     def refresh(self):
         print('time out')
+        coun = self.ui.TransactionHistory.rowCount()
+        ret = Core_func.getTransactionRecord(self.m_wallet.address)
+        print(str(ret[1]).split('tx_hash')[4][4:70])
+        #newItemStatus = QTableWidgetItem(self.sendform.Trans.status)
+        #self.ui.TransactionHistory.setItem(coun, 2, newItemStatus)
+
 
     def refreshTop(self):
         if self.syncstatus == 0:
             self.ui.toolButton_25.setText(' Syncing')
             self.ui.toolButton_25.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
             self.ui.toolButton_25.setIcon(QIcon("pic/grayqukuai.png"))
+            self.ui.toolButton_21.setText(' Syncing')
+            self.ui.toolButton_21.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
+            self.ui.toolButton_21.setIcon(QIcon("pic/grayqukuai.png"))
+            self.ui.toolButton_28.setText(' Syncing')
+            self.ui.toolButton_28.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
+            self.ui.toolButton_28.setIcon(QIcon("pic/grayqukuai.png"))
+            self.ui.toolButton_37.setText(' Syncing')
+            self.ui.toolButton_37.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
+            self.ui.toolButton_37.setIcon(QIcon("pic/grayqukuai.png"))
+            self.ui.toolButton_39.setText(' Syncing')
+            self.ui.toolButton_39.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
+            self.ui.toolButton_39.setIcon(QIcon("pic/grayqukuai.png"))
+            self.ui.toolButton_31.setText(' Syncing')
+            self.ui.toolButton_31.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
+            self.ui.toolButton_31.setIcon(QIcon("pic/grayqukuai.png"))
+            self.ui.toolButton_34.setText(' Syncing')
+            self.ui.toolButton_34.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
+            self.ui.toolButton_34.setIcon(QIcon("pic/grayqukuai.png"))
         else:
             self.ui.toolButton_25.setText(' Completed')
             self.ui.toolButton_25.setStyleSheet('color: #aa00ff;border:0px;')
             self.ui.toolButton_25.setIcon(QIcon("pic/purperqukuai.png"))
+            self.ui.toolButton_21.setText(' Completed')
+            self.ui.toolButton_21.setStyleSheet('color: #aa00ff;border:0px;')
+            self.ui.toolButton_21.setIcon(QIcon("pic/purperqukuai.png"))
+            self.ui.toolButton_28.setText(' Completed')
+            self.ui.toolButton_28.setStyleSheet('color: #aa00ff;border:0px;')
+            self.ui.toolButton_28.setIcon(QIcon("pic/purperqukuai.png"))
+            self.ui.toolButton_31.setText(' Completed')
+            self.ui.toolButton_31.setStyleSheet('color: #aa00ff;border:0px;')
+            self.ui.toolButton_31.setIcon(QIcon("pic/purperqukuai.png"))
+            self.ui.toolButton_34.setText(' Completed')
+            self.ui.toolButton_34.setStyleSheet('color: #aa00ff;border:0px;')
+            self.ui.toolButton_34.setIcon(QIcon("pic/purperqukuai.png"))
+            self.ui.toolButton_37.setText(' Completed')
+            self.ui.toolButton_37.setStyleSheet('color: #aa00ff;border:0px;')
+            self.ui.toolButton_37.setIcon(QIcon("pic/purperqukuai.png"))
+            self.ui.toolButton_39.setText(' Completed')
+            self.ui.toolButton_39.setStyleSheet('color: #aa00ff;border:0px;')
+            self.ui.toolButton_39.setIcon(QIcon("pic/purperqukuai.png"))
         if self.miningtatus == 0:
             self.ui.toolButton_26.setText(' Mining')
             self.ui.toolButton_26.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
             self.ui.toolButton_26.setIcon(QIcon("pic/graymining.png"))
+            self.ui.toolButton_22.setText(' Mining')
+            self.ui.toolButton_22.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
+            self.ui.toolButton_22.setIcon(QIcon("pic/graymining.png"))
+            self.ui.toolButton_29.setText(' Mining')
+            self.ui.toolButton_29.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
+            self.ui.toolButton_29.setIcon(QIcon("pic/graymining.png"))
+            self.ui.toolButton_32.setText(' Mining')
+            self.ui.toolButton_32.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
+            self.ui.toolButton_32.setIcon(QIcon("pic/graymining.png"))
+            self.ui.toolButton_35.setText(' Mining')
+            self.ui.toolButton_35.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
+            self.ui.toolButton_35.setIcon(QIcon("pic/graymining.png"))
+            self.ui.toolButton_38.setText(' Mining')
+            self.ui.toolButton_38.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
+            self.ui.toolButton_38.setIcon(QIcon("pic/graymining.png"))
+            self.ui.toolButton_41.setText(' Mining')
+            self.ui.toolButton_41.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
+            self.ui.toolButton_41.setIcon(QIcon("pic/graymining.png"))
         else:
             self.ui.toolButton_26.setText(' Mining')
             self.ui.toolButton_26.setStyleSheet('color: #aa00ff;border:0px;')
             self.ui.toolButton_26.setIcon(QIcon("pic/mining1.png"))
+            self.ui.toolButton_29.setText(' Mining')
+            self.ui.toolButton_29.setStyleSheet('color: #aa00ff;border:0px;')
+            self.ui.toolButton_29.setIcon(QIcon("pic/mining1.png"))
+            self.ui.toolButton_22.setText(' Mining')
+            self.ui.toolButton_22.setStyleSheet('color: #aa00ff;border:0px;')
+            self.ui.toolButton_22.setIcon(QIcon("pic/mining1.png"))
+            self.ui.toolButton_32.setText(' Mining')
+            self.ui.toolButton_32.setStyleSheet('color: #aa00ff;border:0px;')
+            self.ui.toolButton_32.setIcon(QIcon("pic/mining1.png"))
+            self.ui.toolButton_35.setText(' Mining')
+            self.ui.toolButton_35.setStyleSheet('color: #aa00ff;border:0px;')
+            self.ui.toolButton_35.setIcon(QIcon("pic/mining1.png"))
+            self.ui.toolButton_38.setText(' Mining')
+            self.ui.toolButton_38.setStyleSheet('color: #aa00ff;border:0px;')
+            self.ui.toolButton_38.setIcon(QIcon("pic/mining1.png"))
+            self.ui.toolButton_41.setText(' Mining')
+            self.ui.toolButton_41.setStyleSheet('color: #aa00ff;border:0px;')
+            self.ui.toolButton_41.setIcon(QIcon("pic/mining1.png"))
         if self.peers == 0:
             self.ui.toolButton_24.setText(' Peers Connected:0')
             self.ui.toolButton_24.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
             self.ui.toolButton_24.setIcon(QIcon("pic/tubiaoer.png"))
+            self.ui.toolButton_23.setText(' Peers Connected:0')
+            self.ui.toolButton_23.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
+            self.ui.toolButton_23.setIcon(QIcon("pic/tubiaoer.png"))
+            self.ui.toolButton_27.setText(' Peers Connected:0')
+            self.ui.toolButton_27.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
+            self.ui.toolButton_27.setIcon(QIcon("pic/tubiaoer.png"))
+            self.ui.toolButton_30.setText(' Peers Connected:0')
+            self.ui.toolButton_30.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
+            self.ui.toolButton_30.setIcon(QIcon("pic/tubiaoer.png"))
+            self.ui.toolButton_36.setText(' Peers Connected:0')
+            self.ui.toolButton_36.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
+            self.ui.toolButton_36.setIcon(QIcon("pic/tubiaoer.png"))
+            self.ui.toolButton_33.setText(' Peers Connected:0')
+            self.ui.toolButton_33.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
+            self.ui.toolButton_33.setIcon(QIcon("pic/tubiaoer.png"))
+            self.ui.toolButton_40.setText(' Peers Connected:0')
+            self.ui.toolButton_40.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
+            self.ui.toolButton_40.setIcon(QIcon("pic/tubiaoer.png"))
         else:
             self.ui.toolButton_24.setText(' Peers Connected:'+'')
             self.ui.toolButton_24.setStyleSheet('color: #aa00ff;border:0px;')
             self.ui.toolButton_24.setIcon(QIcon("pic/tubiao1.png"))
+            self.ui.toolButton_23.setText(' Peers Connected:' + '')
+            self.ui.toolButton_23.setStyleSheet('color: #aa00ff;border:0px;')
+            self.ui.toolButton_23.setIcon(QIcon("pic/tubiao1.png"))
+            self.ui.toolButton_27.setText(' Peers Connected:' + '')
+            self.ui.toolButton_27.setStyleSheet('color: #aa00ff;border:0px;')
+            self.ui.toolButton_27.setIcon(QIcon("pic/tubiao1.png"))
+            self.ui.toolButton_33.setText(' Peers Connected:' + '')
+            self.ui.toolButton_33.setStyleSheet('color: #aa00ff;border:0px;')
+            self.ui.toolButton_33.setIcon(QIcon("pic/tubiao1.png"))
+            self.ui.toolButton_36.setText(' Peers Connected:' + '')
+            self.ui.toolButton_36.setStyleSheet('color: #aa00ff;border:0px;')
+            self.ui.toolButton_36.setIcon(QIcon("pic/tubiao1.png"))
+            self.ui.toolButton_30.setText(' Peers Connected:' + '')
+            self.ui.toolButton_30.setStyleSheet('color: #aa00ff;border:0px;')
+            self.ui.toolButton_30.setIcon(QIcon("pic/tubiao1.png"))
+            self.ui.toolButton_40.setText(' Peers Connected:' + '')
+            self.ui.toolButton_40.setStyleSheet('color: #aa00ff;border:0px;')
+            self.ui.toolButton_40.setIcon(QIcon("pic/tubiao1.png"))
 
     def initchart(self):
         ###########
@@ -1225,7 +1345,7 @@ class Example(QDialog,QWidget):
                     #print(float(self.nationlist[j+1])/4000*661, float(self.nationlist[j+2])/1991*241)
                     #print(float(self.nationlist[j+1])/4000*661+50, float(self.nationlist[j+2])/1991*241+10)
 
-                    graphicsceneCR.addEllipse(float(self.nationlist[j+1])/4000*661+90, float(self.nationlist[j+2])/1991*241+20, 4+int(i.split(':')[1])/nodemax*15, 4+int(i.split(':')[1])/nodemax*10, pen)
+                    graphicsceneCR.addEllipse(float(self.nationlist[j+1])/4000*661+90, float(self.nationlist[j+2])/1991*241+20, 3+int(i.split(':')[1])/nodemax*15, 3+int(i.split(':')[1])/nodemax*10, pen)
 
                     graphicsceneCR.addEllipse(float(self.nationlist[j+1])/4000*661, float(self.nationlist[j+2])/1991*241, 0.00001, 0.00001, pen)
         #print(max(nodemax))
@@ -1247,6 +1367,7 @@ class Example(QDialog,QWidget):
         self.ui.setupUi(self)
         self.publishform = publishform()
         self.initchart()
+        self.sendform = sendform()
         #self.nationpos()
         self.timer = QTimer(self)  # 初始化一个定时器
         self.timer.timeout.connect(self.operate)  # 计时结束调用operate()方法
@@ -1256,6 +1377,14 @@ class Example(QDialog,QWidget):
         btnminHisrefresh.clicked.connect(self.refresh)
         btntraHisrefresh = self.ui.pushButton_46
         btntraHisrefresh.clicked.connect(self.refresh)
+
+        self.timertop = QTimer(self)  # 初始化一个定时器  transaction status
+        self.timertop.timeout.connect(self.initchart)  # 计时结束调用operate()方法
+        self.timertop.start(50000)  # 设置计时间隔并启动
+
+        self.timertop = QTimer(self)  # 初始化一个定时器  statistics
+        self.timertop.timeout.connect(self.initchart)  # 计时结束调用operate()方法
+        self.timertop.start(30000)  # 设置计时间隔并启动
 
         self.timertop = QTimer(self)  # 初始化一个定时器  topstatus
         self.timertop.timeout.connect(self.refreshTop)  # 计时结束调用operate()方法
@@ -1390,6 +1519,7 @@ class Example(QDialog,QWidget):
         btntme.clicked.connect(self.totme)
         btnsta = self.ui.pushButton_8
         btnsta.clicked.connect(self.tostack)
+        self.ui.pushButton_9.clicked.connect(self.sendform.show_w2)
 
         #Multiple Wallet page
         btn2create = self.ui.pushButton_32
@@ -1567,8 +1697,8 @@ class Wallet:
     filename = ''
 
 class Transaction:
-    rawTransaction = ''
-    status = ''
+    txhash = ''
+    status = 'Submitted'
     value = ''
     fromaddr = ''
     toaddr = ''
@@ -1756,7 +1886,6 @@ class nationpos:
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = Example()
-    sendform = sendform()
     #publishform = publishform()
     recieveform = recieveform()
     mulwalform =mulwalform()
@@ -1766,7 +1895,6 @@ if __name__ == '__main__':
     #s = Warning_Form.SecondWindow()
     #ex.ui.cw.clicked.connect(s.handle_click)
     ex.show()
-    ex.ui.pushButton_9.clicked.connect(sendform.show_w2)
     ex.ui.pushButton_10.clicked.connect(recieveform.show_w2)
     ex.ui.pushButton_36.clicked.connect(pubaddrForm.show_w2)
     ex.ui.pushButton_38.clicked.connect(newcontactform.show_w2)
