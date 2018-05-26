@@ -126,12 +126,21 @@ def getTransactionRecord(public_key):
         print(err)
         return (0, err)
 
+def getTokenMarket():
+    try:
+        r1 = requests.get(
+            "https://waltonchain.net:18950/api/getMarket/WTC/30").json()
+        return (1, r1['token_market'])
+    except Exception as err:
+        print(err)
+        return (0, err)
+
 
 def getTransactionRecord_day(public_key, interval):
     try:
         r1 = requests.get(
             "https://waltonchain.net:18950/api/getHistoryBalance/"+public_key+'/'+interval).json()
-        return (1, r1)
+        return (1, r1['HistoryBalance'])
     except Exception as err:
         print(err)
         return (0, err)
@@ -190,6 +199,10 @@ def getHashRate():
 # test_public_key = out[1][0]
 # test_private_key = out[1][1]
 # print(Transaction_out(test_private_key, test_public_key, 1, 1, 1))
-
 # print(Import_From_Private('e8671e48e23b728717a43b888612f324ad96177396dcc9a1f3616c6c3c3e6429'))
+
+
+ret2 = getMiningRecord('0xfbf36b7c56258dc3e29769c1a686250b8b002de3')
+print(ret2[1][2]['timestamp'][0:10])
+print(ret2[1][2]['totol_reward'])
 

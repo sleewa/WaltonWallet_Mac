@@ -51,33 +51,84 @@ class Figure_Canvas(FigureCanvas):   # 通过继承FigureCanvas类，使得该�
 
         self.axes = fig.add_subplot(111) # 调用figure下面的add_subplot方法，类似于matplotlib.pyplot下面的subplot方法
 
-    def test(self):
-        x = [0,1,2,3,4,5,6,7,8,9]
-        y = [7,2,1,4,5,5,4,3,3,1]
+    def test(self,addr):
+        if addr != '':
+            ret3 = Core_func.getTransactionRecord_day(addr, '30')
 
-        self.axes.plot(x, y,'r-')
-        self.axes.set_axis_off()
+            y = []
+            x = [30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2,
+                 1]
+            for i in range(len(ret3[1])):
+                y.append(int(ret3[1][i]['history_balance']))
+            self.axes.plot(x, y, 'r-', 1)
+            self.axes.set_axis_off()
+
+            return ret3[1][0]['history_balance']
+
+        else:
+            y = [0]
+            x = [0]
+            self.axes.plot(x, y, 'r-', 1)
+            self.axes.set_axis_off()
+
+            return 0
+
 
     def testM(self):
-        x = [0,1,2,3,4,5,6,7,8,9]
-        y = [2,2,1,4,2,2,4,3,3,1]
-
-        self.axes.plot(x, y,'r-')
+        y=[]
+        x = [30,29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+        ret3 = Core_func.getTokenMarket()
+        for i in range(len(ret3[1])):
+            y.append(int(ret3[1][i]['TokenPriceUSD']))
+        self.axes.plot(x, y,'r-',1)
         self.axes.set_axis_off()
+        return ret3[1][0]['TokenPriceUSD']
 
-    def testB(self):
-        x = [0,1,2,3,4,5,6,7,8,9]
-        y = [2,2,1,3,2,2,4,3,3,1]
+    def testB(self,addr):
+        if addr != '':
+            ret3 = Core_func.getTransactionRecord_day(addr, '30')
 
-        self.axes.plot(x, y,'r-')
-        self.axes.set_axis_off()
+            y = []
+            x = [30, 29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2,
+                 1]
+            for i in range(len(ret3[1])):
+                y.append(int(ret3[1][i]['history_balance']))
+            #y.append(0)
+            self.axes.plot(x, y, 'r-', 1)
+            self.axes.set_axis_off()
+            return  ret3[1][i]['history_balance']
+        else:
+            y = [0]
+            x = [0]
+            self.axes.plot(x, y, 'r-', 1)
+            self.axes.set_axis_off()
+            return  0
 
-    def testR(self):
-        x = [0,1,2,3,4,5,6,7,8,9]
-        y = [2,2,3,4,4,4,4,5,6,6]
+    def testR(self,addr):
+        if addr != '':
+            ret3 = Core_func.getMiningRecord(addr)
 
-        self.axes.plot(x, y,'r-')
-        self.axes.set_axis_off()
+            y = []
+            x = []
+            for i in range(len(ret3[1])):
+                x.append(i)
+                y.append(int(ret3[1][i]['totol_reward']))
+            #y.append(0)
+            #x.append(0)
+
+            #print(ret3[1][2]['timestamp'][0:10])
+            self.axes.plot(x, y, 'r-', 1)
+            self.axes.set_axis_off()
+            return ret3[1][i]['totol_reward']
+        else:
+            y = [0]
+            x = [0]
+            self.axes.plot(x, y, 'r-', 1)
+            self.axes.set_axis_off()
+            return 0
+
+
+
 
 class publishform(QWidget, Ui_publishForm):
     def __init__(self):
@@ -1058,15 +1109,32 @@ class Example(QDialog,QWidget):
         self.cpures = ''
 
     def operate(self):
-        self.refresh()
+        #self.refresh()
+        print('tick')
 
     def refresh(self):
         print('time out')
-        coun = self.ui.TransactionHistory.rowCount()
-        ret = Core_func.getTransactionRecord(self.m_wallet.address)
-        print(str(ret[1]).split('tx_hash')[4][4:70])
-        #newItemStatus = QTableWidgetItem(self.sendform.Trans.status)
-        #self.ui.TransactionHistory.setItem(coun, 2, newItemStatus)
+        coun = self.ui.TransactionHistory.rowCount()#self.m_wallet.address
+        #tx_hashlist = str(ret[1]).split('tx_hash')
+        if self.sendform.Trans.status == 'Submitted':
+            ret = Core_func.getTransactionRecord(self.m_wallet.address)
+            for i in range(len(ret[1])):
+                print(self.sendform.Trans.txhash)
+                print(ret[1][i]['tx_hash'])
+
+                if self.sendform.Trans.txhash == ret[1][i]['tx_hash']:
+                    self.sendform.Trans.status = '0/12'
+                    self.sendform.Trans.blocknumber = int(ret[1][i]['blockNumber'])
+        elif self.sendform.Trans.status != 'Succeed':
+            RET = Core_func.getLatestBlock()
+            if RET > self.sendform.Trans.blocknumber :
+                if RET - self.sendform.Trans.blocknumber <12:
+                    self.sendform.Trans.status = str(RET-self.sendform.Trans.blocknumber)+'/12'
+                else:
+                    self.sendform.Trans.status = 'Succeed'
+        #print(ret[1][1]['tx_hash'])
+        newItemStatus = QTableWidgetItem(self.sendform.Trans.status)
+        self.ui.TransactionHistory.setItem(coun, 2, newItemStatus)
 
 
     def refreshTop(self):
@@ -1206,11 +1274,12 @@ class Example(QDialog,QWidget):
     def initchart(self):
         ###########
         dr = Figure_Canvas()
-        dr.test()  # 画图
+        ret1 = dr.test(self.m_wallet.address)  # 画图
         graphicscene = QtWidgets.QGraphicsScene()  # 第三步，创建一个QGraphicsScene，因为加载的图形（FigureCanvas）不能直接放到graphicview控件中，必须先放到graphicScene，然后再把graphicscene放到graphicview中
         graphicscene.addWidget(dr)  # 第四步，把图形放到QGraphicsScene中，注意：图形是作为一个QWidget放到QGraphicsScene中的
         self.ui.graphicsView.setScene(graphicscene)  # 第五步，把QGraphicsScene放入QGraphicsView
         self.ui.graphicsView.show()  # 最后，调用show方法呈现图形！Voila!!
+        self.ui.lineEdit_35.setText('Current: '+str((int(ret1))/(10**9))+' WTCT')
         ###########
         drMarket = Figure_Canvas()
         drMarket.testM()  # 画图
@@ -1220,151 +1289,155 @@ class Example(QDialog,QWidget):
         self.ui.graphicsView_2.show()  # 最后，调用show方法呈现图形！Voila!!
         ###########
         drB = Figure_Canvas()
-        drB.testB()  # 画图
+        drB.testB(self.m_wallet.address)  # 画图
         graphicsceneB = QtWidgets.QGraphicsScene()  # 第三步，创建一个QGraphicsScene，因为加载的图形（FigureCanvas）不能直接放到graphicview控件中，必须先放到graphicScene，然后再把graphicscene放到graphicview中
         graphicsceneB.addWidget(drB)  # 第四步，把图形放到QGraphicsScene中，注意：图形是作为一个QWidget放到QGraphicsScene中的
         self.ui.graphicsView_5.setScene(graphicsceneB)  # 第五步，把QGraphicsScene放入QGraphicsView
         self.ui.graphicsView_5.show()  # 最后，调用show方法呈现图形！Voila!!
         ###########
         drR = Figure_Canvas()
-        drR.testR()  # 画图
+        drR.testR(self.m_wallet.address)  # 画图
         graphicsceneR = QtWidgets.QGraphicsScene()  # 第三步，创建一个QGraphicsScene，因为加载的图形（FigureCanvas）不能直接放到graphicview控件中，必须先放到graphicScene，然后再把graphicscene放到graphicview中
         graphicsceneR.addWidget(drR)  # 第四步，把图形放到QGraphicsScene中，注意：图形是作为一个QWidget放到QGraphicsScene中的
         self.ui.graphicsView_6.setScene(graphicsceneR)  # 第五步，把QGraphicsScene放入QGraphicsView
         self.ui.graphicsView_6.show()  # 最后，调用show方法呈现图形！Voila!!
         ###########
+
+
+
+    def initmap(self):
         pen = QPen()
         pen.setColor(QColor(255, 0, 0))
         pen.setBrush(QColor(255, 0, 0))
         source = Core_func.getCurrentNodesDistribution()
-        print(source[1])
         sou = json.dumps(source[1]).strip('}')
-        #sou = sou.strip('}')
+        # sou = sou.strip('}')
         rce = sou.split(',')
         graphicsceneCR = QtWidgets.QGraphicsScene()
-        print(len(rce))
         nodemax = 0
         self.nationlist = ('AU', 3330, 1505,
-                      'BR', 1370, 1365,
-                      'CN', 3030, 865,
-                      'CA', 690, 520,
-                      'DE', 2005, 640,
-                      'FR', 1920, 705,
-                      'GB', 1880, 620,
-                      'HK', 3115, 1000,
-                      'IN', 2730, 1000,
-                      'JP', 3375, 830,
-                      'KR', 3255, 835,
-                      'MY', 2985, 1195,
-                      'RU', 2980, 480,
-                      'SG', 3000, 1220,
-                      'TH', 2275, 1070,
-                      'US', 820, 795,
+                           'BR', 1370, 1365,
+                           'CN', 3030, 865,
+                           'CA', 690, 520,
+                           'DE', 2005, 640,
+                           'FR', 1920, 705,
+                           'GB', 1880, 620,
+                           'HK', 3115, 1000,
+                           'IN', 2730, 1000,
+                           'JP', 3375, 830,
+                           'KR', 3255, 835,
+                           'MY', 2985, 1195,
+                           'RU', 2980, 480,
+                           'SG', 3000, 1220,
+                           'TH', 2275, 1070,
+                           'US', 820, 795,
 
-                      'AE', 2485, 1000,
-                      'AR', 1225, 1635,
-                      'BE', 1960, 667,
-                      'BG', 2180, 778,
-                      'GR', 2150, 820,
-                      'RO', 2175, 730,
-                      'TR', 2260, 820,
-                      'BY', 2200, 625,
-                      'PL', 2125, 645,
-                      'DK', 2025, 590,
-                      'EE', 2185, 550,
-                      'CZ', 2070, 680,
-                      'FI', 2200, 465,
-                      'SE', 2080, 485,
-                      'NO', 1995, 515,
-                      'CH', 1998, 720,
-                      'IT', 2045, 760,
-                      'NL', 1970, 645,
-                      'IE', 1830, 630,
-                      'AT', 2065, 710,
-                      'SI', 2080, 733,
-                      'YU', 2135, 760,
-                      'ES', 1870, 805,
-                      'PT', 1825, 815,
-                      'CY ', 2265, 868,
-                      'MD', 2215, 715,
-                      'CL', 1140, 1670,
-                      'CO', 1120, 1215,
-                      'NZ', 3785, 1695,
-                      'TW', 3190, 990,
-                      'IL', 2310, 915,
-                      'DO', 1175, 1050,
-                      'LU', 1990, 680,
-                      'GE', 2375, 780,
-                      'CR', 1020, 1152,
-                      'HU', 2110, 720,
-                      'CU', 1080, 1025,
-                      'LV', 2180, 575,
-                      'LT', 2165, 602,
-                      'MA', 1830, 915,
-                      'PE', 1095, 1350,
-                      'PR', 1205, 1060,
-                      'SK', 2120, 695,
-                      'AM', 2390, 805,
-                      'TJ', 2655, 825,
-                      'TM', 2520, 815,
-                      'ZA', 2165, 1595,
+                           'AE', 2485, 1000,
+                           'AR', 1225, 1635,
+                           'BE', 1960, 667,
+                           'BG', 2180, 778,
+                           'GR', 2150, 820,
+                           'RO', 2175, 730,
+                           'TR', 2260, 820,
+                           'BY', 2200, 625,
+                           'PL', 2125, 645,
+                           'DK', 2025, 590,
+                           'EE', 2185, 550,
+                           'CZ', 2070, 680,
+                           'FI', 2200, 465,
+                           'SE', 2080, 485,
+                           'NO', 1995, 515,
+                           'CH', 1998, 720,
+                           'IT', 2045, 760,
+                           'NL', 1970, 645,
+                           'IE', 1830, 630,
+                           'AT', 2065, 710,
+                           'SI', 2080, 733,
+                           'YU', 2135, 760,
+                           'ES', 1870, 805,
+                           'PT', 1825, 815,
+                           'CY ', 2265, 868,
+                           'MD', 2215, 715,
+                           'CL', 1140, 1670,
+                           'CO', 1120, 1215,
+                           'NZ', 3785, 1695,
+                           'TW', 3190, 990,
+                           'IL', 2310, 915,
+                           'DO', 1175, 1050,
+                           'LU', 1990, 680,
+                           'GE', 2375, 780,
+                           'CR', 1020, 1152,
+                           'HU', 2110, 720,
+                           'CU', 1080, 1025,
+                           'LV', 2180, 575,
+                           'LT', 2165, 602,
+                           'MA', 1830, 915,
+                           'PE', 1095, 1350,
+                           'PR', 1205, 1060,
+                           'SK', 2120, 695,
+                           'AM', 2390, 805,
+                           'TJ', 2655, 825,
+                           'TM', 2520, 815,
+                           'ZA', 2165, 1595,
 
-                      'LY', 2090, 960,
-                      'NG', 1990, 1160,
-                      'ID', 3120, 1270,
-                      'MX', 815, 1000,
-                      'PK', 2650, 930,
-                      'VN', 3065, 1125,
-                      'VE', 1210, 1180,
-                      'SA', 2380, 1000,
-                      'KH', 3025, 1125,
-                      'AZ', 2420, 803,
-                      'MM', 2930, 1025,
-                      'EC', 1075, 1270,
-                      'HN', 990, 1095,
-                      'IS', 1710, 450,
-                      'JM', 1088, 1061,
-                      'JO', 2300, 920,
-                      'SN', 1755, 1105,
-                      'SC', 2505, 1304,
-                      'UA', 2245, 690,
-                      'UY', 1315, 1615)
+                           'LY', 2090, 960,
+                           'NG', 1990, 1160,
+                           'ID', 3120, 1270,
+                           'MX', 815, 1000,
+                           'PK', 2650, 930,
+                           'VN', 3065, 1125,
+                           'VE', 1210, 1180,
+                           'SA', 2380, 1000,
+                           'KH', 3025, 1125,
+                           'AZ', 2420, 803,
+                           'MM', 2930, 1025,
+                           'EC', 1075, 1270,
+                           'HN', 990, 1095,
+                           'IS', 1710, 450,
+                           'JM', 1088, 1061,
+                           'JO', 2300, 920,
+                           'SN', 1755, 1105,
+                           'SC', 2505, 1304,
+                           'UA', 2245, 690,
+                           'UY', 1315, 1615)
         for i in rce:
             nodei = int(i.split(':')[1])
-            if nodei> nodemax :
+            if nodei > nodemax:
                 nodemax = nodei
-        print(nodemax)
         for i in rce:
-            #nodei = (i.split(':')[1])
-            #print(int(i.split(':')[1]))
-            #nodemax += nodei
-            #print(i.split(':')[0][2:-1])
+            # nodei = (i.split(':')[1])
+            # print(int(i.split(':')[1]))
+            # nodemax += nodei
+            # print(i.split(':')[0][2:-1])
             webnation = i.split(':')[0][2:-1]
             for j in range(len(self.nationlist)):
-                if self.nationlist[j]==webnation:
-                    #print(float(self.nationlist[j+1])/4000*661, float(self.nationlist[j+2])/1991*241)
-                    #print(float(self.nationlist[j+1])/4000*661+50, float(self.nationlist[j+2])/1991*241+10)
+                if self.nationlist[j] == webnation:
+                    # print(float(self.nationlist[j+1])/4000*661, float(self.nationlist[j+2])/1991*241)
+                    # print(float(self.nationlist[j+1])/4000*661+50, float(self.nationlist[j+2])/1991*241+10)
 
-                    graphicsceneCR.addEllipse(float(self.nationlist[j+1])/4000*661+90, float(self.nationlist[j+2])/1991*241+20, 3+int(i.split(':')[1])/nodemax*15, 3+int(i.split(':')[1])/nodemax*10, pen)
+                    graphicsceneCR.addEllipse(float(self.nationlist[j + 1]) / 4000 * 661 + 90,
+                                              float(self.nationlist[j + 2]) / 1991 * 241 + 20,
+                                              3 + int(i.split(':')[1]) / nodemax * 15,
+                                              3 + int(i.split(':')[1]) / nodemax * 10, pen)
 
-                    graphicsceneCR.addEllipse(float(self.nationlist[j+1])/4000*661, float(self.nationlist[j+2])/1991*241, 0.00001, 0.00001, pen)
-        #print(max(nodemax))
-        #print(max(nodenum))
-          # 第三步，创建一个QGraphicsScene，因为加载的图形（FigureCanvas）不能直接放到graphicview控件中，必须先放到graphicScene，然后再把graphicscene放到graphicview中
-        #for i in NODEnum:
-         #   graphicsceneCR.addEllipse(40, 40, 4, 4, pen)
-        #graphicsceneCR.addEllipse(40, 40, 4, 4,pen)
-        #graphicsceneCR.addEllipse(10,10,60,60,pen)  # 第四步，把图形放到QGraphicsScene中，注意：图形是作为一个QWidget放到QGraphicsScene中的
+                    graphicsceneCR.addEllipse(float(self.nationlist[j + 1]) / 4000 * 661,
+                                              float(self.nationlist[j + 2]) / 1991 * 241, 0.00001, 0.00001, pen)
+        # print(max(nodemax))
+        # print(max(nodenum))
+        # 第三步，创建一个QGraphicsScene，因为加载的图形（FigureCanvas）不能直接放到graphicview控件中，必须先放到graphicScene，然后再把graphicscene放到graphicview中
+        # for i in NODEnum:
+        #   graphicsceneCR.addEllipse(40, 40, 4, 4, pen)
+        # graphicsceneCR.addEllipse(40, 40, 4, 4,pen)
+        # graphicsceneCR.addEllipse(10,10,60,60,pen)  # 第四步，把图形放到QGraphicsScene中，注意：图形是作为一个QWidget放到QGraphicsScene中的
         self.ui.graphicsView_7.setScene(graphicsceneCR)
         self.ui.graphicsView_7.show()  # 最后，调用show方法呈现图形！Voila!!
-
-
-
 
     def initUI(self):
         '显示窗口'
         self.ui = Ui_Form()
         self.ui.setupUi(self)
+        self.m_wallet = Wallet
+
         self.publishform = publishform()
         self.initchart()
         self.sendform = sendform()
@@ -1379,12 +1452,16 @@ class Example(QDialog,QWidget):
         btntraHisrefresh.clicked.connect(self.refresh)
 
         self.timertop = QTimer(self)  # 初始化一个定时器  transaction status
-        self.timertop.timeout.connect(self.initchart)  # 计时结束调用operate()方法
-        self.timertop.start(50000)  # 设置计时间隔并启动
+        self.timertop.timeout.connect(self.refresh)  # 计时结束调用operate()方法
+        self.timertop.start(51000)  # 设置计时间隔并启动
 
         self.timertop = QTimer(self)  # 初始化一个定时器  statistics
         self.timertop.timeout.connect(self.initchart)  # 计时结束调用operate()方法
-        self.timertop.start(30000)  # 设置计时间隔并启动
+        self.timertop.start(10000)  # 设置计时间隔并启动initmap
+
+        self.timertop = QTimer(self)  # 初始化一个定时器  statistics
+        self.timertop.timeout.connect(self.initmap)  # 计时结束调用operate()方法
+        self.timertop.start(63000)  # 设置计时间隔并启动
 
         self.timertop = QTimer(self)  # 初始化一个定时器  topstatus
         self.timertop.timeout.connect(self.refreshTop)  # 计时结束调用operate()方法
@@ -1393,7 +1470,6 @@ class Example(QDialog,QWidget):
         self.syncstatus = 0
         self.peers = 0
 
-        self.m_wallet = Wallet
         #Page of Create Wallet
         stackedW = self.ui.stackedWidget
         btncnw = self.ui.creat_new_wallet
