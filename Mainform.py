@@ -155,7 +155,7 @@ class conInfoform(QWidget, Ui_ConInfoForm):
 
     def show_w2(self,row):  # 显示窗体2
         self.Row = row
-        ind = Core_func.QTableWidget.indexFromItem(ex.ui.multWallet, ex.ui.multWallet.item(row, 1))
+        ind = Core_func.QTableWidget.indexFromItem(ex.ui.ContactsT, ex.ui.ContactsT.item(row, 1))
         self.ui.lineEdit_6.setText(ind.data())
         self.show()
 
@@ -165,7 +165,7 @@ class conInfoform(QWidget, Ui_ConInfoForm):
         ################
 
         newItemName = QTableWidgetItem(self.ui.lineEdit_7.text())
-        ex.ui.ContactsT.setItem(row, 1, newItemName)
+        ex.ui.ContactsT.setItem(row, 0, newItemName)
         #print(ex.ui.ContactsT.currentIndex())
         #self.accountform.ui.Account.setItem(Rcount, 1, newItemAddr)
         #self.accountform.ui.Account.setItem(Rcount, 0, newItemName)
@@ -212,7 +212,7 @@ class walletInfoform(QWidget, Ui_WalletInfoForm):
         ################
 
         newItemName = QTableWidgetItem(self.ui.lineEdit_7.text())
-        ex.ui.multWallet.setItem(row, 1, newItemName)
+        ex.ui.multWallet.setItem(row, 0, newItemName)
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -590,7 +590,9 @@ class sendform(QWidget, Ui_SendForm):
                 "https://waltonchain.net:18950/api/getBalance/" + ex.m_wallet.address).json()
             a = str(balance)
             self.ui.label_52.setText(a.split(',')[1][11:] + 'WTCT')
-            ind = Core_func.QTableWidget.indexFromItem(ex.ui.multWallet, ex.ui.multWallet.item(row, 1))
+            ind = Core_func.QTableWidget.indexFromItem(ex.ui.ContactsT, ex.ui.ContactsT.item(row, 1))
+            print(row)
+            print(ind.data())
             self.ui.lineEdit_7.setText(ind.data())
             self.show()
 
@@ -633,8 +635,6 @@ class sendform(QWidget, Ui_SendForm):
             self.closeform()
             self.ui.lineEdit_7.clear()
             self.ui.lineEdit_6.clear()
-
-
         else:
             self.publishform.show_w2('transaction failed')
 
@@ -715,6 +715,7 @@ class Example(QDialog,QWidget):
         ind = Core_func.QTableWidget.indexFromItem(ex.ui.multWallet, ex.ui.multWallet.item(row, 1))
         self.ui.lineEdit_8.setText(ind.data())
         self.m_wallet.address = ind.data()
+        print(row)
         self.pressbtn1()
 
     def editwallet(self,row):
@@ -722,13 +723,19 @@ class Example(QDialog,QWidget):
         self.walletInfoform.show_w2(row)
 
     def delcontact(self,row):
-        self.ui.ContactsT.removeRow(row)
+        print(row)
+        if (self.ui.ContactsT.rowCount()-1) == 0:
+            self.ui.ContactsT.setRowCount(0)
+        else:
+            self.ui.ContactsT.removeRow(row)
 
     def sendcontact(self,row):
+        print(row)
         self.sendform = sendform()
         self.sendform.show_w2(row)
 
     def editcontact(self,row):
+        print(row)
         self.conInfoform = conInfoform()
         self.conInfoform.show_w2(row)
 
@@ -1012,9 +1019,10 @@ class Example(QDialog,QWidget):
 
     def delWallet(self,row):
         ind = Core_func.QTableWidget.indexFromItem(ex.ui.multWallet, ex.ui.multWallet.item(row, 1))
-        filename = "Data\\Keystore\\"+ind[2:18]+".keystore"
-        self.ui.ContactsT.removeRow(row)
-        os.remove(filename)
+        filename = "Data\\Keystore\\"+ind.data()[2:18]+".keystore"
+        self.ui.multWallet.removeRow(row)
+        if os.path.isfile(filename):
+            os.remove(filename)
 
     def savekey(self,row=0):
         ## need to change:copy kfile from data\keystore to specify position
@@ -1027,7 +1035,7 @@ class Example(QDialog,QWidget):
                     data = file_save_keystore.write(json.dumps(encrypted))
         else:
             ind = Core_func.QTableWidget.indexFromItem(ex.ui.multWallet, ex.ui.multWallet.item(row, 1))
-            filename = "Data\\Keystore\\" + ind[2:18] + ".keystore"
+            filename = "Data\\Keystore\\" + ind.data()[2:18] + ".keystore"
             if os.path.isfile(filename):
                 file_object = open(filename)
                 all_the_text = file_object.read()
