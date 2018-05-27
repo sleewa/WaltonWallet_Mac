@@ -237,10 +237,18 @@ class messform(QWidget, Ui_MessForm):
         ind = Core_func.QTableWidget.indexFromItem(ex.ui.LogMessage,QTableWidgetItem)
         #rownum = ex.ui.LogMessage.selectedItems().index
         print(ind.data())
+        print(ind.data().split('tx_hash')[1][1:])
+        ret = Core_func.getTransactionInfo(ind.data().split('tx_hash')[1][1:])
+        self.ui.lineEdit_12.setText(str(ret[1][0]['blockNumber']))
+        self.ui.lineEdit_11.setText(ret[1][0]['timestamp'])
+        self.ui.lineEdit_9.setText(str(ret[1][0]['gas']))
+        self.ui.lineEdit_10.setText(str(ret[1][0]['gasPrice']))
+        self.ui.lineEdit_8.setText(str(ret[1][0]['addressTo']))
+        self.ui.lineEdit_7.setText(str(ret[1][0]['addressFrom']))
+        self.ui.lineEdit_6.setText(str(ret[1][0]['value']))
+        self.ui.textEdit.setText(str(ret[1][0]['tx_hash']))
         self.show()
 
-    def savechange(self):
-        ex.m_wallet.accountname = self.ui.lineEdit_7.text()
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -502,7 +510,7 @@ class sendform(QWidget, Ui_SendForm):
         #need to get blocknumber and time
         ret = Core_func.Transaction_out(ex.m_wallet.privateKey, self.ui.lineEdit_7.text().strip(), self.ui.lineEdit_6.text().strip(), self.ui.lineEdit_8.text().strip(), self.ui.lineEdit_9.text().strip())
         if ret[0] == 1:
-            self.Trans.txhash = ret[1]
+            self.Trans.txhash = '0x36775097df4ed6429dbe31fc56119a66f8c3dfcfda46792f4982117a90521f0a'#ret[1]
             #tx_details = Core_func.getTransactionInfo(self.Trans.txhash)
             #self.Trans.Blocknumber = tx_details['blockNumber']
             #self.Trans.timestamp = tx_details['timestamp']
@@ -523,7 +531,7 @@ class sendform(QWidget, Ui_SendForm):
             ex.ui.LogMessage.setRowCount(Rcount + 1)
             #time needs to be confirmed
             newItemTime = QTableWidgetItem(datetime.datetime.now().strftime('%Y-%m-%d'))
-            newItemContent = QTableWidgetItem('From:'+self.Trans.fromaddr +'\n'+ 'To:'+self.Trans.toaddr +'\n'+ 'Value:'+self.Trans.value)
+            newItemContent = QTableWidgetItem('From:'+self.Trans.fromaddr +'\n'+ 'To:'+self.Trans.toaddr +'\n'+ 'Value:'+self.Trans.value +'                                                                                                                         '+'\n'+ 'tx_hash:'+self.Trans.txhash)
             newItemType = QTableWidgetItem(self.Trans.Type)
             ex.ui.LogMessage.setItem(Rcount, 0, newItemType)
             ex.ui.LogMessage.setItem(Rcount, 1, newItemTime)

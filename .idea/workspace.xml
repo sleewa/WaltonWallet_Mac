@@ -231,8 +231,8 @@
       <file leaf-file-name="Mainform.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Mainform.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="905" column="9" selection-start-line="905" selection-start-column="9" selection-end-line="905" selection-end-column="9" />
+            <state relative-caret-position="286">
+              <caret line="243" column="57" selection-start-line="243" selection-start-column="57" selection-end-line="243" selection-end-column="57" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
                 <element signature="e#1544#4353#0" />
@@ -243,7 +243,6 @@
                 <element signature="e#3741#4353#0" />
                 <element signature="e#3581#4602#0" />
                 <element signature="e#3555#6096#0" />
-                <element signature="e#5650#6702#0" />
                 <element signature="e#1109#2764#0" />
                 <element signature="e#1770#1979#0" />
                 <element signature="e#2026#2150#0" />
@@ -257,7 +256,6 @@
                 <element signature="e#1734#1771#0" />
                 <element signature="e#1314#1523#0" />
                 <element signature="e#1570#1694#0" />
-                <element signature="e#11497#16550#0" />
                 <element signature="e#5409#6241#0" />
                 <element signature="e#1701#1826#0" />
                 <element signature="e#1877#2018#0" />
@@ -266,6 +264,7 @@
                 <element signature="e#13481#13774#0" />
                 <element signature="e#1483#1692#0" />
                 <element signature="e#1473#1600#0" />
+                <element signature="e#4316#4358#0" />
                 <element signature="e#959#1568#0" />
                 <element signature="e#1603#2041#0" />
                 <element signature="e#2076#2514#0" />
@@ -286,8 +285,10 @@
                 <element signature="e#7396#7802#0" />
                 <element signature="e#7841#8252#0" />
                 <element signature="e#8287#8818#0" />
-                <element signature="e#17515#17739#0" />
+                <element signature="e#33753#34566#0" />
+                <element signature="e#34601#34841#0" />
                 <element signature="e#19680#20072#0" />
+                <element signature="e#29526#30242#0" />
                 <element signature="e#15012#15129#0" />
                 <element signature="e#15167#15281#0" />
                 <element signature="e#15315#15371#0" />
@@ -405,8 +406,8 @@
       <file leaf-file-name="Core_func.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Core_func.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="359">
-              <caret line="220" column="24" selection-start-line="220" selection-start-column="24" selection-end-line="220" selection-end-column="24" />
+            <state relative-caret-position="282">
+              <caret line="215" column="1" selection-start-line="215" selection-start-column="1" selection-end-line="215" selection-end-column="1" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -433,8 +434,9 @@
       <find>Transaction_out</find>
       <find>testB</find>
       <find>public_key</find>
-      <find>getTransactionRecord_day</find>
       <find>%</find>
+      <find>savename</find>
+      <find>getTransactionRecord_day</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -931,16 +933,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Core_func.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="359">
-          <caret line="220" column="24" selection-start-line="220" selection-start-column="24" selection-end-line="220" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.PyCharmCE2018.1/system/python_stubs/133899476/PyQt5/QtWidgets/QWidget.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="211">
@@ -948,10 +940,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Core_func.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="215" column="1" selection-start-line="215" selection-start-column="1" selection-end-line="215" selection-end-column="1" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Mainform.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="905" column="9" selection-start-line="905" selection-start-column="9" selection-end-line="905" selection-end-column="9" />
+        <state relative-caret-position="286">
+          <caret line="243" column="57" selection-start-line="243" selection-start-column="57" selection-end-line="243" selection-end-column="57" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
             <element signature="e#1544#4353#0" />
@@ -962,7 +964,6 @@
             <element signature="e#3741#4353#0" />
             <element signature="e#3581#4602#0" />
             <element signature="e#3555#6096#0" />
-            <element signature="e#5650#6702#0" />
             <element signature="e#1109#2764#0" />
             <element signature="e#1770#1979#0" />
             <element signature="e#2026#2150#0" />
@@ -976,7 +977,6 @@
             <element signature="e#1734#1771#0" />
             <element signature="e#1314#1523#0" />
             <element signature="e#1570#1694#0" />
-            <element signature="e#11497#16550#0" />
             <element signature="e#5409#6241#0" />
             <element signature="e#1701#1826#0" />
             <element signature="e#1877#2018#0" />
@@ -985,6 +985,7 @@
             <element signature="e#13481#13774#0" />
             <element signature="e#1483#1692#0" />
             <element signature="e#1473#1600#0" />
+            <element signature="e#4316#4358#0" />
             <element signature="e#959#1568#0" />
             <element signature="e#1603#2041#0" />
             <element signature="e#2076#2514#0" />
@@ -1005,8 +1006,10 @@
             <element signature="e#7396#7802#0" />
             <element signature="e#7841#8252#0" />
             <element signature="e#8287#8818#0" />
-            <element signature="e#17515#17739#0" />
+            <element signature="e#33753#34566#0" />
+            <element signature="e#34601#34841#0" />
             <element signature="e#19680#20072#0" />
+            <element signature="e#29526#30242#0" />
             <element signature="e#15012#15129#0" />
             <element signature="e#15167#15281#0" />
             <element signature="e#15315#15371#0" />

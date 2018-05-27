@@ -322,8 +322,8 @@ border-radius:25px;</string>
    </property>
    <property name="font">
     <font>
-     <family>等线</family>
-     <pointsize>10</pointsize>
+     <family>微软雅黑</family>
+     <pointsize>11</pointsize>
     </font>
    </property>
    <property name="toolTip">
@@ -369,8 +369,8 @@ QLineEdit[echoMode=&quot;2&quot;] {
    </property>
    <property name="font">
     <font>
-     <family>等线</family>
-     <pointsize>10</pointsize>
+     <family>微软雅黑</family>
+     <pointsize>11</pointsize>
     </font>
    </property>
    <property name="toolTip">
@@ -413,8 +413,8 @@ QLineEdit[echoMode=&quot;2&quot;] {
    </property>
    <property name="font">
     <font>
-     <family>等线</family>
-     <pointsize>10</pointsize>
+     <family>微软雅黑</family>
+     <pointsize>11</pointsize>
     </font>
    </property>
    <property name="toolTip">
@@ -460,8 +460,8 @@ QLineEdit[echoMode=&quot;2&quot;] {
    </property>
    <property name="font">
     <font>
-     <family>等线</family>
-     <pointsize>10</pointsize>
+     <family>微软雅黑</family>
+     <pointsize>11</pointsize>
     </font>
    </property>
    <property name="toolTip">
@@ -507,8 +507,8 @@ QLineEdit[echoMode=&quot;2&quot;] {
    </property>
    <property name="font">
     <font>
-     <family>等线</family>
-     <pointsize>10</pointsize>
+     <family>微软雅黑</family>
+     <pointsize>11</pointsize>
     </font>
    </property>
    <property name="toolTip">
@@ -552,6 +552,12 @@ QLineEdit[echoMode=&quot;2&quot;] {
      <height>51</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <family>微软雅黑</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
    <property name="frameShape">
     <enum>QFrame::NoFrame</enum>
    </property>
@@ -570,8 +576,8 @@ QLineEdit[echoMode=&quot;2&quot;] {
    </property>
    <property name="font">
     <font>
-     <family>等线</family>
-     <pointsize>10</pointsize>
+     <family>微软雅黑</family>
+     <pointsize>11</pointsize>
     </font>
    </property>
    <property name="toolTip">
@@ -617,8 +623,8 @@ QLineEdit[echoMode=&quot;2&quot;] {
    </property>
    <property name="font">
     <font>
-     <family>等线</family>
-     <pointsize>10</pointsize>
+     <family>微软雅黑</family>
+     <pointsize>11</pointsize>
     </font>
    </property>
    <property name="toolTip">

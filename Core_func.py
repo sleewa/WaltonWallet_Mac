@@ -216,7 +216,7 @@ def getHashRate():
 #ret2 = getTransactionInfo('0x36775097df4ed6429dbe31fc56119a66f8c3dfcfda46792f4982117a90521f0a')
 #print(ret2[1])
 #print(ret2[1][2]['totol_reward'])
-#print(ret2[1][2]['blockNumer'])
+#print(ret2[1][0]['blockNumber'])
 
-ret3 = getMiningRecord('0x4a49f969507770f31a3e98ff05e75060cfe8e3fd')
-print(ret3[1])
+#ret3 = getMiningRecord('0x4a49f969507770f31a3e98ff05e75060cfe8e3fd')
+#print(ret3[1])
