@@ -36,11 +36,15 @@ from NewContactForm import Ui_NewContactForm
 from MessForm import  Ui_MessForm
 from PublishForm import Ui_publishForm
 from AccountForm import Ui_AccountForm
+from WalletInfoForm import Ui_WalletInfoForm
+from ConInfoForm import Ui_ConInfoForm
+
 import matplotlib
 import datetime
 matplotlib.use("Qt5Agg")  # 声明使用QT5
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
+
 
 class Figure_Canvas(FigureCanvas):   # 通过继承FigureCanvas类，使得该类既是一个PyQt5的Qwidget，又是一个matplotlib的FigureCanvas，这是连接pyqt5与matplot                                          lib的关键
 
@@ -135,8 +139,105 @@ class Figure_Canvas(FigureCanvas):   # 通过继承FigureCanvas类，使得该�
             self.axes.set_axis_off()
             return 0
 
+class conInfoform(QWidget, Ui_ConInfoForm):
+    def __init__(self):
+        super().__init__()
+        self.ui = Ui_ConInfoForm()
+        self.ui.setupUi(self)
+        self.setWindowFlags(Qt.CustomizeWindowHint)
+        btnc = self.ui.closeenterpsw
+        btnc.clicked.connect(self.closeform)
+        btnsave = self.ui.pushButton_9
+        btnsave.clicked.connect(self.savechange)
+        #self.ui.lineEdit_6.changeEvent.connect(self.showqrcode)
+        #self.ui.lineEdit_6.keyPressEvent(self,self.showqrcode)
+
+    def show_w2(self):  # 显示窗体2
+        self.show()
+
+    def savechange(self):
+        ################
+        # waiting to add checking same wallet already existed
+        ################
+        Rcount = ex.ui.ContactsT.rowCount()
+        print(Rcount)
+        ex.ui.ContactsT.setRowCount(Rcount + 1)
+        newItemAddr = QTableWidgetItem(self.ui.lineEdit_6.text())
+        newItemName = QTableWidgetItem(self.ui.lineEdit_7.text())
+        ret = ex.buttonsdef()
+        ex.ui.ContactsT.setItem(Rcount, 1, newItemAddr)
+        ex.ui.ContactsT.setItem(Rcount, 0, newItemName)
+        ex.ui.ContactsT.setCellWidget(Rcount, 2, ret[4])
+        ex.ui.ContactsT.setCellWidget(Rcount, 3, ret[5])
+        ex.ui.ContactsT.setCellWidget(Rcount, 4, ret[6])
+        #print(ex.ui.ContactsT.currentIndex())
+        #self.accountform.ui.Account.setItem(Rcount, 1, newItemAddr)
+        #self.accountform.ui.Account.setItem(Rcount, 0, newItemName)
 
 
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.dragPosition = event.globalPos() - self.frameGeometry().topLeft()
+            QApplication.postEvent(self, Core_func.QEvent(174))
+            event.accept()
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() == Qt.LeftButton:
+            self.move(event.globalPos() - self.dragPosition)
+            event.accept()
+
+    def closeform(self):
+        self.close()
+
+class walletInfoform(QWidget, Ui_WalletInfoForm):
+    def __init__(self):
+        super().__init__()
+        self.ui = Ui_WalletInfoForm()
+        self.ui.setupUi(self)
+        self.setWindowFlags(Qt.CustomizeWindowHint)
+        btnc = self.ui.closeenterpsw
+        btnc.clicked.connect(self.closeform)
+        btnsave = self.ui.pushButton_9
+        btnsave.clicked.connect(self.savechange)
+        #self.ui.lineEdit_6.changeEvent.connect(self.showqrcode)
+        #self.ui.lineEdit_6.keyPressEvent(self,self.showqrcode)
+
+    def show_w2(self):  # 显示窗体2
+        self.show()
+
+    def savechange(self):
+        ################
+        # waiting to add checking same wallet already existed
+        ################
+        Rcount = ex.ui.ContactsT.rowCount()
+        print(Rcount)
+        ex.ui.ContactsT.setRowCount(Rcount + 1)
+        newItemAddr = QTableWidgetItem(self.ui.lineEdit_6.text())
+        newItemName = QTableWidgetItem(self.ui.lineEdit_7.text())
+        ret = ex.buttonsdef()
+        ex.ui.ContactsT.setItem(Rcount, 1, newItemAddr)
+        ex.ui.ContactsT.setItem(Rcount, 0, newItemName)
+        ex.ui.ContactsT.setCellWidget(Rcount, 2, ret[4])
+        ex.ui.ContactsT.setCellWidget(Rcount, 3, ret[5])
+        ex.ui.ContactsT.setCellWidget(Rcount, 4, ret[6])
+        #print(ex.ui.ContactsT.currentIndex())
+        #self.accountform.ui.Account.setItem(Rcount, 1, newItemAddr)
+        #self.accountform.ui.Account.setItem(Rcount, 0, newItemName)
+
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.dragPosition = event.globalPos() - self.frameGeometry().topLeft()
+            QApplication.postEvent(self, Core_func.QEvent(174))
+            event.accept()
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() == Qt.LeftButton:
+            self.move(event.globalPos() - self.dragPosition)
+            event.accept()
+
+    def closeform(self):
+        self.close()
 
 class publishform(QWidget, Ui_publishForm):
     def __init__(self):
@@ -290,12 +391,12 @@ class newcontactform(QWidget, Ui_NewContactForm):
         ex.ui.ContactsT.setRowCount(Rcount + 1)
         newItemAddr = QTableWidgetItem(self.ui.lineEdit_6.text())
         newItemName = QTableWidgetItem(self.ui.lineEdit_7.text())
-
+        ret = ex.buttonsdef()
         ex.ui.ContactsT.setItem(Rcount, 1, newItemAddr)
         ex.ui.ContactsT.setItem(Rcount, 0, newItemName)
-        ex.ui.ContactsT.setCellWidget(Rcount, 2, ex.consend)
-        ex.ui.ContactsT.setCellWidget(Rcount, 3, ex.conedit)
-        ex.ui.ContactsT.setCellWidget(Rcount, 4, ex.condelete)
+        ex.ui.ContactsT.setCellWidget(Rcount, 2, ret[4])
+        ex.ui.ContactsT.setCellWidget(Rcount, 3, ret[5])
+        ex.ui.ContactsT.setCellWidget(Rcount, 4, ret[6])
         #print(ex.ui.ContactsT.currentIndex())
         #self.accountform.ui.Account.setItem(Rcount, 1, newItemAddr)
         #self.accountform.ui.Account.setItem(Rcount, 0, newItemName)
@@ -612,21 +713,23 @@ class Example(QDialog,QWidget):
 
 
     def buttonsdef(self):
+
         mwOpen = QPushButton(self)  # type: QPushButton
         mwOpen.setStyleSheet(''' border:0px; ''')
         mwOpen.setIcon(QIcon("pic/open1233.png"))
-        mwOpen.setIconSize(QSize(70, 50))
+        mwOpen.setIconSize(QSize(80, 60))
         mwOpen.clicked.connect(self.pressbtn1)
 
         mwEdit = QPushButton(self)  # type: QPushButton
         mwEdit.setStyleSheet(''' border:0px; ''')
         mwEdit.setIcon(QIcon("pic/editA.png"))
-        mwEdit.setIconSize(QSize(70, 50))
+        mwEdit.setIconSize(QSize(80, 60))
+        mwEdit.clicked.connect(self.editwallet)
 
         mwDelete = QPushButton(self)  # type: QPushButton
         mwDelete.setStyleSheet(''' border:0px; ''')
         mwDelete.setIcon(QIcon("pic/deleteA.png"))
-        mwDelete.setIconSize(QSize(70, 50))
+        mwDelete.setIconSize(QSize(80, 60))
         mwDelete.clicked.connect(self.delWallet)
 
         mwSaveKey = QPushButton(self)  # type: QPushButton
@@ -638,21 +741,41 @@ class Example(QDialog,QWidget):
         consend = QPushButton(self)  # type: QPushButton
         consend.setStyleSheet(''' border:0px; ''')
         consend.setIcon(QIcon("pic/sendA.png"))
-        consend.setIconSize(QSize(70, 50))
-        consend.clicked.connect(self.pressbtn1)
+        consend.setIconSize(QSize(80, 60))
+        consend.clicked.connect(self.sendcontact)
 
         conedit = QPushButton(self)  # type: QPushButton
         conedit.setStyleSheet(''' border:0px; ''')
         conedit.setIcon(QIcon("pic/editA.png"))
-        conedit.setIconSize(QSize(70, 50))
+        conedit.setIconSize(QSize(80, 60))
+        conedit.clicked.connect(self.editcontact)
+
 
         condelete = QPushButton(self)  # type: QPushButton
         condelete.setStyleSheet(''' border:0px; ''')
         condelete.setIcon(QIcon("pic/deleteA.png"))
-        condelete.setIconSize(QSize(70, 50))
-        condelete.clicked.connect(self.delWallet)
+        condelete.setIconSize(QSize(80, 60))
+        condelete.clicked.connect(self.delcontact)
 
-        return (mwOpen,mwEdit,mwDelete,mwSaveKey)
+        return (mwOpen,mwEdit,mwDelete,mwSaveKey,consend,conedit,condelete)
+
+    def editwallet(self):
+        self.walletInfoform = walletInfoform()
+        self.walletInfoform.show()
+
+    def delcontact(self):
+        Rcount = self.ui.ContactsT.rowCount()
+        self.ui.ContactsT.setRowCount(Rcount - 1)
+
+    def sendcontact(self):
+        self.sendform = sendform()
+        self.sendform.show()
+
+    def editcontact(self):
+        self.conInfoform = conInfoform()
+        self.conInfoform.show()
+
+
     #shift Pages tool btn
     def pressbtn1(self):
         self.ui.mywallet.setIcon(QIcon("pic/mywallet1.png"))
@@ -922,11 +1045,11 @@ class Example(QDialog,QWidget):
         newItemName = QTableWidgetItem(self.m_wallet.accountname)
         self.ui.multWallet.setItem(Rcount, 1, newItemAddr)
         self.ui.multWallet.setItem(Rcount, 0, newItemName)
-        #ret = self.buttonsdef()
-        #self.ui.multWallet.setCellWidget(Rcount, 2, ret[0])
-        self.ui.multWallet.setCellWidget(Rcount, 3, self.mwEdit)
-        self.ui.multWallet.setCellWidget(Rcount, 4, self.mwDelete)
-        self.ui.multWallet.setCellWidget(Rcount, 5, self.mwSaveKey)
+        ret = self.buttonsdef()
+        self.ui.multWallet.setCellWidget(Rcount, 2, ret[0])
+        self.ui.multWallet.setCellWidget(Rcount, 3, ret[1])
+        self.ui.multWallet.setCellWidget(Rcount, 4, ret[2])
+        self.ui.multWallet.setCellWidget(Rcount, 5, ret[3])
         self.initchart()
 
     def delWallet(self):
@@ -1795,8 +1918,8 @@ class Example(QDialog,QWidget):
         self.ui.ContactsT.setShowGrid(0)
         self.ui.ContactsT.horizontalHeader().setStretchLastSection(1)
         self.ui.ContactsT.verticalHeader().setDefaultSectionSize(45)
-        self.ui.ContactsT.setColumnWidth(0, 200)  # 将设置第1列的单元格成20宽度
-        self.ui.ContactsT.setColumnWidth(1, 310)  # 将设置第2列的单元格成30宽度
+        self.ui.ContactsT.setColumnWidth(0, 160)  # 将设置第1列的单元格成20宽度
+        self.ui.ContactsT.setColumnWidth(1, 350)  # 将设置第2列的单元格成30宽度
         self.ui.ContactsT.setColumnWidth(2, 100)  # 将设置第3列的单元格成50宽度
         self.ui.ContactsT.setColumnWidth(3, 100)  # 将设置第2列的单元格成30宽度
         self.ui.ContactsT.setColumnWidth(4, 100)
