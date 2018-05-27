@@ -126,6 +126,17 @@ def getTransactionRecord(public_key):
         print(err)
         return (0, err)
 
+def getTransactionInfo(hash):
+    try:
+        r1 = requests.get(
+            "https://waltonchain.net:18950/api/getTransactionInfo/"+hash).json()
+        return (1, r1['tx_details'])
+    except Exception as err:
+        print(err)
+        return (0, err)
+#api/getAccountTransactionsAllPagination/" + address + "/1/100"
+
+
 def getTokenMarket():
     try:
         r1 = requests.get(
@@ -202,7 +213,10 @@ def getHashRate():
 # print(Import_From_Private('e8671e48e23b728717a43b888612f324ad96177396dcc9a1f3616c6c3c3e6429'))
 
 
-ret2 = getMiningRecord('0xfbf36b7c56258dc3e29769c1a686250b8b002de3')
-print(ret2[1][2]['timestamp'][0:10])
-print(ret2[1][2]['totol_reward'])
+#ret2 = getTransactionInfo('0x36775097df4ed6429dbe31fc56119a66f8c3dfcfda46792f4982117a90521f0a')
+#print(ret2[1])
+#print(ret2[1][2]['totol_reward'])
+#print(ret2[1][2]['blockNumer'])
 
+ret3 = getMiningRecord('0x4a49f969507770f31a3e98ff05e75060cfe8e3fd')
+print(ret3[1])

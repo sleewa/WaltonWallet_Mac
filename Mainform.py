@@ -37,6 +37,7 @@ from MessForm import  Ui_MessForm
 from PublishForm import Ui_publishForm
 from AccountForm import Ui_AccountForm
 import matplotlib
+import datetime
 matplotlib.use("Qt5Agg")  # 声明使用QT5
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
@@ -107,19 +108,25 @@ class Figure_Canvas(FigureCanvas):   # 通过继承FigureCanvas类，使得该�
     def testR(self,addr):
         if addr != '':
             ret3 = Core_func.getMiningRecord(addr)
+            if len(ret3[1])!=0:
+                y = []
+                x = []
+                for i in range(len(ret3[1])):
+                    x.append(i)
+                    y.append(int(ret3[1][i]['totol_reward']))
+                #y.append(0)
+                #x.append(0)
 
-            y = []
-            x = []
-            for i in range(len(ret3[1])):
-                x.append(i)
-                y.append(int(ret3[1][i]['totol_reward']))
-            #y.append(0)
-            #x.append(0)
-
-            #print(ret3[1][2]['timestamp'][0:10])
-            self.axes.plot(x, y, 'r-', 1)
-            self.axes.set_axis_off()
-            return ret3[1][i]['totol_reward']
+                #print(ret3[1][2]['timestamp'][0:10])
+                self.axes.plot(x, y, 'r-', 1)
+                self.axes.set_axis_off()
+                return ret3[1][i]['totol_reward']
+            else:
+                y = [0]
+                x = [0]
+                self.axes.plot(x, y, 'r-', 1)
+                self.axes.set_axis_off()
+                return 0
         else:
             y = [0]
             x = [0]
@@ -496,11 +503,14 @@ class sendform(QWidget, Ui_SendForm):
         ret = Core_func.Transaction_out(ex.m_wallet.privateKey, self.ui.lineEdit_7.text().strip(), self.ui.lineEdit_6.text().strip(), self.ui.lineEdit_8.text().strip(), self.ui.lineEdit_9.text().strip())
         if ret[0] == 1:
             self.Trans.txhash = ret[1]
+            #tx_details = Core_func.getTransactionInfo(self.Trans.txhash)
+            #self.Trans.Blocknumber = tx_details['blockNumber']
+            #self.Trans.timestamp = tx_details['timestamp']
             self.Trans.toaddr = self.ui.lineEdit_7.text().strip()
             self.Trans.fromaddr = ex.m_wallet.address
             Rcount = ex.ui.TransactionHistory.rowCount()
             ex.ui.TransactionHistory.setRowCount(Rcount + 1)
-            newItemTime = QTableWidgetItem(time.strftime('%Y/%m/%d',time.localtime(time.time())))
+            newItemTime = QTableWidgetItem(datetime.datetime.now().strftime('%Y-%m-%d'))
             newItemAddr = QTableWidgetItem(ex.m_wallet.address)
             newItemStatus = QTableWidgetItem(self.Trans.status)
             newItemValue = QTableWidgetItem('-'+self.Trans.value+'WTCT')
@@ -512,7 +522,7 @@ class sendform(QWidget, Ui_SendForm):
             Rcount = ex.ui.LogMessage.rowCount()
             ex.ui.LogMessage.setRowCount(Rcount + 1)
             #time needs to be confirmed
-            newItemTime = QTableWidgetItem(time.strftime('%Y/%m/%d',time.localtime(time.time())))
+            newItemTime = QTableWidgetItem(datetime.datetime.now().strftime('%Y-%m-%d'))
             newItemContent = QTableWidgetItem('From:'+self.Trans.fromaddr +'\n'+ 'To:'+self.Trans.toaddr +'\n'+ 'Value:'+self.Trans.value)
             newItemType = QTableWidgetItem(self.Trans.Type)
             ex.ui.LogMessage.setItem(Rcount, 0, newItemType)
@@ -541,6 +551,8 @@ class sendform(QWidget, Ui_SendForm):
 
     def closeform(self):
         self.close()
+
+
 
 class Example(QDialog,QWidget):
     def __init__(self):
@@ -861,6 +873,7 @@ class Example(QDialog,QWidget):
         self.ui.multWallet.setCellWidget(Rcount, 3, self.mwEdit)
         self.ui.multWallet.setCellWidget(Rcount, 4, self.mwDelete)
         self.ui.multWallet.setCellWidget(Rcount, 5, self.mwSaveKey)
+        self.initchart()
 
     def delWallet(self):
         ################
@@ -1113,7 +1126,7 @@ class Example(QDialog,QWidget):
         print('tick')
 
     def refresh(self):
-        print('time out')
+        '''
         coun = self.ui.TransactionHistory.rowCount()#self.m_wallet.address
         #tx_hashlist = str(ret[1]).split('tx_hash')
         if self.sendform.Trans.status == 'Submitted':
@@ -1136,6 +1149,24 @@ class Example(QDialog,QWidget):
         newItemStatus = QTableWidgetItem(self.sendform.Trans.status)
         self.ui.TransactionHistory.setItem(coun, 2, newItemStatus)
 
+        '''
+        """
+        if self.m_wallet.address!='':
+            ret3 = Core_func.getTransactionRecord_day(self.m_wallet.address, '20')
+            self.ui.TransactionHistory.setRowCount(0)
+            for i in range(len(ret3[1])):
+                Rcount = self.ui.TransactionHistory.rowCount()
+                self.ui.TransactionHistory.setRowCount(Rcount + 1)
+                newItemtime = QTableWidgetItem(ret3[1][i]['timestamp'][0:10])
+                newItemblock = QTableWidgetItem(str(ret3[1][i]['blockNumer']))
+                newItemreward = QTableWidgetItem(str(ret3[1][i]['totol_reward']) + 'WTCT')
+                newItemreward = QTableWidgetItem(str(ret3[1][i]['totol_reward']) + 'WTCT')
+
+                self.ui.TransactionHistory.setItem(Rcount, 0, newItemtime)
+                self.ui.TransactionHistory.setItem(Rcount, 1, newItemblock)
+                self.ui.TransactionHistory.setItem(Rcount, 2, newItemreward)
+                self.ui.TransactionHistory.setItem(Rcount, 2, newItemreward)
+        """
 
     def refreshTop(self):
         if self.syncstatus == 0:
@@ -1280,13 +1311,22 @@ class Example(QDialog,QWidget):
         self.ui.graphicsView.setScene(graphicscene)  # 第五步，把QGraphicsScene放入QGraphicsView
         self.ui.graphicsView.show()  # 最后，调用show方法呈现图形！Voila!!
         self.ui.lineEdit_35.setText('Current: '+str((int(ret1))/(10**9))+' WTCT')
+        nowtime = datetime.datetime.now()
+        detaday = datetime.timedelta(days=30)
+        da_days = nowtime - detaday
+        self.ui.lineEdit_36.setText(da_days.strftime('%Y-%m-%d'))
+        self.ui.lineEdit_37.setText(nowtime.strftime('%Y-%m-%d'))
         ###########
         drMarket = Figure_Canvas()
-        drMarket.testM()  # 画图
+        ret2 = drMarket.testM()  # 画图
         graphicsceneM = QtWidgets.QGraphicsScene()  # 第三步，创建一个QGraphicsScene，因为加载的图形（FigureCanvas）不能直接放到graphicview控件中，必须先放到graphicScene，然后再把graphicscene放到graphicview中
         graphicsceneM.addWidget(drMarket)  # 第四步，把图形放到QGraphicsScene中，注意：图形是作为一个QWidget放到QGraphicsScene中的
         self.ui.graphicsView_2.setScene(graphicsceneM)  # 第五步，把QGraphicsScene放入QGraphicsView
         self.ui.graphicsView_2.show()  # 最后，调用show方法呈现图形！Voila!!
+        self.ui.lineEdit_39.setText(str(ret2)+ ' USD')
+
+        self.ui.lineEdit_38.setText(da_days.strftime('%Y-%m-%d'))
+        self.ui.lineEdit_40.setText(nowtime.strftime('%Y-%m-%d'))
         ###########
         drB = Figure_Canvas()
         drB.testB(self.m_wallet.address)  # 画图
@@ -1294,15 +1334,36 @@ class Example(QDialog,QWidget):
         graphicsceneB.addWidget(drB)  # 第四步，把图形放到QGraphicsScene中，注意：图形是作为一个QWidget放到QGraphicsScene中的
         self.ui.graphicsView_5.setScene(graphicsceneB)  # 第五步，把QGraphicsScene放入QGraphicsView
         self.ui.graphicsView_5.show()  # 最后，调用show方法呈现图形！Voila!!
+
+        self.ui.lineEdit_41.setText(da_days.strftime('%Y-%m-%d'))
+        self.ui.lineEdit_42.setText(nowtime.strftime('%Y-%m-%d'))
         ###########
         drR = Figure_Canvas()
-        drR.testR(self.m_wallet.address)  # 画图
+        ret4 = drR.testR(self.m_wallet.address)  # 画图
         graphicsceneR = QtWidgets.QGraphicsScene()  # 第三步，创建一个QGraphicsScene，因为加载的图形（FigureCanvas）不能直接放到graphicview控件中，必须先放到graphicScene，然后再把graphicscene放到graphicview中
         graphicsceneR.addWidget(drR)  # 第四步，把图形放到QGraphicsScene中，注意：图形是作为一个QWidget放到QGraphicsScene中的
         self.ui.graphicsView_6.setScene(graphicsceneR)  # 第五步，把QGraphicsScene放入QGraphicsView
         self.ui.graphicsView_6.show()  # 最后，调用show方法呈现图形！Voila!!
-        ###########
 
+        self.ui.lineEdit_43.setText(da_days.strftime('%Y-%m-%d'))
+        self.ui.lineEdit_44.setText(nowtime.strftime('%Y-%m-%d'))
+        self.ui.lineEdit_45.setText(str(ret4))
+
+        ###########
+    def initmining(self):
+        if self.m_wallet.address!='':
+            ret5 = Core_func.getMiningRecord(self.m_wallet.address)
+            self.ui.miningHistory.setRowCount(0)
+            for i in range(len(ret5[1])):
+                Rcount = self.ui.miningHistory.rowCount()
+                self.ui.miningHistory.setRowCount(Rcount + 1)
+                newItemtime = QTableWidgetItem(ret5[1][i]['timestamp'][0:10])
+                newItemblock = QTableWidgetItem(str(ret5[1][i]['blockNumer']))
+                newItemreward = QTableWidgetItem(str(ret5[1][i]['totol_reward'])+'WTCT')
+
+                self.ui.miningHistory.setItem(Rcount, 0, newItemtime)
+                self.ui.miningHistory.setItem(Rcount, 1, newItemblock)
+                self.ui.miningHistory.setItem(Rcount, 2, newItemreward)
 
 
     def initmap(self):
@@ -1440,32 +1501,37 @@ class Example(QDialog,QWidget):
 
         self.publishform = publishform()
         self.initchart()
+        self.initmap()
         self.sendform = sendform()
         #self.nationpos()
-        self.timer = QTimer(self)  # 初始化一个定时器
-        self.timer.timeout.connect(self.operate)  # 计时结束调用operate()方法
-        self.timer.start(20000)  # 设置计时间隔并启动
+        #self.timer = QTimer(self)  # 初始化一个定时器
+        #self.timer.timeout.connect(self.operate)  # 计时结束调用operate()方法
+        #self.timer.start(20000)  # 设置计时间隔并启动
 
         btnminHisrefresh = self.ui.pushButton_45
-        btnminHisrefresh.clicked.connect(self.refresh)
+        btnminHisrefresh.clicked.connect(self.initmining)
         btntraHisrefresh = self.ui.pushButton_46
         btntraHisrefresh.clicked.connect(self.refresh)
 
-        self.timertop = QTimer(self)  # 初始化一个定时器  transaction status
-        self.timertop.timeout.connect(self.refresh)  # 计时结束调用operate()方法
-        self.timertop.start(51000)  # 设置计时间隔并启动
+        self.timertran = QTimer(self)  # 初始化一个定时器  transaction status
+        self.timertran.timeout.connect(self.refresh)  # 计时结束调用operate()方法
+        self.timertran.start(153000)  # 设置计时间隔并启动
 
-        self.timertop = QTimer(self)  # 初始化一个定时器  statistics
-        self.timertop.timeout.connect(self.initchart)  # 计时结束调用operate()方法
-        self.timertop.start(10000)  # 设置计时间隔并启动initmap
+        self.timermining = QTimer(self)  # 初始化一个定时器  transaction status
+        self.timermining.timeout.connect(self.initmining)  # 计时结束调用operate()方法
+        self.timermining.start(267000)  # 设置计时间隔并启动
 
-        self.timertop = QTimer(self)  # 初始化一个定时器  statistics
-        self.timertop.timeout.connect(self.initmap)  # 计时结束调用operate()方法
-        self.timertop.start(63000)  # 设置计时间隔并启动
+        self.timerchart = QTimer(self)  # 初始化一个定时器  statistics
+        self.timerchart.timeout.connect(self.initchart)  # 计时结束调用operate()方法
+        self.timerchart.start(80000)  # 设置计时间隔并启动initmap
+
+        self.timermap = QTimer(self)  # 初始化一个定时器  statistics
+        self.timermap.timeout.connect(self.initmap)  # 计时结束调用operate()方法
+        self.timermap.start(1730000)  # 设置计时间隔并启动
 
         self.timertop = QTimer(self)  # 初始化一个定时器  topstatus
         self.timertop.timeout.connect(self.refreshTop)  # 计时结束调用operate()方法
-        self.timertop.start(2000)  # 设置计时间隔并启动
+        self.timertop.start(30000)  # 设置计时间隔并启动
         self.miningtatus = 0
         self.syncstatus = 0
         self.peers = 0
@@ -1731,6 +1797,8 @@ class Example(QDialog,QWidget):
             "QScrollBar::sub-line{background:transparent;}"
             "QScrollBar::add-line{background:transparent;}")
 
+        self.initmining()
+
         self.ui.multWallet.horizontalHeader().setVisible(0)
         self.ui.multWallet.verticalHeader().setVisible(0)
         self.ui.multWallet.setShowGrid(0)
@@ -1782,7 +1850,7 @@ class Transaction:
     Gas = ''
     Gasprice = ''
     Blocknumber = ''
-    Time = ''
+    timestamp = ''
 
 class nationpos:
     nationlist= ('AU' ,3330, 1505,

@@ -2489,7 +2489,7 @@ QLineEdit[echoMode=&quot;2&quot;] {
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
          <property name="placeholderText">
-          <string>Please import Keystore</string>
+          <string/>
          </property>
         </widget>
         <widget class="QLineEdit" name="lineEdit_36">
@@ -2542,7 +2542,7 @@ QLineEdit[echoMode=&quot;2&quot;] {
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
          <property name="placeholderText">
-          <string>Please import Keystore</string>
+          <string/>
          </property>
         </widget>
         <widget class="QLineEdit" name="lineEdit_37">
@@ -2595,7 +2595,7 @@ QLineEdit[echoMode=&quot;2&quot;] {
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
          <property name="placeholderText">
-          <string>Please import Keystore</string>
+          <string/>
          </property>
         </widget>
        </widget>
@@ -2923,7 +2923,7 @@ QLineEdit[echoMode=&quot;2&quot;] {
          <property name="geometry">
           <rect>
            <x>10</x>
-           <y>150</y>
+           <y>140</y>
            <width>81</width>
            <height>21</height>
           </rect>
@@ -2969,7 +2969,7 @@ QLineEdit[echoMode=&quot;2&quot;] {
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
          <property name="placeholderText">
-          <string>Please import Keystore</string>
+          <string/>
          </property>
         </widget>
         <widget class="QLineEdit" name="lineEdit_39">
@@ -3022,14 +3022,14 @@ QLineEdit[echoMode=&quot;2&quot;] {
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
          <property name="placeholderText">
-          <string>Please import Keystore</string>
+          <string/>
          </property>
         </widget>
         <widget class="QLineEdit" name="lineEdit_40">
          <property name="geometry">
           <rect>
            <x>250</x>
-           <y>150</y>
+           <y>140</y>
            <width>81</width>
            <height>21</height>
           </rect>
@@ -3075,7 +3075,7 @@ QLineEdit[echoMode=&quot;2&quot;] {
           <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
          <property name="placeholderText">
-          <string>Please import Keystore</string>
+          <string/>
          </property>
         </widget>
        </widget>
@@ -4538,124 +4538,6 @@ color: rgb(100, 100, 100);</string>
       <string>Account Mining Results</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_74">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>230</y>
-       <width>101</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>微软雅黑</family>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(100, 100, 100);
-background-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>2018-05-05</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_75">
-     <property name="geometry">
-      <rect>
-       <x>260</x>
-       <y>230</y>
-       <width>101</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>微软雅黑</family>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(100, 100, 100);
-background-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>2018-05-05</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_76">
-     <property name="geometry">
-      <rect>
-       <x>470</x>
-       <y>230</y>
-       <width>101</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>微软雅黑</family>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(100, 100, 100);
-background-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>2018-05-05</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_77">
-     <property name="geometry">
-      <rect>
-       <x>690</x>
-       <y>230</y>
-       <width>101</width>
-       <height>20</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>微软雅黑</family>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(100, 100, 100);
-background-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>2018-05-05</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_78">
-     <property name="geometry">
-      <rect>
-       <x>420</x>
-       <y>69</y>
-       <width>41</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>微软雅黑</family>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(100, 100, 100);
-background-color: rgb(255, 255, 255);</string>
-     </property>
-     <property name="text">
-      <string>111</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-     </property>
-    </widget>
     <widget class="QGraphicsView" name="graphicsView_7">
      <property name="geometry">
       <rect>
@@ -4694,6 +4576,271 @@ background-color: rgb(255, 255, 255);</string>
       <bool>true</bool>
      </property>
     </widget>
+    <widget class="QLineEdit" name="lineEdit_41">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>230</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>微软雅黑</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="statusTip">
+      <string/>
+     </property>
+     <property name="whatsThis">
+      <string/>
+     </property>
+     <property name="accessibleName">
+      <string/>
+     </property>
+     <property name="accessibleDescription">
+      <string/>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);
+QLineEdit[echoMode=&quot;2&quot;] {
+    lineedit-password-character:42;
+}
+</string>
+     </property>
+     <property name="text">
+      <string>2018-05-05</string>
+     </property>
+     <property name="frame">
+      <bool>false</bool>
+     </property>
+     <property name="echoMode">
+      <enum>QLineEdit::Normal</enum>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="placeholderText">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_42">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>230</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>微软雅黑</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="statusTip">
+      <string/>
+     </property>
+     <property name="whatsThis">
+      <string/>
+     </property>
+     <property name="accessibleName">
+      <string/>
+     </property>
+     <property name="accessibleDescription">
+      <string/>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);
+QLineEdit[echoMode=&quot;2&quot;] {
+    lineedit-password-character:42;
+}
+</string>
+     </property>
+     <property name="text">
+      <string>2018-05-25</string>
+     </property>
+     <property name="frame">
+      <bool>false</bool>
+     </property>
+     <property name="echoMode">
+      <enum>QLineEdit::Normal</enum>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="placeholderText">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_43">
+     <property name="geometry">
+      <rect>
+       <x>470</x>
+       <y>230</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>微软雅黑</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="statusTip">
+      <string/>
+     </property>
+     <property name="whatsThis">
+      <string/>
+     </property>
+     <property name="accessibleName">
+      <string/>
+     </property>
+     <property name="accessibleDescription">
+      <string/>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);
+QLineEdit[echoMode=&quot;2&quot;] {
+    lineedit-password-character:42;
+}
+</string>
+     </property>
+     <property name="text">
+      <string>2018-05-05</string>
+     </property>
+     <property name="frame">
+      <bool>false</bool>
+     </property>
+     <property name="echoMode">
+      <enum>QLineEdit::Normal</enum>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="placeholderText">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_44">
+     <property name="geometry">
+      <rect>
+       <x>690</x>
+       <y>230</y>
+       <width>81</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>微软雅黑</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="statusTip">
+      <string/>
+     </property>
+     <property name="whatsThis">
+      <string/>
+     </property>
+     <property name="accessibleName">
+      <string/>
+     </property>
+     <property name="accessibleDescription">
+      <string/>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);
+QLineEdit[echoMode=&quot;2&quot;] {
+    lineedit-password-character:42;
+}
+</string>
+     </property>
+     <property name="text">
+      <string>2018-05-25</string>
+     </property>
+     <property name="frame">
+      <bool>false</bool>
+     </property>
+     <property name="echoMode">
+      <enum>QLineEdit::Normal</enum>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="placeholderText">
+      <string/>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_45">
+     <property name="geometry">
+      <rect>
+       <x>420</x>
+       <y>90</y>
+       <width>41</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>微软雅黑</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="statusTip">
+      <string/>
+     </property>
+     <property name="whatsThis">
+      <string/>
+     </property>
+     <property name="accessibleName">
+      <string/>
+     </property>
+     <property name="accessibleDescription">
+      <string/>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(255, 255, 255);
+QLineEdit[echoMode=&quot;2&quot;] {
+    lineedit-password-character:42;
+}
+</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="frame">
+      <bool>false</bool>
+     </property>
+     <property name="echoMode">
+      <enum>QLineEdit::Normal</enum>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+     <property name="placeholderText">
+      <string/>
+     </property>
+    </widget>
     <zorder>label_8</zorder>
     <zorder>graphicsView_7</zorder>
     <zorder>toolButton_33</zorder>
@@ -4712,11 +4859,11 @@ background-color: rgb(255, 255, 255);</string>
     <zorder>graphicsView_6</zorder>
     <zorder>label_42</zorder>
     <zorder>label_73</zorder>
-    <zorder>label_74</zorder>
-    <zorder>label_75</zorder>
-    <zorder>label_76</zorder>
-    <zorder>label_77</zorder>
-    <zorder>label_78</zorder>
+    <zorder>lineEdit_41</zorder>
+    <zorder>lineEdit_42</zorder>
+    <zorder>lineEdit_43</zorder>
+    <zorder>lineEdit_44</zorder>
+    <zorder>lineEdit_45</zorder>
    </widget>
    <widget class="QWidget" name="p3">
     <widget class="QLabel" name="label_18">
