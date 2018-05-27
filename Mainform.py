@@ -148,28 +148,24 @@ class conInfoform(QWidget, Ui_ConInfoForm):
         btnc = self.ui.closeenterpsw
         btnc.clicked.connect(self.closeform)
         btnsave = self.ui.pushButton_9
-        btnsave.clicked.connect(self.savechange)
+        self.Row = 0
+        btnsave.clicked.connect(lambda :self.savechange(self.Row))
         #self.ui.lineEdit_6.changeEvent.connect(self.showqrcode)
         #self.ui.lineEdit_6.keyPressEvent(self,self.showqrcode)
 
-    def show_w2(self):  # 显示窗体2
+    def show_w2(self,row):  # 显示窗体2
+        self.Row = row
+        ind = Core_func.QTableWidget.indexFromItem(ex.ui.multWallet, ex.ui.multWallet.item(row, 1))
+        self.ui.lineEdit_6.setText(ind.data())
         self.show()
 
-    def savechange(self):
+    def savechange(self,row):
         ################
         # waiting to add checking same wallet already existed
         ################
-        Rcount = ex.ui.ContactsT.rowCount()
-        print(Rcount)
-        ex.ui.ContactsT.setRowCount(Rcount + 1)
-        newItemAddr = QTableWidgetItem(self.ui.lineEdit_6.text())
+
         newItemName = QTableWidgetItem(self.ui.lineEdit_7.text())
-        ret = ex.buttonsdef()
-        ex.ui.ContactsT.setItem(Rcount, 1, newItemAddr)
-        ex.ui.ContactsT.setItem(Rcount, 0, newItemName)
-        ex.ui.ContactsT.setCellWidget(Rcount, 2, ret[4])
-        ex.ui.ContactsT.setCellWidget(Rcount, 3, ret[5])
-        ex.ui.ContactsT.setCellWidget(Rcount, 4, ret[6])
+        ex.ui.ContactsT.setItem(row, 1, newItemName)
         #print(ex.ui.ContactsT.currentIndex())
         #self.accountform.ui.Account.setItem(Rcount, 1, newItemAddr)
         #self.accountform.ui.Account.setItem(Rcount, 0, newItemName)
@@ -198,32 +194,25 @@ class walletInfoform(QWidget, Ui_WalletInfoForm):
         btnc = self.ui.closeenterpsw
         btnc.clicked.connect(self.closeform)
         btnsave = self.ui.pushButton_9
-        btnsave.clicked.connect(self.savechange)
+        self.Row = 0
+        btnsave.clicked.connect(lambda: self.savechange(self.Row))
         #self.ui.lineEdit_6.changeEvent.connect(self.showqrcode)
         #self.ui.lineEdit_6.keyPressEvent(self,self.showqrcode)
 
-    def show_w2(self):  # 显示窗体2
+    def show_w2(self,row):  # 显示窗体2
+        self.Row = row
+
+        ind = Core_func.QTableWidget.indexFromItem(ex.ui.multWallet, ex.ui.multWallet.item(row,1))
+        self.ui.lineEdit_6.setText(ind.data())
         self.show()
 
-    def savechange(self):
+    def savechange(self,row):
         ################
         # waiting to add checking same wallet already existed
         ################
-        Rcount = ex.ui.ContactsT.rowCount()
-        print(Rcount)
-        ex.ui.ContactsT.setRowCount(Rcount + 1)
-        newItemAddr = QTableWidgetItem(self.ui.lineEdit_6.text())
-        newItemName = QTableWidgetItem(self.ui.lineEdit_7.text())
-        ret = ex.buttonsdef()
-        ex.ui.ContactsT.setItem(Rcount, 1, newItemAddr)
-        ex.ui.ContactsT.setItem(Rcount, 0, newItemName)
-        ex.ui.ContactsT.setCellWidget(Rcount, 2, ret[4])
-        ex.ui.ContactsT.setCellWidget(Rcount, 3, ret[5])
-        ex.ui.ContactsT.setCellWidget(Rcount, 4, ret[6])
-        #print(ex.ui.ContactsT.currentIndex())
-        #self.accountform.ui.Account.setItem(Rcount, 1, newItemAddr)
-        #self.accountform.ui.Account.setItem(Rcount, 0, newItemName)
 
+        newItemName = QTableWidgetItem(self.ui.lineEdit_7.text())
+        ex.ui.multWallet.setItem(row, 1, newItemName)
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -337,7 +326,7 @@ class messform(QWidget, Ui_MessForm):
 
     def show_w2(self,QTableWidgetItem):  # 显示窗体2
         ind = Core_func.QTableWidget.indexFromItem(ex.ui.LogMessage,QTableWidgetItem)
-        #rownum = ex.ui.LogMessage.selectedItems().index
+
         print(ind.data())
         print(ind.data().split('tx_hash')[1][1:])
         ret = Core_func.getTransactionInfo(ind.data().split('tx_hash')[1][1:])
@@ -391,7 +380,7 @@ class newcontactform(QWidget, Ui_NewContactForm):
         ex.ui.ContactsT.setRowCount(Rcount + 1)
         newItemAddr = QTableWidgetItem(self.ui.lineEdit_6.text())
         newItemName = QTableWidgetItem(self.ui.lineEdit_7.text())
-        ret = ex.buttonsdef()
+        ret = ex.buttonsdef(Rcount)
         ex.ui.ContactsT.setItem(Rcount, 1, newItemAddr)
         ex.ui.ContactsT.setItem(Rcount, 0, newItemName)
         ex.ui.ContactsT.setCellWidget(Rcount, 2, ret[4])
@@ -593,7 +582,7 @@ class sendform(QWidget, Ui_SendForm):
             self.ui.lineEdit_8.setPlaceholderText('Enter Gas Limit')
             self.ui.lineEdit_9.setPlaceholderText('Enter Gas Price')
 
-    def show_w2(self):  # 显示窗体2
+    def show_w2(self,row):  # 显示窗体2
         if len(ex.m_wallet.address) <= 40 :
             self.publishform.show_w2('Please Choose Wallet')
         else:
@@ -601,6 +590,8 @@ class sendform(QWidget, Ui_SendForm):
                 "https://waltonchain.net:18950/api/getBalance/" + ex.m_wallet.address).json()
             a = str(balance)
             self.ui.label_52.setText(a.split(',')[1][11:] + 'WTCT')
+            ind = Core_func.QTableWidget.indexFromItem(ex.ui.multWallet, ex.ui.multWallet.item(row, 1))
+            self.ui.lineEdit_7.setText(ind.data())
             self.show()
 
     def showenterphrase(self):
@@ -668,112 +659,78 @@ class Example(QDialog,QWidget):
     def __init__(self):
         super().__init__()
 
-        self.mwOpen = QPushButton(self)  # type: QPushButton
-        self.mwOpen.setStyleSheet(''' border:0px; ''')
-        self.mwOpen.setIcon(QIcon("pic/open1233.png"))
-        self.mwOpen.setIconSize(QSize(70, 50))
-        self.mwOpen.clicked.connect(self.pressbtn1)
 
-        self.mwEdit = QPushButton(self)  # type: QPushButton
-        self.mwEdit.setStyleSheet(''' border:0px; ''')
-        self.mwEdit.setIcon(QIcon("pic/editA.png"))
-        self.mwEdit.setIconSize(QSize(70, 50))
-
-
-        self.mwDelete = QPushButton(self)  # type: QPushButton
-        self.mwDelete.setStyleSheet(''' border:0px; ''')
-        self.mwDelete.setIcon(QIcon("pic/deleteA.png"))
-        self.mwDelete.setIconSize(QSize(70, 50))
-        self.mwDelete.clicked.connect(self.delWallet)
-
-        self.mwSaveKey = QPushButton(self)  # type: QPushButton
-        self.mwSaveKey.setStyleSheet(''' border:0px; ''')
-        self.mwSaveKey.setIcon(QIcon("pic/saveA.png"))
-        self.mwSaveKey.setIconSize(QSize(70, 50))
-        self.mwSaveKey.clicked.connect(self.savekey)
-
-        self.consend = QPushButton(self)  # type: QPushButton
-        self.consend.setStyleSheet(''' border:0px; ''')
-        self.consend.setIcon(QIcon("pic/sendA.png"))
-        self.consend.setIconSize(QSize(70, 50))
-        self.consend.clicked.connect(self.pressbtn1)
-
-        self.conedit = QPushButton(self)  # type: QPushButton
-        self.conedit.setStyleSheet(''' border:0px; ''')
-        self.conedit.setIcon(QIcon("pic/editA.png"))
-        self.conedit.setIconSize(QSize(70, 50))
-
-        self.condelete = QPushButton(self)  # type: QPushButton
-        self.condelete.setStyleSheet(''' border:0px; ''')
-        self.condelete.setIcon(QIcon("pic/deleteA.png"))
-        self.condelete.setIconSize(QSize(70, 50))
-        self.condelete.clicked.connect(self.delWallet)
 
         self.initUI()
 
 
-    def buttonsdef(self):
+    def buttonsdef(self,row):
 
         mwOpen = QPushButton(self)  # type: QPushButton
         mwOpen.setStyleSheet(''' border:0px; ''')
         mwOpen.setIcon(QIcon("pic/open1233.png"))
         mwOpen.setIconSize(QSize(80, 60))
-        mwOpen.clicked.connect(self.pressbtn1)
+        mwOpen.clicked.connect(lambda :self.openwallet(row))
 
         mwEdit = QPushButton(self)  # type: QPushButton
         mwEdit.setStyleSheet(''' border:0px; ''')
         mwEdit.setIcon(QIcon("pic/editA.png"))
         mwEdit.setIconSize(QSize(80, 60))
-        mwEdit.clicked.connect(self.editwallet)
+        mwEdit.clicked.connect(lambda :self.editwallet(row))
 
         mwDelete = QPushButton(self)  # type: QPushButton
         mwDelete.setStyleSheet(''' border:0px; ''')
         mwDelete.setIcon(QIcon("pic/deleteA.png"))
         mwDelete.setIconSize(QSize(80, 60))
-        mwDelete.clicked.connect(self.delWallet)
+        mwDelete.clicked.connect(lambda :self.delWallet(row))
 
         mwSaveKey = QPushButton(self)  # type: QPushButton
         mwSaveKey.setStyleSheet(''' border:0px; ''')
         mwSaveKey.setIcon(QIcon("pic/saveA.png"))
         mwSaveKey.setIconSize(QSize(70, 50))
-        mwSaveKey.clicked.connect(self.savekey)
+        mwSaveKey.clicked.connect(lambda :self.savekey(row))
 
         consend = QPushButton(self)  # type: QPushButton
         consend.setStyleSheet(''' border:0px; ''')
         consend.setIcon(QIcon("pic/sendA.png"))
         consend.setIconSize(QSize(80, 60))
-        consend.clicked.connect(self.sendcontact)
+        consend.clicked.connect(lambda :self.sendcontact(row))
 
         conedit = QPushButton(self)  # type: QPushButton
         conedit.setStyleSheet(''' border:0px; ''')
         conedit.setIcon(QIcon("pic/editA.png"))
         conedit.setIconSize(QSize(80, 60))
-        conedit.clicked.connect(self.editcontact)
+        conedit.clicked.connect(lambda :self.editcontact(row))
 
 
         condelete = QPushButton(self)  # type: QPushButton
         condelete.setStyleSheet(''' border:0px; ''')
         condelete.setIcon(QIcon("pic/deleteA.png"))
         condelete.setIconSize(QSize(80, 60))
-        condelete.clicked.connect(self.delcontact)
+        condelete.clicked.connect(lambda :self.delcontact(row))
 
         return (mwOpen,mwEdit,mwDelete,mwSaveKey,consend,conedit,condelete)
 
-    def editwallet(self):
+    def openwallet(self,row):
+        ind = Core_func.QTableWidget.indexFromItem(ex.ui.multWallet, ex.ui.multWallet.item(row, 1))
+        self.ui.lineEdit_8.setText(ind.data())
+        self.m_wallet.address = ind.data()
+        self.pressbtn1()
+
+    def editwallet(self,row):
         self.walletInfoform = walletInfoform()
-        self.walletInfoform.show()
+        self.walletInfoform.show_w2(row)
 
-    def delcontact(self):
-        Rcount = self.ui.ContactsT.rowCount()
-        self.ui.ContactsT.setRowCount(Rcount - 1)
+    def delcontact(self,row):
+        self.ui.ContactsT.removeRow(row)
 
-    def sendcontact(self):
+    def sendcontact(self,row):
         self.sendform = sendform()
-        self.sendform.show()
+        self.sendform.show_w2(row)
 
-    def editcontact(self):
+    def editcontact(self,row):
         self.conInfoform = conInfoform()
-        self.conInfoform.show()
+        self.conInfoform.show_w2(row)
 
 
     #shift Pages tool btn
@@ -1045,30 +1002,43 @@ class Example(QDialog,QWidget):
         newItemName = QTableWidgetItem(self.m_wallet.accountname)
         self.ui.multWallet.setItem(Rcount, 1, newItemAddr)
         self.ui.multWallet.setItem(Rcount, 0, newItemName)
-        ret = self.buttonsdef()
+        ret = self.buttonsdef(Rcount)
         self.ui.multWallet.setCellWidget(Rcount, 2, ret[0])
         self.ui.multWallet.setCellWidget(Rcount, 3, ret[1])
         self.ui.multWallet.setCellWidget(Rcount, 4, ret[2])
         self.ui.multWallet.setCellWidget(Rcount, 5, ret[3])
+
         self.initchart()
 
-    def delWallet(self):
-        ################
-        #waiting to add checking same wallet already existed
-        ################
-        Rcount = self.ui.multWallet.rowCount()
-        self.ui.multWallet.setRowCount(Rcount-1)
-        os.remove(self.m_wallet.filename)
+    def delWallet(self,row):
+        ind = Core_func.QTableWidget.indexFromItem(ex.ui.multWallet, ex.ui.multWallet.item(row, 1))
+        filename = "Data\\Keystore\\"+ind[2:18]+".keystore"
+        self.ui.ContactsT.removeRow(row)
+        os.remove(filename)
 
-    def savekey(self):
+    def savekey(self,row=0):
         ## need to change:copy kfile from data\keystore to specify position
-        encrypted = Account.encrypt(self.m_wallet.privateKey, self.m_wallet.password)
+        if row==0:
+            encrypted = Account.encrypt(self.m_wallet.privateKey, self.m_wallet.password)
+            fsave_keystore = QFileDialog.getSaveFileName(self, 'Save Your Keystore File', '.','keystore(*.keystore)')
+            if fsave_keystore[0]:
+                file_save_keystore = open(fsave_keystore[0], 'w')
+                with file_save_keystore:
+                    data = file_save_keystore.write(json.dumps(encrypted))
+        else:
+            ind = Core_func.QTableWidget.indexFromItem(ex.ui.multWallet, ex.ui.multWallet.item(row, 1))
+            filename = "Data\\Keystore\\" + ind[2:18] + ".keystore"
+            if os.path.isfile(filename):
+                file_object = open(filename)
+                all_the_text = file_object.read()
 
-        fsave_keystore = QFileDialog.getSaveFileName(self, 'Save Your Keystore File', '.','keystore(*.keystore)')
-        if fsave_keystore[0]:
-            file_save_keystore = open(fsave_keystore[0], 'w')
-            with file_save_keystore:
-                data = file_save_keystore.write(json.dumps(encrypted))
+                fsave_keystore = QFileDialog.getSaveFileName(self, 'Save Your Keystore File', '.',
+                                                             'keystore(*.keystore)')
+                if fsave_keystore[0]:
+                    file_save_keystore = open(fsave_keystore[0], 'w')
+                    with file_save_keystore:
+                        data = file_save_keystore.write(all_the_text)
+
 
     def savename(self):
         self.m_wallet.accountname = self.ui.lineEdit_25.text()
@@ -2220,5 +2190,5 @@ if __name__ == '__main__':
     ex.ui.pushButton_36.clicked.connect(pubaddrForm.show_w2)
     ex.ui.pushButton_38.clicked.connect(newcontactform.show_w2)
     ex.ui.LogMessage.itemClicked.connect(messform.show_w2)
-    ex.mwEdit.clicked.connect(mulwalform.show_w2)
+
     sys.exit(app.exec_())
