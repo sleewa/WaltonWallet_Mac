@@ -38,7 +38,7 @@ from PublishForm import Ui_publishForm
 from AccountForm import Ui_AccountForm
 from WalletInfoForm import Ui_WalletInfoForm
 from ConInfoForm import Ui_ConInfoForm
-
+import xml.etree.ElementTree as ET
 import matplotlib
 import datetime
 matplotlib.use("Qt5Agg")  # 声明使用QT5
@@ -1281,6 +1281,28 @@ class Example(QDialog,QWidget):
         print('tick')
 
     def refresh(self):
+        tree = ET.parse('TransactionList.xml')
+        root = tree.getroot()
+        for AddressTransactionsEntity in root.findall('AddressTransactionsEntity'):
+            if AddressTransactionsEntity.find('Address').text == self.m_wallet.address.lower():
+                for AccountTransactionsEntity in AddressTransactionsEntity.find('TransactionList'):
+                    Rcount = self.ui.TransactionHistory.rowCount()
+                    self.ui.TransactionHistory.setRowCount(Rcount + 1)
+                    newItemtime = QTableWidgetItem(AccountTransactionsEntity[9].text)
+                    newItemtoaddr = QTableWidgetItem(AccountTransactionsEntity[7].text)
+                    newItemtransType = QTableWidgetItem(AccountTransactionsEntity[10].text)
+                    if AccountTransactionsEntity[10].text == 'Send':
+                        newItemvalue = QTableWidgetItem('-'+AccountTransactionsEntity[8].text + 'WTCT')
+                    else:
+                        newItemvalue = QTableWidgetItem(AccountTransactionsEntity[8].text + 'WTCT')
+                    self.ui.TransactionHistory.setItem(Rcount, 0, newItemtime)
+                    self.ui.TransactionHistory.setItem(Rcount, 1, newItemtoaddr)
+                    self.ui.TransactionHistory.setItem(Rcount, 2, newItemtransType)
+                    self.ui.TransactionHistory.setItem(Rcount, 3, newItemvalue)
+
+                break
+
+
         '''
         coun = self.ui.TransactionHistory.rowCount()#self.m_wallet.address
         #tx_hashlist = str(ret[1]).split('tx_hash')
@@ -1512,7 +1534,7 @@ class Example(QDialog,QWidget):
             for i in range(len(ret5[1])):
                 Rcount = self.ui.miningHistory.rowCount()
                 self.ui.miningHistory.setRowCount(Rcount + 1)
-                newItemtime = QTableWidgetItem(ret5[1][i]['timestamp'][0:10])
+                newItemtime = QTableWidgetItem(ret5[1][i]['timestamp'])
                 newItemblock = QTableWidgetItem(str(ret5[1][i]['blockNumer']))
                 newItemreward = QTableWidgetItem(str(ret5[1][i]['totol_reward'])+'WTCT')
 
@@ -1918,9 +1940,9 @@ class Example(QDialog,QWidget):
         self.ui.TransactionHistory.setShowGrid(0)
         self.ui.TransactionHistory.horizontalHeader().setStretchLastSection(1)
         self.ui.TransactionHistory.verticalHeader().setDefaultSectionSize(40)
-        self.ui.TransactionHistory.setColumnWidth(0, 100)  # 将设置第1列的单元格成20宽度
+        self.ui.TransactionHistory.setColumnWidth(0, 150)  # 将设置第1列的单元格成20宽度
         self.ui.TransactionHistory.setColumnWidth(1, 300)  # 将设置第2列的单元格成30宽度
-        self.ui.TransactionHistory.setColumnWidth(2, 105)  # 将设置第3列的单元格成50宽度
+        self.ui.TransactionHistory.setColumnWidth(2, 55)  # 将设置第3列的单元格成50宽度
         self.ui.TransactionHistory.setColumnWidth(3, 105)  # 将设置第2列的单元格成30宽度
         self.ui.TransactionHistory.setFrameShape(QFrame.NoFrame)  # 表格无边框
         self.ui.TransactionHistory.setEditTriggers(QAbstractItemView.NoEditTriggers)  # 不可编辑
