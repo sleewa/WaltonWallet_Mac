@@ -79,11 +79,12 @@ class Figure_Canvas(FigureCanvas):   # 通过继承FigureCanvas类，使得该�
         y=[]
         x = [30,29, 28, 27, 26, 25, 24, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1]
         ret3 = Core_func.getTokenMarket()
-        for i in range(len(ret3[1])):
-            y.append(int(ret3[1][i]['TokenPriceUSD']))
-        self.axes.plot(x, y,'r-',1)
-        self.axes.set_axis_off()
-        return ret3[1][0]['TokenPriceUSD']
+        if ret3[0] == 1:
+            for i in range(len(ret3[1])):
+                y.append(int(ret3[1][i]['TokenPriceUSD']))
+            self.axes.plot(x, y,'r-',1)
+            self.axes.set_axis_off()
+            return ret3[1][0]['TokenPriceUSD']
 
     def testB(self,addr):
         if addr != '':
@@ -565,6 +566,7 @@ class sendform(QWidget, Ui_SendForm):
 class Example(QDialog,QWidget):
     def __init__(self):
         super().__init__()
+
         self.mwOpen = QPushButton(self)  # type: QPushButton
         self.mwOpen.setStyleSheet(''' border:0px; ''')
         self.mwOpen.setIcon(QIcon("pic/open1233.png"))
@@ -608,6 +610,49 @@ class Example(QDialog,QWidget):
 
         self.initUI()
 
+
+    def buttonsdef(self):
+        mwOpen = QPushButton(self)  # type: QPushButton
+        mwOpen.setStyleSheet(''' border:0px; ''')
+        mwOpen.setIcon(QIcon("pic/open1233.png"))
+        mwOpen.setIconSize(QSize(70, 50))
+        mwOpen.clicked.connect(self.pressbtn1)
+
+        mwEdit = QPushButton(self)  # type: QPushButton
+        mwEdit.setStyleSheet(''' border:0px; ''')
+        mwEdit.setIcon(QIcon("pic/editA.png"))
+        mwEdit.setIconSize(QSize(70, 50))
+
+        mwDelete = QPushButton(self)  # type: QPushButton
+        mwDelete.setStyleSheet(''' border:0px; ''')
+        mwDelete.setIcon(QIcon("pic/deleteA.png"))
+        mwDelete.setIconSize(QSize(70, 50))
+        mwDelete.clicked.connect(self.delWallet)
+
+        mwSaveKey = QPushButton(self)  # type: QPushButton
+        mwSaveKey.setStyleSheet(''' border:0px; ''')
+        mwSaveKey.setIcon(QIcon("pic/saveA.png"))
+        mwSaveKey.setIconSize(QSize(70, 50))
+        mwSaveKey.clicked.connect(self.savekey)
+
+        consend = QPushButton(self)  # type: QPushButton
+        consend.setStyleSheet(''' border:0px; ''')
+        consend.setIcon(QIcon("pic/sendA.png"))
+        consend.setIconSize(QSize(70, 50))
+        consend.clicked.connect(self.pressbtn1)
+
+        conedit = QPushButton(self)  # type: QPushButton
+        conedit.setStyleSheet(''' border:0px; ''')
+        conedit.setIcon(QIcon("pic/editA.png"))
+        conedit.setIconSize(QSize(70, 50))
+
+        condelete = QPushButton(self)  # type: QPushButton
+        condelete.setStyleSheet(''' border:0px; ''')
+        condelete.setIcon(QIcon("pic/deleteA.png"))
+        condelete.setIconSize(QSize(70, 50))
+        condelete.clicked.connect(self.delWallet)
+
+        return (mwOpen,mwEdit,mwDelete,mwSaveKey)
     #shift Pages tool btn
     def pressbtn1(self):
         self.ui.mywallet.setIcon(QIcon("pic/mywallet1.png"))
@@ -877,7 +922,8 @@ class Example(QDialog,QWidget):
         newItemName = QTableWidgetItem(self.m_wallet.accountname)
         self.ui.multWallet.setItem(Rcount, 1, newItemAddr)
         self.ui.multWallet.setItem(Rcount, 0, newItemName)
-        self.ui.multWallet.setCellWidget(Rcount, 2, self.mwOpen)
+        #ret = self.buttonsdef()
+        #self.ui.multWallet.setCellWidget(Rcount, 2, ret[0])
         self.ui.multWallet.setCellWidget(Rcount, 3, self.mwEdit)
         self.ui.multWallet.setCellWidget(Rcount, 4, self.mwDelete)
         self.ui.multWallet.setCellWidget(Rcount, 5, self.mwSaveKey)
