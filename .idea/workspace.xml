@@ -5,6 +5,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/Keystore/FBf36B7c56258dC3.keystore" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Keystore/FBf36B7c56258dC3.keystore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mainform.py" beforeDir="false" afterPath="$PROJECT_DIR$/Mainform.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mainform_QT.py" beforeDir="false" afterPath="$PROJECT_DIR$/Mainform_QT.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mainform_QT.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Mainform_QT.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pic/private.png" beforeDir="false" afterPath="$PROJECT_DIR$/pic/private.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pic/public.png" beforeDir="false" afterPath="$PROJECT_DIR$/pic/public.png" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -229,11 +233,12 @@
       <file leaf-file-name="Mainform.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Mainform.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="1299" column="50" selection-start-line="1299" selection-start-column="50" selection-end-line="1299" selection-end-column="50" />
+            <state relative-caret-position="304">
+              <caret line="64" column="31" lean-forward="true" selection-start-line="64" selection-start-column="31" selection-end-line="64" selection-end-column="31" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
                 <element signature="e#1560#4643#0" />
+                <element signature="e#4785#6662#0" />
                 <element signature="e#6235#6444#0" />
                 <element signature="e#6491#6615#0" />
                 <element signature="e#4746#6623#0" />
@@ -242,6 +247,7 @@
                 <element signature="e#4696#5606#0" />
                 <element signature="e#5656#7707#0" />
                 <element signature="e#7751#9429#0" />
+                <element signature="e#9485#11347#0" />
                 <element signature="e#9992#10003#0" />
                 <element signature="e#10920#11129#0" />
                 <element signature="e#11176#11300#0" />
@@ -252,8 +258,6 @@
                 <element signature="e#18002#20660#0" />
                 <element signature="e#20709#20918#0" />
                 <element signature="e#20965#21089#0" />
-                <element signature="e#27065#28904#0" />
-                <element signature="e#29086#29249#0" />
                 <element signature="e#28940#29013#0" />
                 <element signature="e#27119#27283#0" />
                 <element signature="e#27171#27232#0" />
@@ -270,17 +274,15 @@
                 <element signature="e#28791#28937#0" />
                 <element signature="e#28986#29132#0" />
                 <element signature="e#29174#29212#0" />
+                <element signature="e#29250#31238#0" />
                 <element signature="e#31276#32831#0" />
                 <element signature="e#32871#32986#0" />
                 <element signature="e#33022#33492#0" />
                 <element signature="e#33532#35120#0" />
                 <element signature="e#35157#35563#0" />
-                <element signature="e#35602#36013#0" />
                 <element signature="e#36048#36579#0" />
                 <element signature="e#37412#37652#0" />
-                <element signature="e#38187#38915#0" />
-                <element signature="e#38954#39071#0" />
-                <element signature="e#39109#39223#0" />
+                <element signature="e#40383#41630#0" />
                 <element signature="e#39257#39313#0" />
                 <element signature="e#39348#39398#0" />
                 <element signature="e#39429#39475#0" />
@@ -303,15 +305,26 @@
                 <element signature="e#48115#48131#0" />
                 <element signature="e#48168#48184#0" />
                 <element signature="e#48217#48254#0" />
+                <element signature="e#51848#56362#0" />
+                <element signature="e#51884#53066#1" />
+                <element signature="e#49478#50485#1" />
                 <element signature="e#50521#59530#0" />
                 <element signature="e#59565#62516#0" />
                 <element signature="e#62551#63319#0" />
                 <element signature="e#63353#69166#0" />
-                <element signature="e#69198#84429#0" />
                 <element signature="e#84448#84551#0" />
                 <element signature="e#84576#84746#0" />
                 <element signature="e#84769#88313#0" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="typing.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/typing.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="186">
+              <caret line="2290" column="8" selection-start-line="2290" selection-start-column="8" selection-end-line="2290" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -351,17 +364,8 @@
       <file leaf-file-name="Mainform_QT.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Mainform_QT.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="79515">
-              <caret line="2945" selection-start-line="2945" selection-end-line="2945" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="QPalette.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/.PyCharmCE2018.1/system/python_stubs/133899476/PyQt5/QtGui/QPalette.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4752">
-              <caret line="176" column="8" selection-start-line="176" selection-start-column="8" selection-end-line="176" selection-end-column="8" />
+            <state relative-caret-position="507">
+              <caret line="2941" selection-start-line="2941" selection-end-line="2941" />
             </state>
           </provider>
         </entry>
@@ -387,8 +391,8 @@
       <file leaf-file-name="Core_func.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Core_func.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-256">
-              <caret line="139" column="18" selection-start-line="139" selection-start-column="4" selection-end-line="139" selection-end-column="18" />
+            <state relative-caret-position="338">
+              <caret line="53" column="72" lean-forward="true" selection-start-line="53" selection-start-column="22" selection-end-line="53" selection-end-column="72" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -420,6 +424,10 @@
       <find>getTransactionRecord_day</find>
       <find>messform</find>
       <find>m_wallet.filename</find>
+      <find>Import_Keystore</find>
+      <find>NewWalletstacked</find>
+      <find>Newwallets</find>
+      <find>35</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -614,6 +622,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18018967" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -646,11 +655,10 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="109" />
+      <option name="time" value="110" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/wtc_UI.py" />
     <entry file="file://$PROJECT_DIR$/wf4.py" />
     <entry file="file://$PROJECT_DIR$/wtc_UI.py" />
     <entry file="file://$PROJECT_DIR$/wf4.py" />
@@ -878,10 +886,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/Desktop/new 1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="15" column="44" lean-forward="true" selection-start-line="15" selection-start-column="44" selection-end-line="15" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Mainform_QT.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="79515">
-          <caret line="2945" selection-start-line="2945" selection-end-line="2945" />
+        <state relative-caret-position="507">
+          <caret line="2941" selection-start-line="2941" selection-end-line="2941" />
         </state>
       </provider>
     </entry>
@@ -892,17 +907,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Desktop/new 1.py">
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/typing.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="15" column="44" lean-forward="true" selection-start-line="15" selection-start-column="44" selection-end-line="15" selection-end-column="44" />
+        <state relative-caret-position="186">
+          <caret line="2290" column="8" selection-start-line="2290" selection-start-column="8" selection-end-line="2290" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Core_func.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-256">
-          <caret line="139" column="18" selection-start-line="139" selection-start-column="4" selection-end-line="139" selection-end-column="18" />
+        <state relative-caret-position="338">
+          <caret line="53" column="72" lean-forward="true" selection-start-line="53" selection-start-column="22" selection-end-line="53" selection-end-column="72" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
           </folding>
@@ -911,11 +926,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Mainform.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="1299" column="50" selection-start-line="1299" selection-start-column="50" selection-end-line="1299" selection-end-column="50" />
+        <state relative-caret-position="304">
+          <caret line="64" column="31" lean-forward="true" selection-start-line="64" selection-start-column="31" selection-end-line="64" selection-end-column="31" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
             <element signature="e#1560#4643#0" />
+            <element signature="e#4785#6662#0" />
             <element signature="e#6235#6444#0" />
             <element signature="e#6491#6615#0" />
             <element signature="e#4746#6623#0" />
@@ -924,6 +940,7 @@
             <element signature="e#4696#5606#0" />
             <element signature="e#5656#7707#0" />
             <element signature="e#7751#9429#0" />
+            <element signature="e#9485#11347#0" />
             <element signature="e#9992#10003#0" />
             <element signature="e#10920#11129#0" />
             <element signature="e#11176#11300#0" />
@@ -934,8 +951,6 @@
             <element signature="e#18002#20660#0" />
             <element signature="e#20709#20918#0" />
             <element signature="e#20965#21089#0" />
-            <element signature="e#27065#28904#0" />
-            <element signature="e#29086#29249#0" />
             <element signature="e#28940#29013#0" />
             <element signature="e#27119#27283#0" />
             <element signature="e#27171#27232#0" />
@@ -952,17 +967,15 @@
             <element signature="e#28791#28937#0" />
             <element signature="e#28986#29132#0" />
             <element signature="e#29174#29212#0" />
+            <element signature="e#29250#31238#0" />
             <element signature="e#31276#32831#0" />
             <element signature="e#32871#32986#0" />
             <element signature="e#33022#33492#0" />
             <element signature="e#33532#35120#0" />
             <element signature="e#35157#35563#0" />
-            <element signature="e#35602#36013#0" />
             <element signature="e#36048#36579#0" />
             <element signature="e#37412#37652#0" />
-            <element signature="e#38187#38915#0" />
-            <element signature="e#38954#39071#0" />
-            <element signature="e#39109#39223#0" />
+            <element signature="e#40383#41630#0" />
             <element signature="e#39257#39313#0" />
             <element signature="e#39348#39398#0" />
             <element signature="e#39429#39475#0" />
@@ -985,11 +998,13 @@
             <element signature="e#48115#48131#0" />
             <element signature="e#48168#48184#0" />
             <element signature="e#48217#48254#0" />
+            <element signature="e#51848#56362#0" />
+            <element signature="e#51884#53066#1" />
+            <element signature="e#49478#50485#1" />
             <element signature="e#50521#59530#0" />
             <element signature="e#59565#62516#0" />
             <element signature="e#62551#63319#0" />
             <element signature="e#63353#69166#0" />
-            <element signature="e#69198#84429#0" />
             <element signature="e#84448#84551#0" />
             <element signature="e#84576#84746#0" />
             <element signature="e#84769#88313#0" />

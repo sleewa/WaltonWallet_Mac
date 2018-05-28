@@ -30,7 +30,7 @@ from Mainform_QT import *
 from SendForm import Ui_SendForm
 from RecieveForm import Ui_ReceiveForm
 from MulWalForm import Ui_MulWalForm
-from ConInfoForm import Ui_ConInfoForm
+from enterPswForm import Ui_EnterPswForm
 from PubAddrForm import Ui_PubAddrForm
 from NewContactForm import Ui_NewContactForm
 from MessForm import  Ui_MessForm
@@ -45,6 +45,49 @@ matplotlib.use("Qt5Agg")  # 声明使用QT5
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 
+class enterpswform(QWidget, Ui_EnterPswForm):
+    def __init__(self):
+        super().__init__()
+        self.ui = Ui_EnterPswForm()
+        self.ui.setupUi(self)
+        self.setWindowFlags(Qt.CustomizeWindowHint)
+        btnc = self.ui.closeenterpsw
+        btnc.clicked.connect(self.closeform)
+        btnconfirm = self.ui.pushButton_9
+        self.addr = '0'
+        btnconfirm.clicked.connect(lambda :self.getprikey(self.addr,self.ui.lineEdit_6.text()))
+
+    def show_w2(self,str):  # 显示窗体2
+        self.addr = str
+        self.ui.lineEdit_6.clear()
+        self.show()
+
+    def getprikey(self,addr,password):
+        print(addr,password)
+        filename = "Data\\Keystore\\" + addr[2:18] + ".keystore"
+        file = open(filename, 'r')
+        content = file.readline()
+        self.prikey = w3.toHex(Account.decrypt(content, password))
+        print(self.prikey)
+        ex.ui.lineEdit_9.setText(self.prikey)
+        ex.ui.pushButton_35.setIcon(QIcon("pic/01.png"))
+        ex.ui.lineEdit_9.setEchoMode(0)
+        ex.privatekeyeye = 0
+        self.close()
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.dragPosition = event.globalPos() - self.frameGeometry().topLeft()
+            QApplication.postEvent(self, Core_func.QEvent(174))
+            event.accept()
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() == Qt.LeftButton:
+            self.move(event.globalPos() - self.dragPosition)
+            event.accept()
+
+    def closeform(self):
+        self.close()
 
 class Figure_Canvas(FigureCanvas):   # 通过继承FigureCanvas类，使得该类既是一个PyQt5的Qwidget，又是一个matplotlib的FigureCanvas，这是连接pyqt5与matplot                                          lib的关键
 
@@ -715,7 +758,9 @@ class Example(QDialog,QWidget):
         ind = Core_func.QTableWidget.indexFromItem(ex.ui.multWallet, ex.ui.multWallet.item(row, 1))
         self.ui.lineEdit_8.setText(ind.data())
         self.m_wallet.address = ind.data()
-        print(row)
+        self.ui.lineEdit_9.setEchoMode(QLineEdit.Password)
+        self.ui.pushButton_35.setIcon(QIcon("pic/08.png"))
+        self.privatekeyeye = 1
         self.pressbtn1()
 
     def editwallet(self,row):
@@ -751,6 +796,13 @@ class Example(QDialog,QWidget):
         self.ui.cw.setIcon(QIcon("pic/cw0.png"))
         self.ui.stackedWidget.setCurrentIndex(1)
         self.ui.NewWalletstacked.setCurrentIndex(0)
+        self.ui.lineEdit_23.setEchoMode(QLineEdit.Password)
+        self.ui.pushButton_40.setIcon(QIcon("pic/08.png"))
+        self.prieye = 1
+        self.ui.label_11.setPixmap(QPixmap("pic\\disvispri.png"))
+        self.ui.lineEdit_21.setEchoMode(QLineEdit.Password)
+        self.ui.pushButton_41.setIcon(QIcon("pic/08.png"))
+        self.passwordeye = 1
         self.ui.lineEdit_8.setText(self.m_wallet.address)
         self.ui.lineEdit_9.setText(self.m_wallet.privateKey)
 
@@ -814,6 +866,13 @@ class Example(QDialog,QWidget):
         self.ui.cw.setIcon(QIcon("pic/cw1.png"))
         self.ui.stackedWidget.setCurrentIndex(0)
         self.ui.importstack.setCurrentIndex(0)
+        self.ui.lineEdit_23.setEchoMode(QLineEdit.Password)
+        self.ui.pushButton_40.setIcon(QIcon("pic/08.png"))
+        self.prieye = 1
+        self.ui.label_11.setPixmap(QPixmap("pic\\disvispri.png"))
+        self.ui.lineEdit_21.setEchoMode(QLineEdit.Password)
+        self.ui.pushButton_41.setIcon(QIcon("pic/08.png"))
+        self.passwordeye = 1
         self.ui.lineEdit_5.clear()
         self.ui.lineEdit_4.clear()
 
@@ -977,10 +1036,11 @@ class Example(QDialog,QWidget):
 
     def seeprivatekey(self):
         if self.privatekeyeye == 1:
-            self.ui.lineEdit_9.setEchoMode(0)
-            self.ui.lineEdit_9.setText(self.m_wallet.privateKey)
-            self.ui.pushButton_35.setIcon(QIcon("pic/01.png"))
-            self.privatekeyeye = 0
+            self.enterpswform = enterpswform()
+            self.enterpswform.show_w2(self.ui.lineEdit_8.text())
+            print(self.ui.lineEdit_8.text())
+            #self.ui.lineEdit_9.setText(self.m_wallet.privateKey)
+
         else:
             self.ui.lineEdit_9.setEchoMode(QLineEdit.Password)
             self.ui.pushButton_35.setIcon(QIcon("pic/08.png"))
@@ -1056,10 +1116,11 @@ class Example(QDialog,QWidget):
         newItemName = QTableWidgetItem(self.m_wallet.accountname)
         self.ui.multWallet.setItem(Rcount-1, 1, newItemAddr)
         self.ui.multWallet.setItem(Rcount-1, 0, newItemName)
-        self.ui.multWallet.setCellWidget(Rcount-1, 2, self.mwOpen)
-        self.ui.multWallet.setCellWidget(Rcount-1, 3, self.mwEdit)
-        self.ui.multWallet.setCellWidget(Rcount-1, 4, self.mwDelete)
-        self.ui.multWallet.setCellWidget(Rcount-1, 5, self.mwSaveKey)
+        ret = self.buttonsdef(Rcount-1)
+        self.ui.multWallet.setCellWidget(Rcount, 2, ret[0])
+        self.ui.multWallet.setCellWidget(Rcount, 3, ret[1])
+        self.ui.multWallet.setCellWidget(Rcount, 4, ret[2])
+        self.ui.multWallet.setCellWidget(Rcount, 5, ret[3])
 
         self.publishform.show_w2('Saved successfully')
 
@@ -1291,17 +1352,17 @@ class Example(QDialog,QWidget):
                         self.ui.TransactionHistory.setRowCount(Rcount + 1)
                         newItemtime = QTableWidgetItem(AccountTransactionsEntity[9].text)
                         newItemtoaddr = QTableWidgetItem(AccountTransactionsEntity[7].text)
-                        #if AccountTransactionsEntity[11].text != 'Succeed':
-                        #    ret = Core_func.getLatestBlock()
-                        #    num = str(AccountTransactionsEntity[1].text)
-                        #    if int(ret) > int(num):
-                        #        deta = int(ret)-int(num)
-                        #        if deta >= 12:
-                        #            AccountTransactionsEntity[11].text='Succeed'
-                        #        else:
-                        #            AccountTransactionsEntity[11].text=str(deta)+'/12'
-                        #    elif int(ret) == int(AccountTransactionsEntity[1].text):
-                        #        AccountTransactionsEntity[11].text='0/12'
+                        if AccountTransactionsEntity[11].text != 'Succeed':
+                           ret = Core_func.getLatestBlock()[1]
+                           num = str(AccountTransactionsEntity[1].text)
+                           if int(ret) > int(num):
+                               deta = int(ret)-int(num)
+                               if deta >= 12:
+                                   AccountTransactionsEntity[11].text='Succeed'
+                               else:
+                                   AccountTransactionsEntity[11].text=str(deta)+'/12'
+                           elif int(ret) == int(AccountTransactionsEntity[1].text):
+                               AccountTransactionsEntity[11].text='0/12'
                         newItemblockType = QTableWidgetItem(AccountTransactionsEntity[11].text)
                         if AccountTransactionsEntity[10].text == 'Send':
                             newItemvalue = QTableWidgetItem('-' + AccountTransactionsEntity[8].text + 'WTCT')

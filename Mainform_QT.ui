@@ -375,7 +375,7 @@ color: rgb(93, 93, 93);</string>
     <enum>QFrame::NoFrame</enum>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="p0">
     <widget class="QLabel" name="label_3">
@@ -6897,19 +6897,6 @@ color: rgb(100, 100, 100);</string>
     </widget>
    </widget>
   </widget>
-  <widget class="QListView" name="listView">
-   <property name="geometry">
-    <rect>
-     <x>10</x>
-     <y>50</y>
-     <width>61</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="frameShape">
-    <enum>QFrame::NoFrame</enum>
-   </property>
-  </widget>
   <widget class="Line" name="line_27">
    <property name="geometry">
     <rect>
@@ -6924,8 +6911,6 @@ color: rgb(100, 100, 100);</string>
    </property>
   </widget>
  </widget>
- <resources>
-  <include location="pic/mapB.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
