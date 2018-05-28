@@ -16,7 +16,8 @@ import cytoolz.utils
 import qrcode
 import requests
 import sip
-
+from datetime import datetime,timedelta
+import time
 import datetime
 from eth_account import Account
 from PyQt5 import QtWidgets
@@ -369,8 +370,8 @@ class messform(QWidget, Ui_MessForm):
         btnconfirm.clicked.connect(self.closeform)
 
     def show_w2(self,QTableWidgetItem):  # 显示窗体2
+        QTableWidgetItem.setForeground(QBrush(QColor(0,0,0)))
         ind = Core_func.QTableWidget.indexFromItem(ex.ui.LogMessage,QTableWidgetItem)
-
         print(ind.data())
         print(ind.data().split('tx_hash')[1][1:])
         ret = Core_func.getTransactionInfo(ind.data().split('tx_hash')[1][1:])
@@ -650,26 +651,29 @@ class sendform(QWidget, Ui_SendForm):
         #need to get blocknumber and time
         ret = Core_func.Transaction_out(ex.m_wallet.privateKey, self.ui.lineEdit_7.text().strip(), self.ui.lineEdit_6.text().strip(), self.ui.lineEdit_8.text().strip(), self.ui.lineEdit_9.text().strip())
         if ret[0] == 1:
-            self.Trans.txhash = '0x36775097df4ed6429dbe31fc56119a66f8c3dfcfda46792f4982117a90521f0a'#ret[1]
+            #self.Trans.txhash = '0x36775097df4ed6429dbe31fc56119a66f8c3dfcfda46792f4982117a90521f0a'#ret[1]
             #tx_details = Core_func.getTransactionInfo(self.Trans.txhash)
             #self.Trans.Blocknumber = tx_details['blockNumber']
             #self.Trans.timestamp = tx_details['timestamp']
-            self.Trans.toaddr = self.ui.lineEdit_7.text().strip()
-            self.Trans.fromaddr = ex.m_wallet.address
-            Rcount = ex.ui.TransactionHistory.rowCount()
-            ex.ui.TransactionHistory.setRowCount(Rcount + 1)
-            newItemTime = QTableWidgetItem(datetime.datetime.now().strftime('%Y-%m-%d'))
-            newItemAddr = QTableWidgetItem(ex.m_wallet.address)
-            newItemStatus = QTableWidgetItem(self.Trans.status)
-            newItemValue = QTableWidgetItem('-'+self.Trans.value+'WTCT')
-            ex.ui.TransactionHistory.setItem(Rcount, 0, newItemTime)
-            ex.ui.TransactionHistory.setItem(Rcount, 1, newItemAddr)
-            ex.ui.TransactionHistory.setItem(Rcount, 2, newItemStatus)
-            ex.ui.TransactionHistory.setItem(Rcount, 3, newItemValue)
-
+            # self.Trans.toaddr = self.ui.lineEdit_7.text().strip()
+            # self.Trans.fromaddr = ex.m_wallet.address
+            # Rcount = ex.ui.TransactionHistory.rowCount()
+            # ex.ui.TransactionHistory.setRowCount(Rcount + 1)
+            # newItemTime = QTableWidgetItem(datetime.datetime.now().strftime('%Y-%m-%d'))
+            # newItemAddr = QTableWidgetItem(ex.m_wallet.address)
+            # newItemStatus = QTableWidgetItem(self.Trans.status)
+            # newItemValue = QTableWidgetItem('-'+self.Trans.value+'WTCT')
+            # ex.ui.TransactionHistory.setItem(Rcount, 0, newItemTime)
+            # ex.ui.TransactionHistory.setItem(Rcount, 1, newItemAddr)
+            # ex.ui.TransactionHistory.setItem(Rcount, 2, newItemStatus)
+            # ex.ui.TransactionHistory.setItem(Rcount, 3, newItemValue)
+            print('need to write into xml')
 
             self.publishform.show_w2('transaction successfully')
             self.closeform()
+
+            print('need to read into xml')
+
             self.ui.lineEdit_7.clear()
             self.ui.lineEdit_6.clear()
         else:
@@ -1249,26 +1253,12 @@ class Example(QDialog,QWidget):
             self.ui.turn2visible2_4.setIcon(QIcon("pic/02.png"))
             self.phrm2eye = 1
     def purple2black(self):
-        self.ui.LogMessage.setStyleSheet("color:#000000")
-        self.ui.LogMessage.setSelectionBehavior(Core_func.QTableWidget.SelectRows)
-        self.ui.LogMessage.horizontalHeader().setVisible(0)
-        self.ui.LogMessage.verticalHeader().setVisible(0)
-        self.ui.LogMessage.setShowGrid(0)
-        self.ui.LogMessage.horizontalHeader().setStretchLastSection(1)
-        self.ui.LogMessage.verticalHeader().setDefaultSectionSize(57)
-        self.ui.LogMessage.setColumnWidth(0, 150)  # 将设置第1列的单元格成20宽度
-        self.ui.LogMessage.setColumnWidth(1, 150)  # 将设置第2列的单元格成30宽度
-        self.ui.LogMessage.setColumnWidth(2, 100)  # 将设置第3列的单元格成50宽度
-        self.ui.LogMessage.setFrameShape(QFrame.NoFrame)  # 表格无边框
-        self.ui.LogMessage.setEditTriggers(QAbstractItemView.NoEditTriggers)  # 不可编辑
-        self.ui.LogMessage.setFocusPolicy(Qt.NoFocus)  # 无选中虚线框
-        self.ui.LogMessage.verticalScrollBar().setStyleSheet(
-            "QScrollBar{background:transparent; width: 10px;}"
-            "QScrollBar::handle{background:lightgray; border:2px solid transparent; border-radius:5px; }"
-            "QScrollBar::handle:hover{background:#9e9e9e; }"
-            "QScrollBar::handle:pressed{background:#9e9e9e;}"
-            "QScrollBar::sub-line{background:transparent;}"
-            "QScrollBar::add-line{background:transparent;}")
+        self.blacknum=self.ui.LogMessage.rowCount()
+        for i in range(self.ui.LogMessage.rowCount()):
+            self.ui.LogMessage.item(i, 0).setForeground(QBrush(QColor(0,0,0)))
+            self.ui.LogMessage.item(i, 1).setForeground(QBrush(QColor(0,0,0)))
+            self.ui.LogMessage.item(i, 2).setForeground(QBrush(QColor(0,0,0)))
+
     def startmining(self):
         if self.startstop == 1:
             self.startstop = 0
@@ -1349,19 +1339,23 @@ class Example(QDialog,QWidget):
             tree = ET.parse('TransactionList.xml')
             root = tree.getroot()
             for AddressTransactionsEntity in root.findall('AddressTransactionsEntity'):
+                self.ui.TransactionHistory.setRowCount(0)
+                self.ui.LogMessage.setRowCount(0)
                 if AddressTransactionsEntity.find('Address').text == self.m_wallet.address.lower():
                     for AccountTransactionsEntity in AddressTransactionsEntity.find('TransactionList'):
                         Rcount = self.ui.TransactionHistory.rowCount()
                         self.ui.TransactionHistory.setRowCount(Rcount + 1)
-                        newItemtime = QTableWidgetItem(AccountTransactionsEntity[9].text)
+                        time_s = datetime.datetime.strptime(AccountTransactionsEntity[9].text, "%Y-%m-%d %H:%M:%S")
+                        localtime = Core_func.utc2local(time_s)
+                        newItemtime = QTableWidgetItem(localtime.strftime('%Y-%m-%d %H:%M:%S'))
                         newItemtoaddr = QTableWidgetItem(AccountTransactionsEntity[7].text)
-                        if AccountTransactionsEntity[11].text != 'Succeed':
+                        if AccountTransactionsEntity[11].text != 'Success':
                            ret = Core_func.getLatestBlock()[1]
                            num = str(AccountTransactionsEntity[1].text)
                            if int(ret) > int(num):
                                deta = int(ret)-int(num)
                                if deta >= 12:
-                                   AccountTransactionsEntity[11].text='Succeed'
+                                   AccountTransactionsEntity[11].text='Success'
                                else:
                                    AccountTransactionsEntity[11].text=str(deta)+'/12'
                            elif int(ret) == int(AccountTransactionsEntity[1].text):
@@ -1375,18 +1369,21 @@ class Example(QDialog,QWidget):
                         self.ui.TransactionHistory.setItem(Rcount, 1, newItemtoaddr)
                         self.ui.TransactionHistory.setItem(Rcount, 2, newItemblockType)
                         self.ui.TransactionHistory.setItem(Rcount, 3, newItemvalue)
-                        if AccountTransactionsEntity[11].text == 'Succeed':
+                        if AccountTransactionsEntity[11].text == 'Success':
                             Rcount = self.ui.LogMessage.rowCount()
                             self.ui.LogMessage.setRowCount(Rcount + 1)
                             newItemContent = QTableWidgetItem(
                             'From:' + AccountTransactionsEntity[0].text + '\n' + 'To:' + AccountTransactionsEntity[7].text + '\n' + 'Value:' + AccountTransactionsEntity[8].text + '                                                                                                                         ' + '\n' + 'tx_hash:' + AccountTransactionsEntity[5].text)
                             newItemType = QTableWidgetItem(AccountTransactionsEntity[10].text)
-                            newItemTime = QTableWidgetItem(AccountTransactionsEntity[9].text)
+                            time_s = datetime.datetime.strptime(AccountTransactionsEntity[9].text, "%Y-%m-%d %H:%M:%S")
+                            localtime = Core_func.utc2local(time_s)
+                            newItemTime = QTableWidgetItem(localtime.strftime('%Y-%m-%d %H:%M:%S'))
                             self.ui.LogMessage.setItem(Rcount, 0, newItemType)
                             self.ui.LogMessage.setItem(Rcount, 1, newItemTime)
                             self.ui.LogMessage.setItem(Rcount, 2, newItemContent)
 
                     break
+
         else:
             print('')
 
@@ -1809,7 +1806,7 @@ class Example(QDialog,QWidget):
         self.ui = Ui_Form()
         self.ui.setupUi(self)
         self.m_wallet = Wallet
-
+        self.blacknum = 0
         self.publishform = publishform()
         self.initchart()
         self.initmap()

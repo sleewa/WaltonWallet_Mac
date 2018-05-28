@@ -1,14 +1,14 @@
 import getpass
 import json
 import sys
-
+import time
 import requests
 from eth_account import Account
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from web3.auto import w3
-
+import datetime
 
 """
 failure reason for Generate_Two_Key function
@@ -220,3 +220,27 @@ def getHashRate():
 
 #ret3 = getMiningRecord('0x4a49f969507770f31a3e98ff05e75060cfe8e3fd')
 #print(ret3[1])
+# print(time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(time.time())))
+# datetime.datetime.time()
+# timenow = (datetime.datetime.utcnow() + datetime.timedelta(hours=8)) #将utc时间转化为本地时间
+# timedeta = datetime.datetime.utcnow()-datetime.datetime.now()
+# timetext = timenow.strftime('%Y-%m-%d %H:%M:%S')
+# print(datetime.datetime.utcnow())
+# print(timetext)
+# print(timedeta)
+
+
+# timenow = datetime.datetime.utcnow()
+#
+def utc2local(utc_st):
+    now_stamp = time.time()
+    local_time = datetime.datetime.fromtimestamp(now_stamp)
+    utc_time = datetime.datetime.utcfromtimestamp(now_stamp)
+    offset = local_time - utc_time
+    local_st = utc_st + offset
+    return local_st
+#
+# print(utc2local(timenow))
+#
+# ret = getTransactionInfo('0xa6013f46123e676e34e8504320e80afda14e40bd4e9497d8174aeb4277351979')
+# print(ret[1])
