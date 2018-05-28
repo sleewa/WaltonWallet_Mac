@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfAddressEntity xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <AddressEntity>
+        <UAddress />
+        <GuidNo>032a8700-4017-4fad-9cb3-709b26d23fde</GuidNo>
+        <AccountName>111</AccountName>
+        <Address>0x0866174643c89fd5cd6213f9e424cbd492b72165</Address>
+    </AddressEntity>
+    <AddressEntity>
+        <UAddress />
+        <GuidNo>9a7e7264-fae6-4d54-a643-ee3701e35afa</GuidNo>
+        <AccountName>333</AccountName>
+        <Address>0xc5283f4d56b5eb622b5eb7079bda2842bd8fa7b8</Address>
+    </AddressEntity>
+</ArrayOfAddressEntity>

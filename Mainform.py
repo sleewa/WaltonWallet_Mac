@@ -15,6 +15,7 @@ import cytoolz._signatures
 import cytoolz.utils
 import qrcode
 import requests
+import sip
 
 import datetime
 from eth_account import Account
@@ -110,7 +111,7 @@ class Figure_Canvas(FigureCanvas):   # 通过继承FigureCanvas类，使得该�
                 y.append(int(ret3[1][i]['history_balance']))
             self.axes.plot(x, y, 'r-', 1)
             self.axes.set_axis_off()
-
+            print('balance='+str(ret3[1][0]['history_balance']))
             return ret3[1][0]['history_balance']
 
         else:
@@ -429,9 +430,10 @@ class newcontactform(QWidget, Ui_NewContactForm):
         ex.ui.ContactsT.setCellWidget(Rcount, 2, ret[4])
         ex.ui.ContactsT.setCellWidget(Rcount, 3, ret[5])
         ex.ui.ContactsT.setCellWidget(Rcount, 4, ret[6])
-        #print(ex.ui.ContactsT.currentIndex())
-        #self.accountform.ui.Account.setItem(Rcount, 1, newItemAddr)
-        #self.accountform.ui.Account.setItem(Rcount, 0, newItemName)
+        sip.delete(ret[0])
+        sip.delete(ret[1])
+        sip.delete(ret[2])
+        sip.delete(ret[3])
 
 
     def mousePressEvent(self, event):
@@ -625,7 +627,7 @@ class sendform(QWidget, Ui_SendForm):
             self.ui.lineEdit_8.setPlaceholderText('Enter Gas Limit')
             self.ui.lineEdit_9.setPlaceholderText('Enter Gas Price')
 
-    def show_w2(self,row):  # 显示窗体2
+    def show_w2(self,row='none'):  # 显示窗体2
         if len(ex.m_wallet.address) <= 40 :
             self.publishform.show_w2('Please Choose Wallet')
         else:
@@ -633,10 +635,10 @@ class sendform(QWidget, Ui_SendForm):
                 "https://waltonchain.net:18950/api/getBalance/" + ex.m_wallet.address).json()
             a = str(balance)
             self.ui.label_52.setText(a.split(',')[1][11:] + 'WTCT')
-            ind = Core_func.QTableWidget.indexFromItem(ex.ui.ContactsT, ex.ui.ContactsT.item(row, 1))
-            print(row)
-            print(ind.data())
-            self.ui.lineEdit_7.setText(ind.data())
+            self.ui.lineEdit_7.clear()
+            if row != 'none':
+                ind = Core_func.QTableWidget.indexFromItem(ex.ui.ContactsT, ex.ui.ContactsT.item(row, 1))
+                self.ui.lineEdit_7.setText(ind.data())
             self.show()
 
     def showenterphrase(self):
@@ -665,15 +667,7 @@ class sendform(QWidget, Ui_SendForm):
             ex.ui.TransactionHistory.setItem(Rcount, 2, newItemStatus)
             ex.ui.TransactionHistory.setItem(Rcount, 3, newItemValue)
 
-            Rcount = ex.ui.LogMessage.rowCount()
-            ex.ui.LogMessage.setRowCount(Rcount + 1)
-            #time needs to be confirmed
-            newItemTime = QTableWidgetItem(datetime.datetime.now().strftime('%Y-%m-%d'))
-            newItemContent = QTableWidgetItem('From:'+self.Trans.fromaddr +'\n'+ 'To:'+self.Trans.toaddr +'\n'+ 'Value:'+self.Trans.value +'                                                                                                                         '+'\n'+ 'tx_hash:'+self.Trans.txhash)
-            newItemType = QTableWidgetItem(self.Trans.Type)
-            ex.ui.LogMessage.setItem(Rcount, 0, newItemType)
-            ex.ui.LogMessage.setItem(Rcount, 1, newItemTime)
-            ex.ui.LogMessage.setItem(Rcount, 2, newItemContent)
+
             self.publishform.show_w2('transaction successfully')
             self.closeform()
             self.ui.lineEdit_7.clear()
@@ -762,6 +756,9 @@ class Example(QDialog,QWidget):
         self.ui.pushButton_35.setIcon(QIcon("pic/08.png"))
         self.privatekeyeye = 1
         self.pressbtn1()
+        self.initchart()
+        self.refresh()
+
 
     def editwallet(self,row):
         self.walletInfoform = walletInfoform()
@@ -1074,6 +1071,9 @@ class Example(QDialog,QWidget):
         self.ui.multWallet.setCellWidget(Rcount, 3, ret[1])
         self.ui.multWallet.setCellWidget(Rcount, 4, ret[2])
         self.ui.multWallet.setCellWidget(Rcount, 5, ret[3])
+        sip.delete(ret[4])
+        sip.delete(ret[5])
+        sip.delete(ret[6])
 
         self.initchart()
 
@@ -1121,6 +1121,9 @@ class Example(QDialog,QWidget):
         self.ui.multWallet.setCellWidget(Rcount, 3, ret[1])
         self.ui.multWallet.setCellWidget(Rcount, 4, ret[2])
         self.ui.multWallet.setCellWidget(Rcount, 5, ret[3])
+        sip.delete(ret[4])
+        sip.delete(ret[5])
+        sip.delete(ret[6])
 
         self.publishform.show_w2('Saved successfully')
 
@@ -1372,6 +1375,16 @@ class Example(QDialog,QWidget):
                         self.ui.TransactionHistory.setItem(Rcount, 1, newItemtoaddr)
                         self.ui.TransactionHistory.setItem(Rcount, 2, newItemblockType)
                         self.ui.TransactionHistory.setItem(Rcount, 3, newItemvalue)
+                        if AccountTransactionsEntity[11].text == 'Succeed':
+                            Rcount = self.ui.LogMessage.rowCount()
+                            self.ui.LogMessage.setRowCount(Rcount + 1)
+                            newItemContent = QTableWidgetItem(
+                            'From:' + AccountTransactionsEntity[0].text + '\n' + 'To:' + AccountTransactionsEntity[7].text + '\n' + 'Value:' + AccountTransactionsEntity[8].text + '                                                                                                                         ' + '\n' + 'tx_hash:' + AccountTransactionsEntity[5].text)
+                            newItemType = QTableWidgetItem(AccountTransactionsEntity[10].text)
+                            newItemTime = QTableWidgetItem(AccountTransactionsEntity[9].text)
+                            self.ui.LogMessage.setItem(Rcount, 0, newItemType)
+                            self.ui.LogMessage.setItem(Rcount, 1, newItemTime)
+                            self.ui.LogMessage.setItem(Rcount, 2, newItemContent)
 
                     break
         else:
@@ -1618,6 +1631,51 @@ class Example(QDialog,QWidget):
                 self.ui.miningHistory.setItem(Rcount, 1, newItemblock)
                 self.ui.miningHistory.setItem(Rcount, 2, newItemreward)
 
+    def initcontact(self):
+        if os.path.isfile('address.xml'):
+            tree = ET.parse('address.xml')
+            root = tree.getroot()
+            for AddressEntity in root.findall('AddressEntity'):
+                Rcount = self.ui.ContactsT.rowCount()
+                self.ui.ContactsT.setRowCount(Rcount + 1)
+                newItemname = QTableWidgetItem(AddressEntity[2].text)
+                newItemaddr = QTableWidgetItem(AddressEntity[3].text)
+                ret = self.buttonsdef(Rcount)
+                self.ui.ContactsT.setItem(Rcount, 0, newItemname)
+                self.ui.ContactsT.setItem(Rcount, 1, newItemaddr)
+                self.ui.ContactsT.setCellWidget(Rcount, 2, ret[4])
+                self.ui.ContactsT.setCellWidget(Rcount, 3, ret[5])
+                self.ui.ContactsT.setCellWidget(Rcount, 4, ret[6])
+                sip.delete(ret[0])
+                sip.delete(ret[1])
+                sip.delete(ret[2])
+                sip.delete(ret[3])
+
+
+        else:
+            print('')
+
+    def initwallets(self):
+        if os.path.isfile('Wallets.xml'):
+            tree = ET.parse('Wallets.xml')
+            root = tree.getroot()
+            for AddressEntity in root.findall('AddressEntity'):
+                Rcount = self.ui.multWallet.rowCount()
+                self.ui.multWallet.setRowCount(Rcount + 1)
+                newItemname = QTableWidgetItem(AddressEntity[2].text)
+                newItemaddr = QTableWidgetItem(AddressEntity[0].text)
+                ret = self.buttonsdef(Rcount)
+                self.ui.multWallet.setItem(Rcount, 0, newItemname)
+                self.ui.multWallet.setItem(Rcount, 1, newItemaddr)
+                self.ui.multWallet.setCellWidget(Rcount, 2, ret[0])
+                self.ui.multWallet.setCellWidget(Rcount, 3, ret[1])
+                self.ui.multWallet.setCellWidget(Rcount, 4, ret[2])
+                self.ui.multWallet.setCellWidget(Rcount, 5, ret[3])
+                sip.delete(ret[4])
+                sip.delete(ret[5])
+                sip.delete(ret[6])
+        else:
+            print('')
 
     def initmap(self):
         pen = QPen()
@@ -1755,6 +1813,8 @@ class Example(QDialog,QWidget):
         self.publishform = publishform()
         self.initchart()
         self.initmap()
+        self.initcontact()
+        self.initwallets()
         self.sendform = sendform()
         #self.nationpos()
         #self.timer = QTimer(self)  # 初始化一个定时器
@@ -1914,7 +1974,7 @@ class Example(QDialog,QWidget):
         btntme.clicked.connect(self.totme)
         btnsta = self.ui.pushButton_8
         btnsta.clicked.connect(self.tostack)
-        self.ui.pushButton_9.clicked.connect(self.sendform.show_w2)
+        self.ui.pushButton_9.clicked.connect(lambda :self.sendform.show_w2('none'))
 
         #Multiple Wallet page
         btn2create = self.ui.pushButton_32

@@ -220,7 +220,7 @@ border-radius:25px;</string>
     <string notr="true">color: rgb(100, 100, 100);</string>
    </property>
    <property name="text">
-    <string>Addreaa To:</string>
+    <string>Address To:</string>
    </property>
   </widget>
   <widget class="QLabel" name="label_55">

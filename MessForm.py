@@ -283,7 +283,7 @@ class Ui_MessForm(object):
         self.label_51.setText(_translate("MessForm", "Address From:"))
         self.label_52.setText(_translate("MessForm", "Value:"))
         self.label_53.setText(_translate("MessForm", "Id:"))
-        self.label_54.setText(_translate("MessForm", "Addreaa To:"))
+        self.label_54.setText(_translate("MessForm", "Address To:"))
         self.label_55.setText(_translate("MessForm", "Gas:"))
         self.label_56.setText(_translate("MessForm", "Gas Price:"))
         self.label_57.setText(_translate("MessForm", "Time:"))
