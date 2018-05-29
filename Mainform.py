@@ -19,6 +19,7 @@ import sip
 from datetime import datetime,timedelta
 import time
 import datetime
+import xml.dom.minidom
 from eth_account import Account
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt, QSize, QTimer
@@ -439,6 +440,9 @@ class newcontactform(QWidget, Ui_NewContactForm):
         sip.delete(ret[1])
         sip.delete(ret[2])
         sip.delete(ret[3])
+        dom = xml.dom.minidom.parse("test.xml")  # 打开xml文档
+        root = dom.documentElement  # 得到xml文档
+        Core_func.addaddressxml(dom, root, self.ui.lineEdit_7.text(), self.ui.lineEdit_6.text())
 
 
     def mousePressEvent(self, event):
@@ -776,8 +780,22 @@ class Example(QDialog,QWidget):
         print(row)
         if (self.ui.ContactsT.rowCount()-1) == 0:
             self.ui.ContactsT.setRowCount(0)
+            dom = xml.dom.minidom.parse("test.xml")  # 打开xml文档
+            root = dom.documentElement  # 得到xml文档
+            addrentity = root.getElementsByTagName('AddressEntity')[0]
+            addrentity.parentNode.removeChild(addrentity)
+            f = open('test.xml', 'w')
+            dom.writexml(f, addindent=' ', newl='\n')
+            f.close()
         else:
             self.ui.ContactsT.removeRow(row)
+            dom = xml.dom.minidom.parse("test.xml")  # 打开xml文档
+            root = dom.documentElement  # 得到xml文档
+            addrentity = root.getElementsByTagName('AddressEntity')[row]
+            addrentity.parentNode.removeChild(addrentity)
+            f = open('test.xml', 'w')
+            dom.writexml(f, addindent=' ', newl='\n')
+            f.close()
 
     def sendcontact(self,row):
         print(row)
@@ -996,7 +1014,7 @@ class Example(QDialog,QWidget):
 
     def importKetstore(self):
         file = open(self.ui.lineEdit_26.text(), 'r')
-        content = file.readline()
+        content = file.read()
         if self.ui.lineEdit_26.text()[-5:] == 'store':
             enterpri = self.ui.lineEdit_20.text()
             enterpri.strip()
@@ -1697,24 +1715,33 @@ class Example(QDialog,QWidget):
                 self.ui.miningHistory.setItem(Rcount, 2, newItemreward)
 
     def initcontact(self):
-        if os.path.isfile('address.xml'):
-            tree = ET.parse('address.xml')
-            root = tree.getroot()
-            for AddressEntity in root.findall('AddressEntity'):
-                Rcount = self.ui.ContactsT.rowCount()
-                self.ui.ContactsT.setRowCount(Rcount + 1)
-                newItemname = QTableWidgetItem(AddressEntity[2].text)
-                newItemaddr = QTableWidgetItem(AddressEntity[3].text)
-                ret = self.buttonsdef(Rcount)
-                self.ui.ContactsT.setItem(Rcount, 0, newItemname)
-                self.ui.ContactsT.setItem(Rcount, 1, newItemaddr)
-                self.ui.ContactsT.setCellWidget(Rcount, 2, ret[4])
-                self.ui.ContactsT.setCellWidget(Rcount, 3, ret[5])
-                self.ui.ContactsT.setCellWidget(Rcount, 4, ret[6])
-                sip.delete(ret[0])
-                sip.delete(ret[1])
-                sip.delete(ret[2])
-                sip.delete(ret[3])
+        if os.path.isfile('test.xml'):#address
+            # tree = ET.parse('test.xml')root.findall('AddressEntity')
+            # root = tree.getroot()
+            dom = xml.dom.minidom.parse("test.xml")  # 打开xml文档
+            root = dom.documentElement  # 得到xml文档
+            if len(root.getElementsByTagName('AddressEntity')) != 0:
+                for AddressEntity in root.getElementsByTagName('AddressEntity'):
+                    Rcount = self.ui.ContactsT.rowCount()
+                    self.ui.ContactsT.setRowCount(Rcount + 1)
+
+                    itemlist1 = AddressEntity.getElementsByTagName('AccountName')
+                    item1 = itemlist1[0]
+                    itemlist2 = AddressEntity.getElementsByTagName('Address')
+                    item2 = itemlist2[0]
+
+                    newItemname = QTableWidgetItem(item1.firstChild.data)
+                    newItemaddr = QTableWidgetItem(item2.firstChild.data)
+                    ret = self.buttonsdef(Rcount)
+                    self.ui.ContactsT.setItem(Rcount, 0, newItemname)
+                    self.ui.ContactsT.setItem(Rcount, 1, newItemaddr)
+                    self.ui.ContactsT.setCellWidget(Rcount, 2, ret[4])
+                    self.ui.ContactsT.setCellWidget(Rcount, 3, ret[5])
+                    self.ui.ContactsT.setCellWidget(Rcount, 4, ret[6])
+                    sip.delete(ret[0])
+                    sip.delete(ret[1])
+                    sip.delete(ret[2])
+                    sip.delete(ret[3])
 
 
         else:
@@ -1873,6 +1900,10 @@ class Example(QDialog,QWidget):
         '显示窗口'
         self.ui = Ui_Form()
         self.ui.setupUi(self)
+        if os.path.isfile('test.xml'):
+            print('')
+        else:
+            Core_func.generateaddressXml()
         self.m_wallet = Wallet
         self.lastblacknum = 0
         self.publishform = publishform()

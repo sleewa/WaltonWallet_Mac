@@ -16,6 +16,59 @@ failure reason for Generate_Two_Key function
 10001: two passwords do not match
 """
 
+from xml.dom import minidom
+
+
+# 生成XML文件方式
+def generateaddressXml():
+    doc = minidom.Document()
+
+    # 创建根元素
+    rootElement = doc.createElement('ArrayOfAddressEntity')
+    rootElement.setAttribute('xmlns:xsd','"http://www.w3.org/2001/XMLSchema"')
+
+    doc.appendChild(rootElement)
+    # 为根元素添加10个子元素
+
+    # 打开test.xml文件 准备写入
+    f = open('test.xml', 'w')
+    # 写入文件
+    doc.writexml(f, addindent=' ', newl='\n')
+    # 关闭
+    f.close()
+
+    return (doc,rootElement)
+
+def addaddressxml(doc,rootElement,accountname,address):
+    AddressEntity = doc.createElement('AddressEntity')
+    rootElement.appendChild(AddressEntity)
+    # 为子元素添加id属性
+    # childElement.setAttribute('id', str(pythonId))
+    UAddress = doc.createElement('UAddress')
+    AddressEntity.appendChild(UAddress)
+
+    GuidNo = doc.createElement('GuidNo')
+    AddressEntity.appendChild(GuidNo)
+
+    AccountName = doc.createElement('AccountName')
+    AddressEntity.appendChild(AccountName)
+    name = doc.createTextNode(accountname)
+    AccountName.appendChild(name)
+
+    Address = doc.createElement('Address')
+    AddressEntity.appendChild(Address)
+    addr = doc.createTextNode(address)
+    Address.appendChild(addr)
+
+    doc.appendChild(rootElement)
+
+    f = open('test.xml', 'w')
+    # 写入文件
+    #f.truncate()
+    doc.writexml(f, addindent=' ', newl='\n')
+    # 关闭
+    f.close()
+
 
 def Generate_Three_Key(password1, password2):
     if password1 == password2:
@@ -64,7 +117,7 @@ def Import_mnemonic(passphrase1, passphrase2, mnemonicwords):
     if passphrase1 == passphrase2:
         print(passphrase1)
         print(mnemonicwords)
-        
+        return (1, 0)
     else:
         return (0, 0)
 

@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+<ArrayOfAddressEntity xmlns:xsd="&quot;http://www.w3.org/2001/XMLSchema&quot;">
+ 
+ 
+ <AddressEntity>
+  
+  
+  <UAddress/>
+  
+  
+  <GuidNo/>
+  
+  
+  <AccountName>1</AccountName>
+  
+  
+  <Address>0xc5283f4d56b5eb622b5eb7079bda2842bd8fa7b8</Address>
+  
+ 
+ </AddressEntity>
+ 
+ 
+ <AddressEntity>
+  
+  
+  <UAddress/>
+  
+  
+  <GuidNo/>
+  
+  
+  <AccountName>1</AccountName>
+  
+  
+  <Address>0xc5283f4d56b5eb622b5eb7079bda2842bd8fa7b8</Address>
+  
+ 
+ </AddressEntity>
+ 
+
+ <AddressEntity>
+  <UAddress/>
+  <GuidNo/>
+  <AccountName>1</AccountName>
+  <Address>0xc5283f4d56b5eb622b5eb7079bda2842bd8fa7b8</Address>
+ </AddressEntity>
+ <AddressEntity>
+  <UAddress/>
+  <GuidNo/>
+  <AccountName>1</AccountName>
+  <Address>0xc5283f4d56b5eb622b5eb7079bda2842bd8fa7b8</Address>
+ </AddressEntity>
+</ArrayOfAddressEntity>
