@@ -64,8 +64,9 @@ def Import_mnemonic(passphrase1, passphrase2, mnemonicwords):
     if passphrase1 == passphrase2:
         print(passphrase1)
         print(mnemonicwords)
+        
     else:
-        print('wrong')
+        return (0, 0)
 
 
 def Transaction_out(private_key, toaddr, value, gas, gasprice):
@@ -242,5 +243,5 @@ def utc2local(utc_st):
 #
 # print(utc2local(timenow))
 #
-# ret = getTransactionInfo('0xa6013f46123e676e34e8504320e80afda14e40bd4e9497d8174aeb4277351979')
-# print(ret[1])
+# ret = getMiningRecord('0xfbf36b7c56258dc3e29769c1a686250b8b002de3')
+# print(ret)

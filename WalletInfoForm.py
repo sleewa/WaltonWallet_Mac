@@ -30,7 +30,7 @@ class Ui_WalletInfoForm(object):
 "}\n"
 "")
         self.lineEdit_6.setFrame(False)
-        self.lineEdit_6.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.lineEdit_6.setEchoMode(QtWidgets.QLineEdit.Normal)
         self.lineEdit_6.setObjectName("lineEdit_6")
         self.line_38 = QtWidgets.QFrame(WalletInfoForm)
         self.line_38.setGeometry(QtCore.QRect(60, 160, 371, 16))
@@ -54,7 +54,7 @@ class Ui_WalletInfoForm(object):
 "}\n"
 "")
         self.lineEdit_7.setFrame(False)
-        self.lineEdit_7.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.lineEdit_7.setEchoMode(QtWidgets.QLineEdit.Normal)
         self.lineEdit_7.setPlaceholderText("")
         self.lineEdit_7.setObjectName("lineEdit_7")
         self.label_51 = QtWidgets.QLabel(WalletInfoForm)

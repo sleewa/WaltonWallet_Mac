@@ -1212,7 +1212,7 @@ class Ui_Form(object):
         self.lineEdit_38.setWhatsThis("")
         self.lineEdit_38.setAccessibleName("")
         self.lineEdit_38.setAccessibleDescription("")
-        self.lineEdit_38.setStyleSheet("\n"
+        self.lineEdit_38.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "QLineEdit[echoMode=\"2\"] {\n"
 "    lineedit-password-character:42;\n"
 "}\n"
@@ -1254,7 +1254,7 @@ class Ui_Form(object):
         self.lineEdit_40.setWhatsThis("")
         self.lineEdit_40.setAccessibleName("")
         self.lineEdit_40.setAccessibleDescription("")
-        self.lineEdit_40.setStyleSheet("\n"
+        self.lineEdit_40.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "QLineEdit[echoMode=\"2\"] {\n"
 "    lineedit-password-character:42;\n"
 "}\n"
@@ -2764,7 +2764,7 @@ class Ui_Form(object):
         self.line_27.setObjectName("line_27")
 
         self.retranslateUi(Form)
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(1)
         self.importstack.setCurrentIndex(4)
         self.NewWalletstacked.setCurrentIndex(0)
         self.tabWidget.setCurrentIndex(1)
