@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2cb5a557-5c71-4f3d-abef-ea3994e1e70c" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core_func.py" beforeDir="false" afterPath="$PROJECT_DIR$/Core_func.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Data/Keystore/AB828046856F5886.keystore" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Keystore/AB828046856F5886.keystore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Data/Keystore/FBf36B7c56258dC3.keystore" beforeDir="false" afterPath="$PROJECT_DIR$/Data/Keystore/FBf36B7c56258dC3.keystore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mainform.py" beforeDir="false" afterPath="$PROJECT_DIR$/Mainform.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mainform_QT.py" beforeDir="false" afterPath="$PROJECT_DIR$/Mainform_QT.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mainform_QT.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Mainform_QT.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pic/private.png" beforeDir="false" afterPath="$PROJECT_DIR$/pic/private.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pic/public.png" beforeDir="false" afterPath="$PROJECT_DIR$/pic/public.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.xml" beforeDir="false" afterPath="$PROJECT_DIR$/test.xml" afterDir="false" />
@@ -230,16 +232,17 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Mainform.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Mainform.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Mainform.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="269">
-              <caret line="1146" column="53" lean-forward="true" selection-start-line="1146" selection-start-column="53" selection-end-line="1146" selection-end-column="53" />
+            <state relative-caret-position="206">
+              <caret line="464" column="24" lean-forward="true" selection-start-line="464" selection-start-column="24" selection-end-line="464" selection-end-column="24" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
                 <element signature="e#1638#3127#0" />
                 <element signature="e#3307#6454#0" />
-                <element signature="e#6504#8154#0" />
+                <element signature="e#6504#8034#0" />
+                <element signature="e#7270#7557#0" />
                 <element signature="e#8210#9680#0" />
                 <element signature="e#9730#10640#0" />
                 <element signature="e#10690#12741#0" />
@@ -248,11 +251,16 @@
                 <element signature="e#18479#19428#0" />
                 <element signature="e#19478#21043#0" />
                 <element signature="e#21087#26227#0" />
+                <element signature="e#25800#26009#0" />
+                <element signature="e#26056#26180#0" />
                 <element signature="e#26390#26781#0" />
                 <element signature="e#26823#27192#0" />
                 <element signature="e#26690#28621#0" />
                 <element signature="e#28342#28745#0" />
+                <element signature="e#28786#28865#0" />
                 <element signature="e#28905#29992#0" />
+                <element signature="e#30033#30113#0" />
+                <element signature="e#31941#32030#0" />
                 <element signature="e#30305#31271#0" />
                 <element signature="e#31306#31744#0" />
                 <element signature="e#31779#32217#0" />
@@ -273,6 +281,7 @@
                 <element signature="e#41320#41726#0" />
                 <element signature="e#41765#42191#0" />
                 <element signature="e#42226#42757#0" />
+                <element signature="e#45179#46710#0" />
                 <element signature="e#43660#43929#0" />
                 <element signature="e#43968#45215#0" />
                 <element signature="e#45250#46066#0" />
@@ -295,11 +304,14 @@
                 <element signature="e#51476#53656#0" />
                 <element signature="e#53690#53929#0" />
                 <element signature="e#53964#54203#0" />
-                <element signature="e#54515#64853#0" />
+                <element signature="e#54238#54254#0" />
+                <element signature="e#54290#54306#0" />
+                <element signature="e#54343#54359#0" />
+                <element signature="e#54396#54412#0" />
+                <element signature="e#54445#54482#0" />
                 <element signature="e#64889#73898#0" />
                 <element signature="e#73933#77605#0" />
                 <element signature="e#77640#78402#0" />
-                <element signature="e#78760#80661#0" />
                 <element signature="e#80015#81036#0" />
                 <element signature="e#81069#86882#0" />
                 <element signature="e#87030#87596#0" />
@@ -310,77 +322,38 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="QIcon.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/.PyCharmCE2018.1/system/python_stubs/133899476/PyQt5/QtGui/QIcon.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="183">
-              <caret line="76" column="8" selection-start-line="76" selection-start-column="8" selection-end-line="76" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="QTableWidgetItem.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/.PyCharmCE2018.1/system/python_stubs/133899476/PyQt5/QtWidgets/QTableWidgetItem.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="129">
-              <caret line="66" column="21" selection-start-line="66" selection-start-column="8" selection-end-line="66" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="QAbstractItemView.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/.PyCharmCE2018.1/system/python_stubs/133899476/PyQt5/QtWidgets/QAbstractItemView.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="13284">
-              <caret line="496" column="8" selection-start-line="496" selection-start-column="8" selection-end-line="496" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="new 1.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Desktop/new 1.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1350">
-              <caret line="50" selection-start-line="50" selection-end-line="50" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="builtins.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/.PyCharmCE2018.1/system/python_stubs/133899476/builtins.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="127953">
-              <caret line="4739" column="8" selection-start-line="4739" selection-start-column="8" selection-end-line="4739" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="minidom.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/xml/dom/minidom.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1161">
-              <caret line="48" column="8" selection-start-line="48" selection-start-column="8" selection-end-line="48" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Core_func.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Core_func.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Core_func.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1458">
-              <caret line="64" column="64" selection-start-line="63" selection-start-column="4" selection-end-line="64" selection-end-column="64" />
+            <state relative-caret-position="414">
+              <caret line="474" column="27" lean-forward="true" selection-start-line="474" selection-start-column="27" selection-end-line="474" selection-end-column="27" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
+                <element signature="e#418#813#0" />
+                <element signature="e#875#1861#0" />
+                <element signature="e#1882#2323#0" />
+                <element signature="e#2354#2797#0" />
+                <element signature="e#2757#3705#0" />
+                <element signature="e#3990#4434#0" />
+                <element signature="e#1914#2427#0" />
+                <element signature="e#2529#2752#0" />
+                <element signature="e#2805#3200#0" />
+                <element signature="e#3269#3409#0" />
+                <element signature="e#3480#4161#0" />
+                <element signature="e#4268#4484#0" />
+                <element signature="e#4524#4776#0" />
+                <element signature="e#4821#5084#0" />
+                <element signature="e#5120#5341#0" />
+                <element signature="e#5434#5649#0" />
+                <element signature="e#5708#5951#0" />
+                <element signature="e#5993#6203#0" />
+                <element signature="e#6232#6445#0" />
+                <element signature="e#6471#6665#0" />
+                <element signature="e#6691#6938#0" />
+                <element signature="e#10069#10390#0" />
+                <element signature="e#10472#11647#0" />
+                <element signature="e#11550#14800#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="QTableWidget.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/.PyCharmCE2018.1/system/python_stubs/133899476/PyQt5/QtWidgets/QTableWidget.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="27">
-              <caret line="221" column="8" selection-start-line="221" selection-start-column="8" selection-end-line="221" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -396,7 +369,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>importsecret</find>
       <find>walton.exe</find>
       <find>api</find>
       <find>newcontactform</find>
@@ -425,6 +397,8 @@
       <find>ContactsT</find>
       <find>addaddressxml</find>
       <find>minidom</find>
+      <find>initcontact</find>
+      <find>addWallet</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -441,8 +415,8 @@
         <option value="$PROJECT_DIR$/Create_or_import.py" />
         <option value="$PROJECT_DIR$/Mainform_QT.py" />
         <option value="$USER_HOME$/Desktop/new 1.py" />
-        <option value="$PROJECT_DIR$/Core_func.py" />
         <option value="$PROJECT_DIR$/Mainform.py" />
+        <option value="$PROJECT_DIR$/Core_func.py" />
       </list>
     </option>
   </component>
@@ -652,7 +626,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="116" />
+      <option name="time" value="117" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -894,44 +868,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Desktop/new 1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1350">
-          <caret line="50" selection-start-line="50" selection-end-line="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2018.1/system/python_stubs/133899476/builtins.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127953">
-          <caret line="4739" column="8" selection-start-line="4739" selection-start-column="8" selection-end-line="4739" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/xml/dom/minidom.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1161">
-          <caret line="48" column="8" selection-start-line="48" selection-start-column="8" selection-end-line="48" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Core_func.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1458">
-          <caret line="64" column="64" selection-start-line="63" selection-start-column="4" selection-end-line="64" selection-end-column="64" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2018.1/system/python_stubs/133899476/PyQt5/QtWidgets/QAbstractItemView.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="13284">
-          <caret line="496" column="8" selection-start-line="496" selection-start-column="8" selection-end-line="496" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.PyCharmCE2018.1/system/python_stubs/133899476/PyQt5/QtWidgets/QTableWidget.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="27">
@@ -939,10 +875,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2018.1/system/python_stubs/133899476/PyQt5/QtGui/QIcon.py">
+    <entry file="file://$USER_HOME$/.PyCharmCE2018.1/system/python_stubs/133899476/builtins.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="183">
-          <caret line="76" column="8" selection-start-line="76" selection-start-column="8" selection-end-line="76" selection-end-column="8" />
+          <caret line="4739" column="8" selection-start-line="4739" selection-start-column="8" selection-end-line="4739" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/new 1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="171">
+          <caret line="50" selection-start-line="50" selection-end-line="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharmCE2018.1/system/python_stubs/133899476/PyQt5/QtWidgets/QAbstractItemView.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="27">
+          <caret line="496" column="8" selection-start-line="496" selection-start-column="8" selection-end-line="496" selection-end-column="8" />
         </state>
       </provider>
     </entry>
@@ -953,15 +903,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/.PyCharmCE2018.1/system/python_stubs/133899476/PyQt5/QtGui/QIcon.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="183">
+          <caret line="76" column="8" selection-start-line="76" selection-start-column="8" selection-end-line="76" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/xml/dom/minidom.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="1051" column="22" lean-forward="true" selection-start-line="1051" selection-start-column="22" selection-end-line="1051" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Mainform.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="1146" column="53" lean-forward="true" selection-start-line="1146" selection-start-column="53" selection-end-line="1146" selection-end-column="53" />
+        <state relative-caret-position="206">
+          <caret line="464" column="24" lean-forward="true" selection-start-line="464" selection-start-column="24" selection-end-line="464" selection-end-column="24" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
             <element signature="e#1638#3127#0" />
             <element signature="e#3307#6454#0" />
-            <element signature="e#6504#8154#0" />
+            <element signature="e#6504#8034#0" />
+            <element signature="e#7270#7557#0" />
             <element signature="e#8210#9680#0" />
             <element signature="e#9730#10640#0" />
             <element signature="e#10690#12741#0" />
@@ -970,11 +935,16 @@
             <element signature="e#18479#19428#0" />
             <element signature="e#19478#21043#0" />
             <element signature="e#21087#26227#0" />
+            <element signature="e#25800#26009#0" />
+            <element signature="e#26056#26180#0" />
             <element signature="e#26390#26781#0" />
             <element signature="e#26823#27192#0" />
             <element signature="e#26690#28621#0" />
             <element signature="e#28342#28745#0" />
+            <element signature="e#28786#28865#0" />
             <element signature="e#28905#29992#0" />
+            <element signature="e#30033#30113#0" />
+            <element signature="e#31941#32030#0" />
             <element signature="e#30305#31271#0" />
             <element signature="e#31306#31744#0" />
             <element signature="e#31779#32217#0" />
@@ -995,6 +965,7 @@
             <element signature="e#41320#41726#0" />
             <element signature="e#41765#42191#0" />
             <element signature="e#42226#42757#0" />
+            <element signature="e#45179#46710#0" />
             <element signature="e#43660#43929#0" />
             <element signature="e#43968#45215#0" />
             <element signature="e#45250#46066#0" />
@@ -1017,16 +988,53 @@
             <element signature="e#51476#53656#0" />
             <element signature="e#53690#53929#0" />
             <element signature="e#53964#54203#0" />
-            <element signature="e#54515#64853#0" />
+            <element signature="e#54238#54254#0" />
+            <element signature="e#54290#54306#0" />
+            <element signature="e#54343#54359#0" />
+            <element signature="e#54396#54412#0" />
+            <element signature="e#54445#54482#0" />
             <element signature="e#64889#73898#0" />
             <element signature="e#73933#77605#0" />
             <element signature="e#77640#78402#0" />
-            <element signature="e#78760#80661#0" />
             <element signature="e#80015#81036#0" />
             <element signature="e#81069#86882#0" />
             <element signature="e#87030#87596#0" />
             <element signature="e#87624#88240#0" />
             <element signature="e#103847#107391#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Core_func.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="414">
+          <caret line="474" column="27" lean-forward="true" selection-start-line="474" selection-start-column="27" selection-end-line="474" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#418#813#0" />
+            <element signature="e#875#1861#0" />
+            <element signature="e#1882#2323#0" />
+            <element signature="e#2354#2797#0" />
+            <element signature="e#2757#3705#0" />
+            <element signature="e#3990#4434#0" />
+            <element signature="e#1914#2427#0" />
+            <element signature="e#2529#2752#0" />
+            <element signature="e#2805#3200#0" />
+            <element signature="e#3269#3409#0" />
+            <element signature="e#3480#4161#0" />
+            <element signature="e#4268#4484#0" />
+            <element signature="e#4524#4776#0" />
+            <element signature="e#4821#5084#0" />
+            <element signature="e#5120#5341#0" />
+            <element signature="e#5434#5649#0" />
+            <element signature="e#5708#5951#0" />
+            <element signature="e#5993#6203#0" />
+            <element signature="e#6232#6445#0" />
+            <element signature="e#6471#6665#0" />
+            <element signature="e#6691#6938#0" />
+            <element signature="e#10069#10390#0" />
+            <element signature="e#10472#11647#0" />
+            <element signature="e#11550#14800#0" />
           </folding>
         </state>
       </provider>

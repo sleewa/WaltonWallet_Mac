@@ -67,12 +67,83 @@ def addaddressxml(doc,rootElement,accountname,address):
 
 
     f = open('test.xml', 'w')
-    # 写入文件
-    #f.truncate()
     doc.writexml(f, addindent=' ', newl='\n')
-    # 关闭
     f.close()
 
+def editaddressxml(doc,rootElement,accountname,row):
+    addrentity = rootElement.getElementsByTagName('AddressEntity')[row]
+    nametag = addrentity.getElementsByTagName('AccountName')[0].childNodes[0]
+    nametag.nodeValue=accountname
+
+    xmlStr = doc.toprettyxml(indent='', newl='', encoding='utf-8')
+    xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
+    doc = minidom.parseString(xmlStr)
+
+    f = open('test.xml', 'w')
+    doc.writexml(f, addindent=' ', newl='\n')
+    f.close()
+
+def generatewalletXml():
+    doc = minidom.Document()
+
+    rootElement = doc.createElement('ArrayOfWalletBaseEntity')
+    rootElement.setAttribute('xmlns:xsd', '"http://www.w3.org/2001/XMLSchema"')
+    doc.appendChild(rootElement)
+    f = open('wa.xml', 'w')
+    doc.writexml(f, addindent='  ', newl='\n')
+    f.close()
+
+    return (doc, rootElement)
+
+def addwalletxml(doc,rootElement,accountname,address,filename,GMN='false'):
+    WalletBaseEntity = doc.createElement('WalletBaseEntity')
+    rootElement.appendChild(WalletBaseEntity)
+    # 为子元素添加id属性
+    Address = doc.createElement('Address')
+    WalletBaseEntity.appendChild(Address)
+    addr = doc.createTextNode(address)
+    Address.appendChild(addr)
+    # childElement.setAttribute('id', str(pythonId))
+    UUID = doc.createElement('UUID')
+    WalletBaseEntity.appendChild(UUID)
+
+    AccountName = doc.createElement('AccountName')
+    WalletBaseEntity.appendChild(AccountName)
+    name = doc.createTextNode(accountname)
+    AccountName.appendChild(name)
+
+    FileName = doc.createElement('FileName')
+    WalletBaseEntity.appendChild(FileName)
+    fname = doc.createTextNode(filename)
+    FileName.appendChild(fname)
+
+    GMNtag = doc.createElement('GMN')
+    WalletBaseEntity.appendChild(GMNtag)
+    gmn = doc.createTextNode(GMN)
+    GMNtag.appendChild(gmn)
+
+    doc.appendChild(rootElement)
+    xmlStr = doc.toprettyxml(indent='', newl='', encoding='utf-8')
+    xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
+    doc = minidom.parseString(xmlStr)
+
+
+    f = open('wa.xml', 'w')
+    doc.writexml(f, addindent=' ', newl='\n')
+    f.close()
+
+def editwalletxml(doc,rootElement,accountname,row):
+    walletentity = rootElement.getElementsByTagName('WalletBaseEntity')[row]
+    nametag = walletentity.getElementsByTagName('AccountName')[0].childNodes[0]
+    nametag.nodeValue=accountname
+
+    xmlStr = doc.toprettyxml(indent='', newl='', encoding='utf-8')
+    xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
+    doc = minidom.parseString(xmlStr)
+
+    f = open('wa.xml', 'w')
+    doc.writexml(f, addindent=' ', newl='\n')
+    f.close()
 
 def Generate_Three_Key(password1, password2):
     if password1 == password2:
@@ -144,7 +215,11 @@ def Transaction_out(private_key, toaddr, value, gas, gasprice):
     }
     key = '0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318'
     signed = w3.eth.account.signTransaction(transaction, private_key)
-    return (1, w3.toHex(signed.rawTransaction))
+    tx_hash = requests.get(
+        "https://waltonchain.net:18950/api/sendRawTransaction/" + w3.toHex(signed.rawTransaction)).json()
+    print(tx_hash['tx_hash'])
+
+    return (1, tx_hash['tx_hash'])
 
 
 def startCPUMining():
@@ -253,43 +328,7 @@ def getHashRate():
     except Exception as err:
         print(err)
         return (0, err)
-# test for Generate_Two_Key()
-# print(Generate_Two_Key("12345", "12345"))
-# print(Generate_Two_Key("1234567", "123456"))
 
-# test case
-# test_account = (Generate_Three_Key("123456", "123456"))
-# print(test_account)
-# test_keystore = test_account[1][2]
-#
-# # test for Import_Keystore
-# out = (Import_Keystore("123456", test_keystore))
-# print(out)
-# test_public_key = out[1][0]
-# test_private_key = out[1][1]
-# print(Transaction_out(test_private_key, test_public_key, 1, 1, 1))
-# print(Import_From_Private('e8671e48e23b728717a43b888612f324ad96177396dcc9a1f3616c6c3c3e6429'))
-
-
-#ret2 = getTransactionInfo('0x36775097df4ed6429dbe31fc56119a66f8c3dfcfda46792f4982117a90521f0a')
-#print(ret2[1])
-#print(ret2[1][2]['totol_reward'])
-#print(ret2[1][0]['blockNumber'])
-
-#ret3 = getMiningRecord('0x4a49f969507770f31a3e98ff05e75060cfe8e3fd')
-#print(ret3[1])
-# print(time.strftime("%Y-%m-%d %H:%M:%S",time.localtime(time.time())))
-# datetime.datetime.time()
-# timenow = (datetime.datetime.utcnow() + datetime.timedelta(hours=8)) #将utc时间转化为本地时间
-# timedeta = datetime.datetime.utcnow()-datetime.datetime.now()
-# timetext = timenow.strftime('%Y-%m-%d %H:%M:%S')
-# print(datetime.datetime.utcnow())
-# print(timetext)
-# print(timedeta)
-
-
-# timenow = datetime.datetime.utcnow()
-#
 def utc2local(utc_st):
     now_stamp = time.time()
     local_time = datetime.datetime.fromtimestamp(now_stamp)
@@ -302,3 +341,142 @@ def utc2local(utc_st):
 #
 # ret = getMiningRecord('0xfbf36b7c56258dc3e29769c1a686250b8b002de3')
 # print(ret)
+
+def generatetransXml():
+    doc = minidom.Document()
+
+    rootElement = doc.createElement('ArrayOfAddressTransactionsEntity')
+    rootElement.setAttribute('xmlns:xsd', '"http://www.w3.org/2001/XMLSchema"')
+    doc.appendChild(rootElement)
+    f = open('trans.xml', 'w')
+    doc.writexml(f, addindent='  ', newl='\n')
+    f.close()
+
+    return (doc, rootElement)
+
+def addtransaddrxml(doc,rootElement,address,updatetime):
+    AddressTransactionsEntity = doc.createElement('AddressTransactionsEntity')
+    rootElement.appendChild(AddressTransactionsEntity)
+
+    Address = doc.createElement('Address')
+    AddressTransactionsEntity.appendChild(Address)
+    addr = doc.createTextNode(address)
+    Address.appendChild(addr)
+
+    UpdateTime = doc.createElement('UpdateTime')
+    AddressTransactionsEntity.appendChild(UpdateTime)
+    updatet = doc.createTextNode(updatetime)
+    UpdateTime.appendChild(updatet)
+
+    TransactionList = doc.createElement('TransactionList')
+    AddressTransactionsEntity.appendChild(TransactionList)
+
+    doc.appendChild(rootElement)
+    xmlStr = doc.toprettyxml(indent='', newl='', encoding='utf-8')
+    xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
+    doc = minidom.parseString(xmlStr)
+
+
+    f = open('trans.xml', 'w')
+    doc.writexml(f, addindent=' ', newl='\n')
+    f.close()
+
+def addtranslistxml\
+    (doc,rootElement,address,updatetime,fromaddr,blocknum,
+     toaddr,gasprice,blockhash,transacindex,txhash,Gas,toaddress,Value,utctimestamp,transtype,blocktype):
+    for AddressTransactionsEntity in rootElement.getElementsByTagName('AddressTransactionsEntity'):
+        if address == AddressTransactionsEntity[0].childNodes[0]:
+            # walletentity = rootElement.getElementsByTagName('WalletBaseEntity')[row]
+            updatet = AddressTransactionsEntity[1].childNodes[0]
+            updatet.nodeValue=updatetime
+
+            AccountTransactionsEntity = doc.createElement('AccountTransactionsEntity')
+            AddressTransactionsEntity[2].appendChild(AccountTransactionsEntity)
+
+            addressFrom = doc.createElement('addressFrom')
+            AccountTransactionsEntity.appendChild(addressFrom)
+            faddr = doc.createTextNode(fromaddr)
+            addressFrom.appendChild(faddr)
+
+            blockNumber = doc.createElement('blockNumber')
+            AccountTransactionsEntity.appendChild(blockNumber)
+            blockNo = doc.createTextNode(blocknum)
+            blockNumber.appendChild(blockNo)
+
+            gasPrice = doc.createElement('gasPrice')
+            AccountTransactionsEntity.appendChild(gasPrice)
+            gp = doc.createTextNode(gasprice)
+            gasPrice.appendChild(gp)
+
+            blockHash = doc.createElement('blockHash')
+            AccountTransactionsEntity.appendChild(blockHash)
+
+            transacIndex = doc.createElement('transacIndex')
+            AccountTransactionsEntity.appendChild(transacIndex)
+            tranid = doc.createTextNode(transacindex)
+            transacIndex.appendChild(tranid)
+
+            tx_hash = doc.createElement('tx_hash')
+            AccountTransactionsEntity.appendChild(tx_hash)
+            hash = doc.createTextNode(txhash)
+            tx_hash.appendChild(hash)
+
+            gas = doc.createElement('gas')
+            AccountTransactionsEntity.appendChild(gas)
+            GAS = doc.createTextNode(Gas)
+            gas.appendChild(GAS)
+
+            addressTo = doc.createElement('addressTo')
+            AccountTransactionsEntity.appendChild(toaddress)
+            taddr = doc.createTextNode(toaddr)
+            addressTo.appendChild(taddr)
+
+            value = doc.createElement('value')
+            AccountTransactionsEntity.appendChild(value)
+            val = doc.createTextNode(Value)
+            value.appendChild(val)
+
+            utc_timestamp = doc.createElement('utc_timestamp')
+            AccountTransactionsEntity.appendChild(utc_timestamp)
+            utct = doc.createTextNode(utctimestamp)
+            utc_timestamp.appendChild(utct)
+
+            transType = doc.createElement('transType')
+            AccountTransactionsEntity.appendChild(transType)
+            ttype = doc.createTextNode(transtype)
+            transType.appendChild(ttype)
+
+            blockType = doc.createElement('blockType')
+            AccountTransactionsEntity.appendChild(blockType)
+            btype = doc.createTextNode(blocktype)
+            blockType.appendChild(btype)
+
+            break
+
+    doc.appendChild(rootElement)
+    xmlStr = doc.toprettyxml(indent='', newl='', encoding='utf-8')
+    xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
+    doc = minidom.parseString(xmlStr)
+
+
+    f = open('trans.xml', 'w')
+    doc.writexml(f, addindent=' ', newl='\n')
+    f.close()
+
+def edittransxml(doc,rootElement,address,blocktype,row):
+    for AddressTransactionsEntity in rootElement.getElementsByTagName('AddressTransactionsEntity'):
+        if address == AddressTransactionsEntity[0].childNodes[0]:
+            TransactionList = AddressTransactionsEntity[0].childNodes[2]
+            trans = TransactionList.getElementsByTagName('AccountTransactionsEntity')[row]
+            typetag = trans.getElementsByTagName('blockType')[0].childNodes[0]
+            typetag.nodeValue=blocktype
+
+            xmlStr = doc.toprettyxml(indent='', newl='', encoding='utf-8')
+            xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
+            doc = minidom.parseString(xmlStr)
+
+            f = open('trans.xml', 'w')
+            doc.writexml(f, addindent=' ', newl='\n')
+            f.close()
+
+            break

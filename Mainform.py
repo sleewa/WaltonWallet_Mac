@@ -212,9 +212,9 @@ class conInfoform(QWidget, Ui_ConInfoForm):
 
         newItemName = QTableWidgetItem(self.ui.lineEdit_7.text())
         ex.ui.ContactsT.setItem(row, 0, newItemName)
-        #print(ex.ui.ContactsT.currentIndex())
-        #self.accountform.ui.Account.setItem(Rcount, 1, newItemAddr)
-        #self.accountform.ui.Account.setItem(Rcount, 0, newItemName)
+
+        Core_func.editaddressxml(ex.addrdom,ex.addrroot,self.ui.lineEdit_7.text(),row)
+
 
 
     def mousePressEvent(self, event):
@@ -259,6 +259,7 @@ class walletInfoform(QWidget, Ui_WalletInfoForm):
 
         newItemName = QTableWidgetItem(self.ui.lineEdit_7.text())
         ex.ui.multWallet.setItem(row, 0, newItemName)
+        Core_func.editwalletxml(ex.walletdom, ex.walletroot, self.ui.lineEdit_7.text(), row)
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -446,21 +447,10 @@ class newcontactform(QWidget, Ui_NewContactForm):
         newItemedit.setForeground(QBrush(QColor(170, 0, 255)))
         newItemedit.setFlags(QtCore.Qt.ItemIsEnabled)
 
-        # newItemdel = QTableWidgetItem.setIcon(QtGui.QIcon('pic/deleteA.png'))
-        # ret = self.buttonsdef(Rcount)
         ex.ui.ContactsT.setItem(Rcount, 2, newItemsend)
         ex.ui.ContactsT.setItem(Rcount, 3, newItemedit)
-        # self.ui.ContactsT.setCellWidget(Rcount, 4, ret[6])
         ex.ui.ContactsT.setItem(Rcount, 4, newItemdel)
-        # ex.ui.ContactsT.setCellWidget(Rcount, 2, ret[4])
-        # ex.ui.ContactsT.setCellWidget(Rcount, 3, ret[5])
-        # ex.ui.ContactsT.setCellWidget(Rcount, 4, ret[6])
-        # sip.delete(ret[0])
-        # sip.delete(ret[1])
-        # sip.delete(ret[2])
-        # sip.delete(ret[3])
-        # dom = xml.dom.minidom.parse("test.xml")  # 打开xml文档
-        # root = dom.documentElement  # 得到xml文档
+
         Core_func.addaddressxml(ex.addrdom, ex.addrroot, self.ui.lineEdit_7.text(), self.ui.lineEdit_6.text())
 
 
@@ -699,7 +689,7 @@ class sendform(QWidget, Ui_SendForm):
             self.publishform.show_w2('transaction successfully')
             self.closeform()
 
-            print('need to read into xml')
+            ex.refresh()
 
             self.ui.lineEdit_7.clear()
             self.ui.lineEdit_6.clear()
@@ -826,6 +816,11 @@ class Example(QDialog,QWidget):
             self.ui.ContactsT.setRowCount(0)
             # dom = xml.dom.minidom.parse("test.xml")  # 打开xml文档
             # root = dom.documentElement  # 得到xml文档
+
+            # self.addrdom = xml.dom.minidom.parse("test.xml")  # 打开xml文档
+            # xmlStr = self.addrdom.toprettyxml(indent='', newl='', encoding='utf-8')
+            # xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
+            # self.addrdom = xml.dom.minidom.parseString(xmlStr)
             addrentity = self.addrroot.getElementsByTagName('AddressEntity')[0]
             addrentity.parentNode.removeChild(addrentity)
             f = open('test.xml', 'w')
@@ -835,6 +830,11 @@ class Example(QDialog,QWidget):
             self.ui.ContactsT.removeRow(row)
             # dom = xml.dom.minidom.parse("test.xml")  # 打开xml文档
             # root = dom.documentElement  # 得到xml文档
+
+            # self.addrdom = xml.dom.minidom.parse("test.xml")  # 打开xml文档
+            # xmlStr = self.addrdom.toprettyxml(indent='', newl='', encoding='utf-8')
+            # xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
+            # self.addrdom = xml.dom.minidom.parseString(xmlStr)
             addrentity = self.addrroot.getElementsByTagName('AddressEntity')[row]
             addrentity.parentNode.removeChild(addrentity)
             f = open('test.xml', 'w')
@@ -850,6 +850,7 @@ class Example(QDialog,QWidget):
         print(row)
         self.conInfoform = conInfoform()
         self.conInfoform.show_w2(row)
+
 
 
     #shift Pages tool btn
@@ -1155,14 +1156,10 @@ class Example(QDialog,QWidget):
         self.ui.multWallet.setItem(Rcount, 3, newItemedit)
         self.ui.multWallet.setItem(Rcount, 4, newItemdel)
         self.ui.multWallet.setItem(Rcount, 5, newItemsave)
-        # ret = self.buttonsdef(Rcount)
-        # self.ui.multWallet.setCellWidget(Rcount, 2, ret[0])
-        # self.ui.multWallet.setCellWidget(Rcount, 3, ret[1])
-        # self.ui.multWallet.setCellWidget(Rcount, 4, ret[2])
-        # self.ui.multWallet.setCellWidget(Rcount, 5, ret[3])
-        # sip.delete(ret[4])
-        # sip.delete(ret[5])
-        # sip.delete(ret[6])
+
+        DataKeystore = "Data\\Keystore\\" + self.m_wallet.address[2:18] + ".keystore"
+        Core_func.addwalletxml(ex.walletdom,ex.walletroot,self.m_wallet.accountname,self.m_wallet.address,DataKeystore)
+
 
         self.initchart()
 
@@ -1170,50 +1167,61 @@ class Example(QDialog,QWidget):
         ind = Core_func.QTableWidget.indexFromItem(ex.ui.multWallet, ex.ui.multWallet.item(row, 1))
         filename = "Data\\Keystore\\"+ind.data()[2:18]+".keystore"
         self.ui.multWallet.removeRow(row)
+
+        addrentity = self.walletroot.getElementsByTagName('WalletBaseEntity')[0]
+        addrentity.parentNode.removeChild(addrentity)
+        f = open('wa.xml', 'w')
+        self.walletdom.writexml(f, addindent=' ', newl='\n')
+        f.close()
+
         if os.path.isfile(filename):
             os.remove(filename)
 
     def savekey(self,row=0):
         ## need to change:copy kfile from data\keystore to specify position
-        if row==0:
-            encrypted = Account.encrypt(self.m_wallet.privateKey, self.m_wallet.password)
-            fsave_keystore = QFileDialog.getSaveFileName(self, 'Save Your Keystore File', '.','keystore(*.keystore)')
+        ind = Core_func.QTableWidget.indexFromItem(ex.ui.multWallet, ex.ui.multWallet.item(row, 1))
+        filename = "Data\\Keystore\\" + ind.data()[2:18] + ".keystore"
+        if os.path.isfile(filename):
+            file_object = open(filename)
+            all_the_text = file_object.read()
+
+            fsave_keystore = QFileDialog.getSaveFileName(self, 'Save Your Keystore File', '.',
+                                                         'keystore(*.keystore)')
             if fsave_keystore[0]:
                 file_save_keystore = open(fsave_keystore[0], 'w')
                 with file_save_keystore:
-                    data = file_save_keystore.write(json.dumps(encrypted))
-        else:
-            ind = Core_func.QTableWidget.indexFromItem(ex.ui.multWallet, ex.ui.multWallet.item(row, 1))
-            filename = "Data\\Keystore\\" + ind.data()[2:18] + ".keystore"
-            if os.path.isfile(filename):
-                file_object = open(filename)
-                all_the_text = file_object.read()
-
-                fsave_keystore = QFileDialog.getSaveFileName(self, 'Save Your Keystore File', '.',
-                                                             'keystore(*.keystore)')
-                if fsave_keystore[0]:
-                    file_save_keystore = open(fsave_keystore[0], 'w')
-                    with file_save_keystore:
-                        data = file_save_keystore.write(all_the_text)
+                    data = file_save_keystore.write(all_the_text)
 
 
     def savename(self):
         self.m_wallet.accountname = self.ui.lineEdit_25.text()
         Rcount = self.ui.multWallet.rowCount()
-        self.ui.multWallet.setRowCount(Rcount )
+        self.ui.multWallet.setRowCount(Rcount)
         newItemAddr = QTableWidgetItem(self.m_wallet.address)
         newItemName = QTableWidgetItem(self.m_wallet.accountname)
         self.ui.multWallet.setItem(Rcount-1, 1, newItemAddr)
         self.ui.multWallet.setItem(Rcount-1, 0, newItemName)
-        ret = self.buttonsdef(Rcount-1)
-        self.ui.multWallet.setCellWidget(Rcount, 2, ret[0])
-        self.ui.multWallet.setCellWidget(Rcount, 3, ret[1])
-        self.ui.multWallet.setCellWidget(Rcount, 4, ret[2])
-        self.ui.multWallet.setCellWidget(Rcount, 5, ret[3])
-        sip.delete(ret[4])
-        sip.delete(ret[5])
-        sip.delete(ret[6])
+        newItemdel = QTableWidgetItem('(   Delete   )')
+        newItemdel.setForeground(QBrush(QColor(170, 0, 255)))
+        newItemdel.setFlags(QtCore.Qt.ItemIsEnabled)
+        newItemopen = QTableWidgetItem('(    Open    )')
+        newItemopen.setForeground(QBrush(QColor(170, 0, 255)))
+        newItemopen.setFlags(QtCore.Qt.ItemIsEnabled)
 
+        newItemedit = QTableWidgetItem('(    Edit    )')
+        newItemedit.setForeground(QBrush(QColor(170, 0, 255)))
+        newItemedit.setFlags(QtCore.Qt.ItemIsEnabled)
+
+        newItemsave = QTableWidgetItem('(  Save key  )')
+        newItemsave.setForeground(QBrush(QColor(170, 0, 255)))
+        newItemsave.setFlags(QtCore.Qt.ItemIsEnabled)
+
+        self.ui.multWallet.setItem(Rcount-1, 2, newItemopen)
+        self.ui.multWallet.setItem(Rcount-1, 3, newItemedit)
+        self.ui.multWallet.setItem(Rcount-1, 4, newItemdel)
+        self.ui.multWallet.setItem(Rcount-1, 5, newItemsave)
+
+        Core_func.editwalletxml(self.walletdom,self.walletroot,self.m_wallet.accountname,Rcount-1)
         self.publishform.show_w2('Saved successfully')
 
     def copyPublicKey(self):
@@ -1521,51 +1529,8 @@ class Example(QDialog,QWidget):
                         break
 
         else:
-            print('')
+            print('create transaction xml')
 
-
-
-        '''
-        coun = self.ui.TransactionHistory.rowCount()#self.m_wallet.address
-        #tx_hashlist = str(ret[1]).split('tx_hash')
-        if self.sendform.Trans.status == 'Submitted':
-            ret = Core_func.getTransactionRecord(self.m_wallet.address)
-            for i in range(len(ret[1])):
-                print(self.sendform.Trans.txhash)
-                print(ret[1][i]['tx_hash'])
-
-                if self.sendform.Trans.txhash == ret[1][i]['tx_hash']:
-                    self.sendform.Trans.status = '0/12'
-                    self.sendform.Trans.blocknumber = int(ret[1][i]['blockNumber'])
-        elif self.sendform.Trans.status != 'Succeed':
-            RET = Core_func.getLatestBlock()
-            if RET > self.sendform.Trans.blocknumber :
-                if RET - self.sendform.Trans.blocknumber <12:
-                    self.sendform.Trans.status = str(RET-self.sendform.Trans.blocknumber)+'/12'
-                else:
-                    self.sendform.Trans.status = 'Succeed'
-        #print(ret[1][1]['tx_hash'])
-        newItemStatus = QTableWidgetItem(self.sendform.Trans.status)
-        self.ui.TransactionHistory.setItem(coun, 2, newItemStatus)
-
-        '''
-        """
-        if self.m_wallet.address!='':
-            ret3 = Core_func.getTransactionRecord_day(self.m_wallet.address, '20')
-            self.ui.TransactionHistory.setRowCount(0)
-            for i in range(len(ret3[1])):
-                Rcount = self.ui.TransactionHistory.rowCount()
-                self.ui.TransactionHistory.setRowCount(Rcount + 1)
-                newItemtime = QTableWidgetItem(ret3[1][i]['timestamp'][0:10])
-                newItemblock = QTableWidgetItem(str(ret3[1][i]['blockNumer']))
-                newItemreward = QTableWidgetItem(str(ret3[1][i]['totol_reward']) + 'WTCT')
-                newItemreward = QTableWidgetItem(str(ret3[1][i]['totol_reward']) + 'WTCT')
-
-                self.ui.TransactionHistory.setItem(Rcount, 0, newItemtime)
-                self.ui.TransactionHistory.setItem(Rcount, 1, newItemblock)
-                self.ui.TransactionHistory.setItem(Rcount, 2, newItemreward)
-                self.ui.TransactionHistory.setItem(Rcount, 2, newItemreward)
-        """
 
     def refreshTop(self):
         if self.syncstatus == 0:
@@ -1832,24 +1797,42 @@ class Example(QDialog,QWidget):
             print('')
 
     def initwallets(self):
-        if os.path.isfile('Wallets.xml'):
-            tree = ET.parse('Wallets.xml')
-            root = tree.getroot()
-            for AddressEntity in root.findall('AddressEntity'):
-                Rcount = self.ui.multWallet.rowCount()
-                self.ui.multWallet.setRowCount(Rcount + 1)
-                newItemname = QTableWidgetItem(AddressEntity[2].text)
-                newItemaddr = QTableWidgetItem(AddressEntity[0].text)
-                ret = self.buttonsdef(Rcount)
-                self.ui.multWallet.setItem(Rcount, 0, newItemname)
-                self.ui.multWallet.setItem(Rcount, 1, newItemaddr)
-                self.ui.multWallet.setCellWidget(Rcount, 2, ret[0])
-                self.ui.multWallet.setCellWidget(Rcount, 3, ret[1])
-                self.ui.multWallet.setCellWidget(Rcount, 4, ret[2])
-                self.ui.multWallet.setCellWidget(Rcount, 5, ret[3])
-                sip.delete(ret[4])
-                sip.delete(ret[5])
-                sip.delete(ret[6])
+        if os.path.isfile('wa.xml'):#address
+            if len(self.walletroot.getElementsByTagName('WalletBaseEntity')) != 0:
+                for WalletEntity in self.walletroot.getElementsByTagName('WalletBaseEntity'):
+                    Rcount = self.ui.multWallet.rowCount()
+                    self.ui.multWallet.setRowCount(Rcount + 1)
+
+                    itemlist1 = WalletEntity.getElementsByTagName('AccountName')
+                    item1 = itemlist1[0]
+                    itemlist2 = WalletEntity.getElementsByTagName('Address')
+                    item2 = itemlist2[0]
+
+                    newItemname = QTableWidgetItem(item1.firstChild.data)
+                    newItemaddr = QTableWidgetItem(item2.firstChild.data)
+
+                    self.ui.multWallet.setItem(Rcount, 0, newItemname)
+                    self.ui.multWallet.setItem(Rcount, 1, newItemaddr)
+
+                    newItemdel = QTableWidgetItem('(   Delete   )')
+                    newItemdel.setForeground(QBrush(QColor(170, 0, 255)))
+                    newItemdel.setFlags(QtCore.Qt.ItemIsEnabled)
+                    newItemopen = QTableWidgetItem('(    Open    )')
+                    newItemopen.setForeground(QBrush(QColor(170, 0, 255)))
+                    newItemopen.setFlags(QtCore.Qt.ItemIsEnabled)
+
+                    newItemedit = QTableWidgetItem('(    Edit    )')
+                    newItemedit.setForeground(QBrush(QColor(170, 0, 255)))
+                    newItemedit.setFlags(QtCore.Qt.ItemIsEnabled)
+
+                    newItemsave = QTableWidgetItem('(  Save key  )')
+                    newItemsave.setForeground(QBrush(QColor(170, 0, 255)))
+                    newItemsave.setFlags(QtCore.Qt.ItemIsEnabled)
+
+                    self.ui.multWallet.setItem(Rcount, 2, newItemopen)
+                    self.ui.multWallet.setItem(Rcount, 3, newItemedit)
+                    self.ui.multWallet.setItem(Rcount, 4, newItemdel)
+                    self.ui.multWallet.setItem(Rcount, 5, newItemsave)
         else:
             print('')
 
@@ -2004,6 +1987,28 @@ class Example(QDialog,QWidget):
             xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
             self.addrdom = xml.dom.minidom.parseString(xmlStr)
             self.addrroot = self.addrdom.documentElement  # 得到xml文档
+
+        if os.path.isfile('wa.xml'):
+            self.walletdom = xml.dom.minidom.parse("wa.xml") # 打开xml文档
+            xmlStr = self.walletdom.toprettyxml(indent='', newl='', encoding='utf-8')
+            xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
+            self.walletdom = xml.dom.minidom.parseString(xmlStr)
+            xmlStr = self.walletdom.toprettyxml(indent='', newl='', encoding='utf-8')
+            xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
+            self.walletdom = xml.dom.minidom.parseString(xmlStr)
+            self.walletroot = self.walletdom.documentElement  # 得到xml文档
+
+        else:
+            ret = Core_func.generatewalletXml()
+            self.walletdom = xml.dom.minidom.parse("wa.xml")  # 打开xml文档
+            xmlStr = self.walletdom.toprettyxml(indent='', newl='', encoding='utf-8')
+            xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
+            self.walletdom = xml.dom.minidom.parseString(xmlStr)
+            xmlStr = self.walletdom.toprettyxml(indent='', newl='', encoding='utf-8')
+            xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
+            self.walletdom = xml.dom.minidom.parseString(xmlStr)
+            self.walletroot = self.walletdom.documentElement  # 得到xml文档
+
 
         self.m_wallet = Wallet
         self.lastblacknum = 0

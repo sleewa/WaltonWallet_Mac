@@ -2255,6 +2255,11 @@ border-radius:25px;</string>
          <string>4</string>
         </property>
        </column>
+       <column>
+        <property name="text">
+         <string>5</string>
+        </property>
+       </column>
       </widget>
       <widget class="Line" name="line_18">
        <property name="geometry">
