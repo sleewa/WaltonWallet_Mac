@@ -419,6 +419,8 @@ class newcontactform(QWidget, Ui_NewContactForm):
         #self.ui.lineEdit_6.keyPressEvent(self,self.showqrcode)
 
     def show_w2(self):  # 显示窗体2
+        self.ui.lineEdit_6.clear()
+        self.ui.lineEdit_7.clear()
         self.show()
 
     def savechange(self):
@@ -430,19 +432,36 @@ class newcontactform(QWidget, Ui_NewContactForm):
         ex.ui.ContactsT.setRowCount(Rcount + 1)
         newItemAddr = QTableWidgetItem(self.ui.lineEdit_6.text())
         newItemName = QTableWidgetItem(self.ui.lineEdit_7.text())
-        ret = ex.buttonsdef(Rcount)
+        # ret = ex.buttonsdef(Rcount)
         ex.ui.ContactsT.setItem(Rcount, 1, newItemAddr)
         ex.ui.ContactsT.setItem(Rcount, 0, newItemName)
-        ex.ui.ContactsT.setCellWidget(Rcount, 2, ret[4])
-        ex.ui.ContactsT.setCellWidget(Rcount, 3, ret[5])
-        ex.ui.ContactsT.setCellWidget(Rcount, 4, ret[6])
-        sip.delete(ret[0])
-        sip.delete(ret[1])
-        sip.delete(ret[2])
-        sip.delete(ret[3])
-        dom = xml.dom.minidom.parse("test.xml")  # 打开xml文档
-        root = dom.documentElement  # 得到xml文档
-        Core_func.addaddressxml(dom, root, self.ui.lineEdit_7.text(), self.ui.lineEdit_6.text())
+
+        newItemdel = QTableWidgetItem('(   delete   )')
+        newItemdel.setForeground(QBrush(QColor(170, 0, 255)))
+        newItemdel.setFlags(QtCore.Qt.ItemIsEnabled)
+        newItemsend = QTableWidgetItem('(    send    )')
+        newItemsend.setForeground(QBrush(QColor(170, 0, 255)))
+        newItemsend.setFlags(QtCore.Qt.ItemIsEnabled)
+        newItemedit = QTableWidgetItem('(    edit    )')
+        newItemedit.setForeground(QBrush(QColor(170, 0, 255)))
+        newItemedit.setFlags(QtCore.Qt.ItemIsEnabled)
+
+        # newItemdel = QTableWidgetItem.setIcon(QtGui.QIcon('pic/deleteA.png'))
+        # ret = self.buttonsdef(Rcount)
+        ex.ui.ContactsT.setItem(Rcount, 2, newItemsend)
+        ex.ui.ContactsT.setItem(Rcount, 3, newItemedit)
+        # self.ui.ContactsT.setCellWidget(Rcount, 4, ret[6])
+        ex.ui.ContactsT.setItem(Rcount, 4, newItemdel)
+        # ex.ui.ContactsT.setCellWidget(Rcount, 2, ret[4])
+        # ex.ui.ContactsT.setCellWidget(Rcount, 3, ret[5])
+        # ex.ui.ContactsT.setCellWidget(Rcount, 4, ret[6])
+        # sip.delete(ret[0])
+        # sip.delete(ret[1])
+        # sip.delete(ret[2])
+        # sip.delete(ret[3])
+        # dom = xml.dom.minidom.parse("test.xml")  # 打开xml文档
+        # root = dom.documentElement  # 得到xml文档
+        Core_func.addaddressxml(ex.addrdom, ex.addrroot, self.ui.lineEdit_7.text(), self.ui.lineEdit_6.text())
 
 
     def mousePressEvent(self, event):
@@ -712,6 +731,29 @@ class Example(QDialog,QWidget):
 
         self.initUI()
 
+    def choosebtn(self,QTableWidgetItem):
+        row = Core_func.QTableWidget.indexFromItem(self.ui.ContactsT, QTableWidgetItem).row()
+        col = Core_func.QTableWidget.indexFromItem(self.ui.ContactsT, QTableWidgetItem).column()
+        print(row,col)
+        if col == 4:
+            self.delcontact(row)
+        if col == 3:
+            self.editcontact(row)
+        if col == 2:
+            self.sendcontact(row)
+
+    def walletbtn(self,QTableWidgetItem):
+        row = Core_func.QTableWidget.indexFromItem(self.ui.multWallet, QTableWidgetItem).row()
+        col = Core_func.QTableWidget.indexFromItem(self.ui.multWallet, QTableWidgetItem).column()
+        print(row,col)
+        if col == 5:
+            self.savekey(row)
+        if col == 4:
+            self.delWallet(row)
+        if col == 3:
+            self.editwallet(row)
+        if col == 2:
+            self.openwallet(row)
 
     def buttonsdef(self,row):
 
@@ -752,13 +794,13 @@ class Example(QDialog,QWidget):
         conedit.clicked.connect(lambda :self.editcontact(row))
 
 
-        condelete = QPushButton(self)  # type: QPushButton
-        condelete.setStyleSheet(''' border:0px; ''')
-        condelete.setIcon(QIcon("pic/deleteA.png"))
-        condelete.setIconSize(QSize(80, 60))
-        condelete.clicked.connect(lambda :self.delcontact(row))
+        # condelete = QPushButton(self)  # type: QPushButton
+        # condelete.setStyleSheet(''' border:0px; ''')
+        # condelete.setIcon(QIcon("pic/deleteA.png"))
+        # condelete.setIconSize(QSize(80, 60))
+        #condelete.clicked.connect(lambda :self.delcontact(row))
 
-        return (mwOpen,mwEdit,mwDelete,mwSaveKey,consend,conedit,condelete)
+        return (mwOpen,mwEdit,mwDelete,mwSaveKey,consend,conedit)#,condelete
 
     def openwallet(self,row):
         ind = Core_func.QTableWidget.indexFromItem(ex.ui.multWallet, ex.ui.multWallet.item(row, 1))
@@ -778,23 +820,25 @@ class Example(QDialog,QWidget):
 
     def delcontact(self,row):
         print(row)
+        print( self.ui.ContactsT.selectedItems())
+        #print(Core_func.QTableWidget.indexFromItem(self.ui.ContactsT, self.ui.ContactsT.selectedItems()[0]).row())
         if (self.ui.ContactsT.rowCount()-1) == 0:
             self.ui.ContactsT.setRowCount(0)
-            dom = xml.dom.minidom.parse("test.xml")  # 打开xml文档
-            root = dom.documentElement  # 得到xml文档
-            addrentity = root.getElementsByTagName('AddressEntity')[0]
+            # dom = xml.dom.minidom.parse("test.xml")  # 打开xml文档
+            # root = dom.documentElement  # 得到xml文档
+            addrentity = self.addrroot.getElementsByTagName('AddressEntity')[0]
             addrentity.parentNode.removeChild(addrentity)
             f = open('test.xml', 'w')
-            dom.writexml(f, addindent=' ', newl='\n')
+            self.addrdom.writexml(f, addindent=' ', newl='\n')
             f.close()
         else:
             self.ui.ContactsT.removeRow(row)
-            dom = xml.dom.minidom.parse("test.xml")  # 打开xml文档
-            root = dom.documentElement  # 得到xml文档
-            addrentity = root.getElementsByTagName('AddressEntity')[row]
+            # dom = xml.dom.minidom.parse("test.xml")  # 打开xml文档
+            # root = dom.documentElement  # 得到xml文档
+            addrentity = self.addrroot.getElementsByTagName('AddressEntity')[row]
             addrentity.parentNode.removeChild(addrentity)
             f = open('test.xml', 'w')
-            dom.writexml(f, addindent=' ', newl='\n')
+            self.addrdom.writexml(f, addindent=' ', newl='\n')
             f.close()
 
     def sendcontact(self,row):
@@ -1092,14 +1136,33 @@ class Example(QDialog,QWidget):
         newItemName = QTableWidgetItem(self.m_wallet.accountname)
         self.ui.multWallet.setItem(Rcount, 1, newItemAddr)
         self.ui.multWallet.setItem(Rcount, 0, newItemName)
-        ret = self.buttonsdef(Rcount)
-        self.ui.multWallet.setCellWidget(Rcount, 2, ret[0])
-        self.ui.multWallet.setCellWidget(Rcount, 3, ret[1])
-        self.ui.multWallet.setCellWidget(Rcount, 4, ret[2])
-        self.ui.multWallet.setCellWidget(Rcount, 5, ret[3])
-        sip.delete(ret[4])
-        sip.delete(ret[5])
-        sip.delete(ret[6])
+        newItemdel = QTableWidgetItem( '(   Delete   )')
+        newItemdel.setForeground(QBrush(QColor(170, 0, 255)))
+        newItemdel.setFlags(QtCore.Qt.ItemIsEnabled)
+        newItemopen = QTableWidgetItem('(    Open    )')
+        newItemopen.setForeground(QBrush(QColor(170, 0, 255)))
+        newItemopen.setFlags(QtCore.Qt.ItemIsEnabled)
+
+        newItemedit = QTableWidgetItem('(    Edit    )')
+        newItemedit.setForeground(QBrush(QColor(170, 0, 255)))
+        newItemedit.setFlags(QtCore.Qt.ItemIsEnabled)
+
+        newItemsave = QTableWidgetItem('(  Save key  )')
+        newItemsave.setForeground(QBrush(QColor(170, 0, 255)))
+        newItemsave.setFlags(QtCore.Qt.ItemIsEnabled)
+
+        self.ui.multWallet.setItem(Rcount, 2, newItemopen)
+        self.ui.multWallet.setItem(Rcount, 3, newItemedit)
+        self.ui.multWallet.setItem(Rcount, 4, newItemdel)
+        self.ui.multWallet.setItem(Rcount, 5, newItemsave)
+        # ret = self.buttonsdef(Rcount)
+        # self.ui.multWallet.setCellWidget(Rcount, 2, ret[0])
+        # self.ui.multWallet.setCellWidget(Rcount, 3, ret[1])
+        # self.ui.multWallet.setCellWidget(Rcount, 4, ret[2])
+        # self.ui.multWallet.setCellWidget(Rcount, 5, ret[3])
+        # sip.delete(ret[4])
+        # sip.delete(ret[5])
+        # sip.delete(ret[6])
 
         self.initchart()
 
@@ -1718,10 +1781,10 @@ class Example(QDialog,QWidget):
         if os.path.isfile('test.xml'):#address
             # tree = ET.parse('test.xml')root.findall('AddressEntity')
             # root = tree.getroot()
-            dom = xml.dom.minidom.parse("test.xml")  # 打开xml文档
-            root = dom.documentElement  # 得到xml文档
-            if len(root.getElementsByTagName('AddressEntity')) != 0:
-                for AddressEntity in root.getElementsByTagName('AddressEntity'):
+            # dom = xml.dom.minidom.parse("test.xml")  # 打开xml文档
+            # root = dom.documentElement  # 得到xml文档
+            if len(self.addrroot.getElementsByTagName('AddressEntity')) != 0:
+                for AddressEntity in self.addrroot.getElementsByTagName('AddressEntity'):
                     Rcount = self.ui.ContactsT.rowCount()
                     self.ui.ContactsT.setRowCount(Rcount + 1)
 
@@ -1732,16 +1795,37 @@ class Example(QDialog,QWidget):
 
                     newItemname = QTableWidgetItem(item1.firstChild.data)
                     newItemaddr = QTableWidgetItem(item2.firstChild.data)
-                    ret = self.buttonsdef(Rcount)
+                    # item = QTableWidgetItem()
+                    # item.setFlags(QtCore.Qt.ItemIsEnabled)  # 不这么设置，用户点击时，图片被选的状态不美观
+                    # dela = QtGui.QIcon('pic/deleteA.png')
+                    # dela.pixmap(QSize(80, 60))
+                    #
+                    # item.setIcon(dela)
+                    #item.setIconSize(QSize(80, 60))
+                    newItemdel = QTableWidgetItem('(   delete   )')
+                    newItemdel.setForeground(QBrush(QColor(170, 0, 255)))
+                    newItemdel.setFlags(QtCore.Qt.ItemIsEnabled)
+                    newItemsend = QTableWidgetItem('(    send    )')
+                    newItemsend.setForeground(QBrush(QColor(170, 0, 255)))
+                    newItemsend.setFlags(QtCore.Qt.ItemIsEnabled)
+                    newItemedit = QTableWidgetItem('(    edit    )')
+                    newItemedit.setForeground(QBrush(QColor(170, 0, 255)))
+                    newItemedit.setFlags(QtCore.Qt.ItemIsEnabled)
+
+
+                    # newItemdel = QTableWidgetItem.setIcon(QtGui.QIcon('pic/deleteA.png'))
+                    # ret = self.buttonsdef(Rcount)
                     self.ui.ContactsT.setItem(Rcount, 0, newItemname)
                     self.ui.ContactsT.setItem(Rcount, 1, newItemaddr)
-                    self.ui.ContactsT.setCellWidget(Rcount, 2, ret[4])
-                    self.ui.ContactsT.setCellWidget(Rcount, 3, ret[5])
-                    self.ui.ContactsT.setCellWidget(Rcount, 4, ret[6])
-                    sip.delete(ret[0])
-                    sip.delete(ret[1])
-                    sip.delete(ret[2])
-                    sip.delete(ret[3])
+                    self.ui.ContactsT.setItem(Rcount, 2, newItemsend)
+                    self.ui.ContactsT.setItem(Rcount, 3, newItemedit)
+                    #self.ui.ContactsT.setCellWidget(Rcount, 4, ret[6])
+                    self.ui.ContactsT.setItem(Rcount, 4, newItemdel)
+
+                    # sip.delete(ret[0])
+                    # sip.delete(ret[1])
+                    # sip.delete(ret[2])
+                    # sip.delete(ret[3])
 
 
         else:
@@ -1901,9 +1985,26 @@ class Example(QDialog,QWidget):
         self.ui = Ui_Form()
         self.ui.setupUi(self)
         if os.path.isfile('test.xml'):
-            print('')
+            self.addrdom = xml.dom.minidom.parse("test.xml") # 打开xml文档
+            xmlStr = self.addrdom.toprettyxml(indent='', newl='', encoding='utf-8')
+            xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
+            self.addrdom = xml.dom.minidom.parseString(xmlStr)
+            xmlStr = self.addrdom.toprettyxml(indent='', newl='', encoding='utf-8')
+            xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
+            self.addrdom = xml.dom.minidom.parseString(xmlStr)
+            self.addrroot = self.addrdom.documentElement  # 得到xml文档
+
         else:
-            Core_func.generateaddressXml()
+            ret = Core_func.generateaddressXml()
+            self.addrdom = xml.dom.minidom.parse("test.xml")  # 打开xml文档
+            xmlStr = self.addrdom.toprettyxml(indent='', newl='', encoding='utf-8')
+            xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
+            self.addrdom = xml.dom.minidom.parseString(xmlStr)
+            xmlStr = self.addrdom.toprettyxml(indent='', newl='', encoding='utf-8')
+            xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
+            self.addrdom = xml.dom.minidom.parseString(xmlStr)
+            self.addrroot = self.addrdom.documentElement  # 得到xml文档
+
         self.m_wallet = Wallet
         self.lastblacknum = 0
         self.publishform = publishform()
@@ -2157,7 +2258,7 @@ class Example(QDialog,QWidget):
         self.ui.ContactsT.setColumnWidth(4, 100)
         self.ui.ContactsT.setFrameShape(QFrame.NoFrame)  # 表格无边框
         self.ui.ContactsT.setEditTriggers(QAbstractItemView.NoEditTriggers)  # 不可编辑
-        self.ui.ContactsT.setSelectionMode(QAbstractItemView.NoSelection)  # 单元不可选
+        self.ui.LogMessage.setSelectionBehavior(Core_func.QTableWidget.SelectItems)
         self.ui.ContactsT.setFocusPolicy(Qt.NoFocus)  # 无选中虚线框
         self.ui.ContactsT.verticalScrollBar().setStyleSheet(
             "QScrollBar{background:transparent; width: 10px;}"
@@ -2452,5 +2553,8 @@ if __name__ == '__main__':
     ex.ui.pushButton_36.clicked.connect(pubaddrForm.show_w2)
     ex.ui.pushButton_38.clicked.connect(newcontactform.show_w2)
     ex.ui.LogMessage.itemClicked.connect(messform.show_w2)
+    ex.ui.ContactsT.itemClicked.connect(ex.choosebtn)
+    ex.ui.multWallet.itemClicked.connect(ex.walletbtn)
+
 
     sys.exit(app.exec_())

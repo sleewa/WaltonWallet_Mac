@@ -33,7 +33,7 @@ def generateaddressXml():
     # 打开test.xml文件 准备写入
     f = open('test.xml', 'w')
     # 写入文件
-    doc.writexml(f, addindent=' ', newl='\n')
+    doc.writexml(f, addindent='  ', newl='\n')
     # 关闭
     f.close()
 
@@ -61,6 +61,10 @@ def addaddressxml(doc,rootElement,accountname,address):
     Address.appendChild(addr)
 
     doc.appendChild(rootElement)
+    xmlStr = doc.toprettyxml(indent='', newl='', encoding='utf-8')
+    xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
+    doc = minidom.parseString(xmlStr)
+
 
     f = open('test.xml', 'w')
     # 写入文件
