@@ -87,10 +87,25 @@ class enterpswform(QWidget, Ui_EnterPswForm):
         self.gotprikey = 1
         if self.needtosend == 1:
             ex.m_wallet.privateKey = self.prikey
-            ret = Core_func.Transaction_out(ex.m_wallet.privateKey, ex.Trans.toaddr, ex.Trans.value, ex.Trans.Gas, ex.Trans.Gasprice)
+            try:
+                ret = Core_func.Transaction_out(ex.m_wallet.privateKey, ex.Trans.toaddr, ex.Trans.value, ex.Trans.Gas, ex.Trans.Gasprice)
+            except Exception as err:
+                self.publishform.show_w2('transaction failed')
+                return 1
             if ret[0] == 1:
+                # print(ret[1][1])
+                # try:
+                #     transdetail = Core_func.getTransactionInfo(ret[1][1])
+                # except Exception as err:
+                #     self.publishform.show_w2('get tx_hash failed')
+                # #print(transdetail[1])
+                print(ret[1][1])
 
-                print('need to write into xml')
+                Core_func.addtranslistxml \
+                                (ex.transdom, ex.transroot, addr, time.strftime('%Y-%m-%d',time.localtime(time.time())), addr, '',
+                                 ex.Trans.toaddr, ex.Trans.Gasprice, ' ', '', ret[1][1],
+                                 ex.Trans.Gas, ex.Trans.value, '',
+                                 'Send', 'Submitted')
 
                 self.publishform.show_w2('transaction successfully')
                 self.closeform()
@@ -476,6 +491,8 @@ class newcontactform(QWidget, Ui_NewContactForm):
         super().__init__()
         self.ui = Ui_NewContactForm()
         self.ui.setupUi(self)
+        self.publishform = publishform()
+
         self.setWindowFlags(Qt.CustomizeWindowHint)
         btnc = self.ui.closeenterpsw
         btnc.clicked.connect(self.closeform)
@@ -493,30 +510,36 @@ class newcontactform(QWidget, Ui_NewContactForm):
         ################
         # waiting to add checking same wallet already existed
         ################
-        Rcount = ex.ui.ContactsT.rowCount()
-        print(Rcount)
-        ex.ui.ContactsT.setRowCount(Rcount + 1)
-        newItemAddr = QTableWidgetItem(self.ui.lineEdit_6.text())
-        newItemName = QTableWidgetItem(self.ui.lineEdit_7.text())
-        # ret = ex.buttonsdef(Rcount)
-        ex.ui.ContactsT.setItem(Rcount, 1, newItemAddr)
-        ex.ui.ContactsT.setItem(Rcount, 0, newItemName)
+        for i in range(ex.ui.ContactsT.rowCount()):
+            ind = Core_func.QTableWidget.indexFromItem(ex.ui.ContactsT, ex.ui.ContactsT.item(i, 1))
+            if self.ui.lineEdit_6.text() == ind.data():
+                self.publishform.show_w2('Address already exist')
+                break
+            if i == ex.ui.ContactsT.rowCount()-1:
+                Rcount = ex.ui.ContactsT.rowCount()
+                print(Rcount)
+                ex.ui.ContactsT.setRowCount(Rcount + 1)
+                newItemAddr = QTableWidgetItem(self.ui.lineEdit_6.text())
+                newItemName = QTableWidgetItem(self.ui.lineEdit_7.text())
+                # ret = ex.buttonsdef(Rcount)
+                ex.ui.ContactsT.setItem(Rcount, 1, newItemAddr)
+                ex.ui.ContactsT.setItem(Rcount, 0, newItemName)
 
-        newItemdel = QTableWidgetItem('(   delete   )')
-        newItemdel.setForeground(QBrush(QColor(170, 0, 255)))
-        newItemdel.setFlags(QtCore.Qt.ItemIsEnabled)
-        newItemsend = QTableWidgetItem('(    send    )')
-        newItemsend.setForeground(QBrush(QColor(170, 0, 255)))
-        newItemsend.setFlags(QtCore.Qt.ItemIsEnabled)
-        newItemedit = QTableWidgetItem('(    edit    )')
-        newItemedit.setForeground(QBrush(QColor(170, 0, 255)))
-        newItemedit.setFlags(QtCore.Qt.ItemIsEnabled)
+                newItemdel = QTableWidgetItem('(   delete   )')
+                newItemdel.setForeground(QBrush(QColor(170, 0, 255)))
+                newItemdel.setFlags(QtCore.Qt.ItemIsEnabled)
+                newItemsend = QTableWidgetItem('(    send    )')
+                newItemsend.setForeground(QBrush(QColor(170, 0, 255)))
+                newItemsend.setFlags(QtCore.Qt.ItemIsEnabled)
+                newItemedit = QTableWidgetItem('(    edit    )')
+                newItemedit.setForeground(QBrush(QColor(170, 0, 255)))
+                newItemedit.setFlags(QtCore.Qt.ItemIsEnabled)
 
-        ex.ui.ContactsT.setItem(Rcount, 2, newItemsend)
-        ex.ui.ContactsT.setItem(Rcount, 3, newItemedit)
-        ex.ui.ContactsT.setItem(Rcount, 4, newItemdel)
+                ex.ui.ContactsT.setItem(Rcount, 2, newItemsend)
+                ex.ui.ContactsT.setItem(Rcount, 3, newItemedit)
+                ex.ui.ContactsT.setItem(Rcount, 4, newItemdel)
 
-        Core_func.addaddressxml(ex.addrdom, ex.addrroot, self.ui.lineEdit_7.text(), self.ui.lineEdit_6.text())
+                Core_func.addaddressxml(ex.addrdom, ex.addrroot, self.ui.lineEdit_7.text(), self.ui.lineEdit_6.text())
 
 
     def mousePressEvent(self, event):
@@ -917,7 +940,8 @@ class Example(QDialog,QWidget):
         self.passwordeye = 1
         self.ui.lineEdit_8.setText(self.m_wallet.address)
         if self.m_wallet.privateKey == '':
-            self.ui.lineEdit_9.setText('******************************************************************')
+            if self.m_wallet.address != '':
+                self.ui.lineEdit_9.setText('******************************************************************')
         else:
             self.ui.lineEdit_9.setText(self.m_wallet.privateKey)
 
@@ -1178,37 +1202,42 @@ class Example(QDialog,QWidget):
         ################
         #waiting to add checking same wallet already existed
         ################
-        Rcount = self.ui.multWallet.rowCount()
-        self.ui.multWallet.setRowCount(Rcount+1)
-        newItemAddr = QTableWidgetItem(self.m_wallet.address)
-        newItemName = QTableWidgetItem(self.m_wallet.accountname)
-        self.ui.multWallet.setItem(Rcount, 1, newItemAddr)
-        self.ui.multWallet.setItem(Rcount, 0, newItemName)
-        newItemdel = QTableWidgetItem( '(   Delete   )')
-        newItemdel.setForeground(QBrush(QColor(170, 0, 255)))
-        newItemdel.setFlags(QtCore.Qt.ItemIsEnabled)
-        newItemopen = QTableWidgetItem('(    Open    )')
-        newItemopen.setForeground(QBrush(QColor(170, 0, 255)))
-        newItemopen.setFlags(QtCore.Qt.ItemIsEnabled)
+        for i in range(self.ui.multWallet.rowCount()):
+            ind = Core_func.QTableWidget.indexFromItem(self.ui.multWallet, self.ui.multWallet.item(i, 1))
+            if self.m_wallet.address == ind.data():
+                break
+            if i == self.ui.multWallet.rowCount()-1:
+                Rcount = self.ui.multWallet.rowCount()
+                self.ui.multWallet.setRowCount(Rcount+1)
+                newItemAddr = QTableWidgetItem(self.m_wallet.address)
+                newItemName = QTableWidgetItem(self.m_wallet.accountname)
+                self.ui.multWallet.setItem(Rcount, 1, newItemAddr)
+                self.ui.multWallet.setItem(Rcount, 0, newItemName)
+                newItemdel = QTableWidgetItem( '(   Delete   )')
+                newItemdel.setForeground(QBrush(QColor(170, 0, 255)))
+                newItemdel.setFlags(QtCore.Qt.ItemIsEnabled)
+                newItemopen = QTableWidgetItem('(    Open    )')
+                newItemopen.setForeground(QBrush(QColor(170, 0, 255)))
+                newItemopen.setFlags(QtCore.Qt.ItemIsEnabled)
 
-        newItemedit = QTableWidgetItem('(    Edit    )')
-        newItemedit.setForeground(QBrush(QColor(170, 0, 255)))
-        newItemedit.setFlags(QtCore.Qt.ItemIsEnabled)
+                newItemedit = QTableWidgetItem('(    Edit    )')
+                newItemedit.setForeground(QBrush(QColor(170, 0, 255)))
+                newItemedit.setFlags(QtCore.Qt.ItemIsEnabled)
 
-        newItemsave = QTableWidgetItem('(  Save key  )')
-        newItemsave.setForeground(QBrush(QColor(170, 0, 255)))
-        newItemsave.setFlags(QtCore.Qt.ItemIsEnabled)
+                newItemsave = QTableWidgetItem('(  Save key  )')
+                newItemsave.setForeground(QBrush(QColor(170, 0, 255)))
+                newItemsave.setFlags(QtCore.Qt.ItemIsEnabled)
 
-        self.ui.multWallet.setItem(Rcount, 2, newItemopen)
-        self.ui.multWallet.setItem(Rcount, 3, newItemedit)
-        self.ui.multWallet.setItem(Rcount, 4, newItemdel)
-        self.ui.multWallet.setItem(Rcount, 5, newItemsave)
+                self.ui.multWallet.setItem(Rcount, 2, newItemopen)
+                self.ui.multWallet.setItem(Rcount, 3, newItemedit)
+                self.ui.multWallet.setItem(Rcount, 4, newItemdel)
+                self.ui.multWallet.setItem(Rcount, 5, newItemsave)
 
-        DataKeystore = "Data\\Keystore\\" + self.m_wallet.address[2:18] + ".keystore"
-        Core_func.addwalletxml(ex.walletdom,ex.walletroot,self.m_wallet.accountname,self.m_wallet.address,DataKeystore)
+                DataKeystore = "Data\\Keystore\\" + self.m_wallet.address[2:18] + ".keystore"
+                Core_func.addwalletxml(ex.walletdom,ex.walletroot,self.m_wallet.accountname,self.m_wallet.address,DataKeystore)
 
-
-        self.initchart()
+                Core_func.addtransaddrxml(self.transdom, self.transroot, self.m_wallet.address, time.strftime('%Y-%m-%d',time.localtime(time.time())))
+                self.initchart()
 
     def delWallet(self,row):
         ind = Core_func.QTableWidget.indexFromItem(ex.ui.multWallet, ex.ui.multWallet.item(row, 1))
@@ -1477,121 +1506,122 @@ class Example(QDialog,QWidget):
         print('tick')
 
     def refresh(self):
-        if os.path.isfile('TransactionList.xml'):
-            tree = ET.parse('TransactionList.xml')
-            root = tree.getroot()
-            for AddressTransactionsEntity in root.findall('AddressTransactionsEntity'):
-                #self.ui.TransactionHistory.setRowCount(0)
-                #self.ui.LogMessage.setRowCount(0)
-                if AddressTransactionsEntity.find('Address').text == self.m_wallet.address.lower():
-                    if self.ui.LogMessage.rowCount()==0:
-                        for AccountTransactionsEntity in AddressTransactionsEntity.find('TransactionList'):
-                            Rcount = self.ui.TransactionHistory.rowCount()
-                            self.ui.TransactionHistory.setRowCount(Rcount + 1)
-                            time_s = datetime.datetime.strptime(AccountTransactionsEntity[9].text, "%Y-%m-%d %H:%M:%S")
-                            localtime = Core_func.utc2local(time_s)
-                            newItemtime = QTableWidgetItem(localtime.strftime('%Y-%m-%d %H:%M:%S'))
-                            newItemtoaddr = QTableWidgetItem(AccountTransactionsEntity[7].text)
-                            if AccountTransactionsEntity[11].text != 'Success':
-                               ret = Core_func.getLatestBlock()[1]
-                               num = str(AccountTransactionsEntity[1].text)
-                               if int(ret) > int(num):
-                                   deta = int(ret)-int(num)
-                                   if deta >= 12:
-                                       AccountTransactionsEntity[11].text='Success'
-                                   else:
-                                       AccountTransactionsEntity[11].text=str(deta)+'/12'
-                               elif int(ret) == int(AccountTransactionsEntity[1].text):
-                                   AccountTransactionsEntity[11].text='0/12'
-                            newItemblockType = QTableWidgetItem(AccountTransactionsEntity[11].text)
-                            if AccountTransactionsEntity[10].text == 'Send':
-                                newItemvalue = QTableWidgetItem('-' + AccountTransactionsEntity[8].text + 'WTCT')
-                                item = QTableWidgetItem()
-                                dela = QtGui.QIcon('pic/send3.png')
-                                item.setIcon(dela)
-                            else:
-                                item = QTableWidgetItem()
-                                dela = QtGui.QIcon('pic/recieve3.png')
-                                item.setIcon(dela)
-                                newItemvalue = QTableWidgetItem(AccountTransactionsEntity[8].text + 'WTCT')
-                            self.ui.TransactionHistory.setItem(Rcount, 0, item)
-                            self.ui.TransactionHistory.setItem(Rcount, 1, newItemtime)
-                            self.ui.TransactionHistory.setItem(Rcount, 2, newItemtoaddr)
-                            self.ui.TransactionHistory.setItem(Rcount, 3, newItemblockType)
-                            self.ui.TransactionHistory.setItem(Rcount, 4, newItemvalue)
-                            if AccountTransactionsEntity[11].text == 'Success':
-                                Rcount = self.ui.LogMessage.rowCount()
-                                self.ui.LogMessage.setRowCount(Rcount + 1)
-                                newItemContent = QTableWidgetItem(
-                                'From:' + AccountTransactionsEntity[0].text + '\n' + 'To:' + AccountTransactionsEntity[7].text + '\n' + 'Value:' + AccountTransactionsEntity[8].text + '                                                                                                                         ' + '\n' + 'tx_hash:' + AccountTransactionsEntity[5].text)
-                                newItemType = QTableWidgetItem(AccountTransactionsEntity[10].text)
-                                time_s = datetime.datetime.strptime(AccountTransactionsEntity[9].text, "%Y-%m-%d %H:%M:%S")
-                                localtime = Core_func.utc2local(time_s)
-                                newItemTime = QTableWidgetItem(localtime.strftime('%Y-%m-%d %H:%M:%S'))
-                                self.ui.LogMessage.setItem(Rcount, 0, newItemType)
-                                self.ui.LogMessage.setItem(Rcount, 1, newItemTime)
-                                self.ui.LogMessage.setItem(Rcount, 2, newItemContent)
-
-                            if len(AddressTransactionsEntity.find('TransactionList')) == self.ui.LogMessage.rowCount() :
-                                break
-                        break
-                    if len(AddressTransactionsEntity.find('TransactionList'))-self.ui.LogMessage.rowCount()>0:
-                        for AccountTransactionsEntity in AddressTransactionsEntity.find('TransactionList'):
-                            Rcount = self.ui.TransactionHistory.rowCount()
-                            self.ui.TransactionHistory.setRowCount(Rcount + 1)
-                            self.ui.TransactionHistory.insertRow(0)
-                            time_s = datetime.datetime.strptime(AccountTransactionsEntity[9].text, "%Y-%m-%d %H:%M:%S")
-                            localtime = Core_func.utc2local(time_s)
-                            newItemtime = QTableWidgetItem(localtime.strftime('%Y-%m-%d %H:%M:%S'))
-                            newItemtoaddr = QTableWidgetItem(AccountTransactionsEntity[7].text)
-                            if AccountTransactionsEntity[11].text != 'Success':
-                               ret = Core_func.getLatestBlock()[1]
-                               num = str(AccountTransactionsEntity[1].text)
-                               if int(ret) > int(num):
-                                   deta = int(ret)-int(num)
-                                   if deta >= 12:
-                                       AccountTransactionsEntity[11].text='Success'
-                                   else:
-                                       AccountTransactionsEntity[11].text=str(deta)+'/12'
-                               elif int(ret) == int(AccountTransactionsEntity[1].text):
-                                   AccountTransactionsEntity[11].text='0/12'
-                            newItemblockType = QTableWidgetItem(AccountTransactionsEntity[11].text)
-
-                            if AccountTransactionsEntity[10].text == 'Send':
-                                newItemvalue = QTableWidgetItem('-' + AccountTransactionsEntity[8].text + 'WTCT')
-                                item = QTableWidgetItem()
-                                dela = QtGui.QIcon('pic/send3.png')
-                                item.setIcon(dela)
-                            else:
-                                item = QTableWidgetItem()
-                                dela = QtGui.QIcon('pic/recieve3.png')
-                                item.setIcon(dela)
-                                newItemvalue = QTableWidgetItem(AccountTransactionsEntity[8].text + 'WTCT')
-                            self.ui.TransactionHistory.setItem(0, 0, item)
-                            self.ui.TransactionHistory.setItem(0, 1, newItemtime)
-                            self.ui.TransactionHistory.setItem(0, 2, newItemtoaddr)
-                            self.ui.TransactionHistory.setItem(0, 3, newItemblockType)
-                            self.ui.TransactionHistory.setItem(0, 4, newItemvalue)
-                            if AccountTransactionsEntity[11].text == 'Success':
-                                Rcount = self.ui.LogMessage.rowCount()
-                                self.ui.LogMessage.setRowCount(Rcount + 1)
-                                self.ui.LogMessage.insertRow(0)
-                                newItemContent = QTableWidgetItem(
-                                'From:' + AccountTransactionsEntity[0].text + '\n' + 'To:' + AccountTransactionsEntity[7].text + '\n' + 'Value:' + AccountTransactionsEntity[8].text + '                                                                                                                         ' + '\n' + 'tx_hash:' + AccountTransactionsEntity[5].text)
-                                newItemType = QTableWidgetItem(AccountTransactionsEntity[10].text)
-                                time_s = datetime.datetime.strptime(AccountTransactionsEntity[9].text, "%Y-%m-%d %H:%M:%S")
-                                localtime = Core_func.utc2local(time_s)
-                                newItemTime = QTableWidgetItem(localtime.strftime('%Y-%m-%d %H:%M:%S'))
-                                self.ui.LogMessage.setItem(0, 0, newItemType)
-                                self.ui.LogMessage.setItem(0, 1, newItemTime)
-                                self.ui.LogMessage.setItem(0, 2, newItemContent)
-
-                            if len(AddressTransactionsEntity.find('TransactionList')) == self.ui.LogMessage.rowCount() :
-                                break
-                        break
-
-        else:
-            Core_func.generatetransXml()
+        print('')
+        # if os.path.isfile('trans.xml'):
+        #     tree = ET.parse('trans.xml')
+        #     root = tree.getroot()
+        #     for AddressTransactionsEntity in root.findall('AddressTransactionsEntity'):
+        #         #self.ui.TransactionHistory.setRowCount(0)
+        #         #self.ui.LogMessage.setRowCount(0)
+        #         if AddressTransactionsEntity.find('Address').text == self.m_wallet.address:
+        #             if self.ui.LogMessage.rowCount()==0:
+        #                 for AccountTransactionsEntity in AddressTransactionsEntity.find('TransactionList'):
+        #                     Rcount = self.ui.TransactionHistory.rowCount()
+        #                     self.ui.TransactionHistory.setRowCount(Rcount + 1)
+        #                     time_s = datetime.datetime.strptime(AccountTransactionsEntity[9].text, "%Y-%m-%d %H:%M:%S")
+        #                     localtime = Core_func.utc2local(time_s)
+        #                     newItemtime = QTableWidgetItem(localtime.strftime('%Y-%m-%d %H:%M:%S'))
+        #                     newItemtoaddr = QTableWidgetItem(AccountTransactionsEntity[7].text)
+        #                     if AccountTransactionsEntity[11].text != 'Success':
+        #                        ret = Core_func.getLatestBlock()[1]
+        #                        num = str(AccountTransactionsEntity[1].text)
+        #                        if int(ret) > int(num):
+        #                            deta = int(ret)-int(num)
+        #                            if deta >= 12:
+        #                                AccountTransactionsEntity[11].text='Success'
+        #                            else:
+        #                                AccountTransactionsEntity[11].text=str(deta)+'/12'
+        #                        elif int(ret) == int(AccountTransactionsEntity[1].text):
+        #                            AccountTransactionsEntity[11].text='0/12'
+        #                     newItemblockType = QTableWidgetItem(AccountTransactionsEntity[11].text)
+        #                     if AccountTransactionsEntity[10].text == 'Send':
+        #                         newItemvalue = QTableWidgetItem('-' + AccountTransactionsEntity[8].text + 'WTCT')
+        #                         item = QTableWidgetItem()
+        #                         dela = QtGui.QIcon('pic/send3.png')
+        #                         item.setIcon(dela)
+        #                     else:
+        #                         item = QTableWidgetItem()
+        #                         dela = QtGui.QIcon('pic/recieve3.png')
+        #                         item.setIcon(dela)
+        #                         newItemvalue = QTableWidgetItem(AccountTransactionsEntity[8].text + 'WTCT')
+        #                     self.ui.TransactionHistory.setItem(Rcount, 0, item)
+        #                     self.ui.TransactionHistory.setItem(Rcount, 1, newItemtime)
+        #                     self.ui.TransactionHistory.setItem(Rcount, 2, newItemtoaddr)
+        #                     self.ui.TransactionHistory.setItem(Rcount, 3, newItemblockType)
+        #                     self.ui.TransactionHistory.setItem(Rcount, 4, newItemvalue)
+        #                     if AccountTransactionsEntity[11].text == 'Success':
+        #                         Rcount = self.ui.LogMessage.rowCount()
+        #                         self.ui.LogMessage.setRowCount(Rcount + 1)
+        #                         newItemContent = QTableWidgetItem(
+        #                         'From:' + AccountTransactionsEntity[0].text + '\n' + 'To:' + AccountTransactionsEntity[7].text + '\n' + 'Value:' + AccountTransactionsEntity[8].text + '                                                                                                                         ' + '\n' + 'tx_hash:' + AccountTransactionsEntity[5].text)
+        #                         newItemType = QTableWidgetItem(AccountTransactionsEntity[10].text)
+        #                         time_s = datetime.datetime.strptime(AccountTransactionsEntity[9].text, "%Y-%m-%d %H:%M:%S")
+        #                         localtime = Core_func.utc2local(time_s)
+        #                         newItemTime = QTableWidgetItem(localtime.strftime('%Y-%m-%d %H:%M:%S'))
+        #                         self.ui.LogMessage.setItem(Rcount, 0, newItemType)
+        #                         self.ui.LogMessage.setItem(Rcount, 1, newItemTime)
+        #                         self.ui.LogMessage.setItem(Rcount, 2, newItemContent)
+        #
+        #                     if len(AddressTransactionsEntity.find('TransactionList')) == self.ui.LogMessage.rowCount() :
+        #                         break
+        #                 break
+        #             if len(AddressTransactionsEntity.find('TransactionList'))-self.ui.LogMessage.rowCount()>0:
+        #                 for AccountTransactionsEntity in AddressTransactionsEntity.find('TransactionList'):
+        #                     Rcount = self.ui.TransactionHistory.rowCount()
+        #                     self.ui.TransactionHistory.setRowCount(Rcount + 1)
+        #                     self.ui.TransactionHistory.insertRow(0)
+        #                     time_s = datetime.datetime.strptime(AccountTransactionsEntity[9].text, "%Y-%m-%d %H:%M:%S")
+        #                     localtime = Core_func.utc2local(time_s)
+        #                     newItemtime = QTableWidgetItem(localtime.strftime('%Y-%m-%d %H:%M:%S'))
+        #                     newItemtoaddr = QTableWidgetItem(AccountTransactionsEntity[7].text)
+        #                     if AccountTransactionsEntity[11].text != 'Success':
+        #                        ret = Core_func.getLatestBlock()[1]
+        #                        num = str(AccountTransactionsEntity[1].text)
+        #                        if int(ret) > int(num):
+        #                            deta = int(ret)-int(num)
+        #                            if deta >= 12:
+        #                                AccountTransactionsEntity[11].text='Success'
+        #                            else:
+        #                                AccountTransactionsEntity[11].text=str(deta)+'/12'
+        #                        elif int(ret) == int(AccountTransactionsEntity[1].text):
+        #                            AccountTransactionsEntity[11].text='0/12'
+        #                     newItemblockType = QTableWidgetItem(AccountTransactionsEntity[11].text)
+        #
+        #                     if AccountTransactionsEntity[10].text == 'Send':
+        #                         newItemvalue = QTableWidgetItem('-' + AccountTransactionsEntity[8].text + 'WTCT')
+        #                         item = QTableWidgetItem()
+        #                         dela = QtGui.QIcon('pic/send3.png')
+        #                         item.setIcon(dela)
+        #                     else:
+        #                         item = QTableWidgetItem()
+        #                         dela = QtGui.QIcon('pic/recieve3.png')
+        #                         item.setIcon(dela)
+        #                         newItemvalue = QTableWidgetItem(AccountTransactionsEntity[8].text + 'WTCT')
+        #                     self.ui.TransactionHistory.setItem(0, 0, item)
+        #                     self.ui.TransactionHistory.setItem(0, 1, newItemtime)
+        #                     self.ui.TransactionHistory.setItem(0, 2, newItemtoaddr)
+        #                     self.ui.TransactionHistory.setItem(0, 3, newItemblockType)
+        #                     self.ui.TransactionHistory.setItem(0, 4, newItemvalue)
+        #                     if AccountTransactionsEntity[11].text == 'Success':
+        #                         Rcount = self.ui.LogMessage.rowCount()
+        #                         self.ui.LogMessage.setRowCount(Rcount + 1)
+        #                         self.ui.LogMessage.insertRow(0)
+        #                         newItemContent = QTableWidgetItem(
+        #                         'From:' + AccountTransactionsEntity[0].text + '\n' + 'To:' + AccountTransactionsEntity[7].text + '\n' + 'Value:' + AccountTransactionsEntity[8].text + '                                                                                                                         ' + '\n' + 'tx_hash:' + AccountTransactionsEntity[5].text)
+        #                         newItemType = QTableWidgetItem(AccountTransactionsEntity[10].text)
+        #                         time_s = datetime.datetime.strptime(AccountTransactionsEntity[9].text, "%Y-%m-%d %H:%M:%S")
+        #                         localtime = Core_func.utc2local(time_s)
+        #                         newItemTime = QTableWidgetItem(localtime.strftime('%Y-%m-%d %H:%M:%S'))
+        #                         self.ui.LogMessage.setItem(0, 0, newItemType)
+        #                         self.ui.LogMessage.setItem(0, 1, newItemTime)
+        #                         self.ui.LogMessage.setItem(0, 2, newItemContent)
+        #
+        #                     if len(AddressTransactionsEntity.find('TransactionList')) == self.ui.LogMessage.rowCount() :
+        #                         break
+        #                 break
+        #
+        # else:
+        #     Core_func.generatetransXml()
 
 
     def refreshTop(self):
@@ -1860,7 +1890,8 @@ class Example(QDialog,QWidget):
 
     def initwallets(self):
         if os.path.isfile('wa.xml'):#address
-            if len(self.walletroot.getElementsByTagName('WalletBaseEntity')) != 0:
+            if len(self.walletroot.getElementsByTagName('WalletBaseEntity'))- self.ui.multWallet.rowCount() > 0:
+                self.ui.multWallet.setRowCount(0)
                 for WalletEntity in self.walletroot.getElementsByTagName('WalletBaseEntity'):
                     Rcount = self.ui.multWallet.rowCount()
                     self.ui.multWallet.setRowCount(Rcount + 1)
@@ -2070,7 +2101,32 @@ class Example(QDialog,QWidget):
             xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
             self.walletdom = xml.dom.minidom.parseString(xmlStr)
             self.walletroot = self.walletdom.documentElement  # 得到xml文档
+        self.initwallets()
 
+        if os.path.isfile('trans.xml'):
+            self.transdom = xml.dom.minidom.parse("trans.xml") # 打开xml文档
+            xmlStr = self.transdom.toprettyxml(indent='', newl='', encoding='utf-8')
+            xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
+            self.transdom = xml.dom.minidom.parseString(xmlStr)
+            xmlStr = self.transdom.toprettyxml(indent='', newl='', encoding='utf-8')
+            xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
+            self.transdom = xml.dom.minidom.parseString(xmlStr)
+            self.transroot = self.transdom.documentElement  # 得到xml文档
+
+        else:
+            ret = Core_func.generatetransXml()
+            self.transdom = xml.dom.minidom.parse("trans.xml")  # 打开xml文档
+            self.transroot = self.transdom.documentElement  # 得到xml文档
+            for i in range(self.ui.multWallet.rowCount()):
+                ind = Core_func.QTableWidget.indexFromItem(self.ui.multWallet, self.ui.multWallet.item(i, 1))
+                print(i,self.ui.multWallet.rowCount())
+                Core_func.addtransaddrxml(self.transdom, self.transroot, ind.data(),time.strftime('%Y-%m-%d',time.localtime(time.time())))
+            xmlStr = self.transdom.toprettyxml(indent='', newl='', encoding='utf-8')
+            xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
+            self.transdom = xml.dom.minidom.parseString(xmlStr)
+            xmlStr = self.transdom.toprettyxml(indent='', newl='', encoding='utf-8')
+            xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
+            self.transdom = xml.dom.minidom.parseString(xmlStr)
 
         self.m_wallet = Wallet
         self.Trans = Transaction
@@ -2080,7 +2136,6 @@ class Example(QDialog,QWidget):
         self.initchart()
         self.initmap()
         self.initcontact()
-        self.initwallets()
         self.sendform = sendform()
         #self.nationpos()
         #self.timer = QTimer(self)  # 初始化一个定时器
@@ -2111,6 +2166,7 @@ class Example(QDialog,QWidget):
         self.timertop = QTimer(self)  # 初始化一个定时器  topstatus
         self.timertop.timeout.connect(self.refreshTop)  # 计时结束调用operate()方法
         self.timertop.start(30000)  # 设置计时间隔并启动
+
         self.miningtatus = 0
         self.syncstatus = 0
         self.peers = 0

@@ -386,15 +386,16 @@ def addtransaddrxml(doc,rootElement,address,updatetime):
 
 def addtranslistxml\
     (doc,rootElement,address,updatetime,fromaddr,blocknum,
-     toaddr,gasprice,blockhash,transacindex,txhash,Gas,toaddress,Value,utctimestamp,transtype,blocktype):
+     toaddr,gasprice,blockhash,transacindex,txhash,Gas,Value,utctimestamp,transtype,blocktype):
     for AddressTransactionsEntity in rootElement.getElementsByTagName('AddressTransactionsEntity'):
-        if address == AddressTransactionsEntity[0].childNodes[0]:
-            # walletentity = rootElement.getElementsByTagName('WalletBaseEntity')[row]
-            updatet = AddressTransactionsEntity[1].childNodes[0]
+        if address == AddressTransactionsEntity.getElementsByTagName('Address')[0].firstChild.data:
+            # walletentity = AddressTransactionsEntity.getElementsByTagName('UpdateTime')
+            updatet = AddressTransactionsEntity.getElementsByTagName('UpdateTime')[0].firstChild
             updatet.nodeValue=updatetime
 
             AccountTransactionsEntity = doc.createElement('AccountTransactionsEntity')
-            AddressTransactionsEntity[2].appendChild(AccountTransactionsEntity)
+            newtrans = AddressTransactionsEntity.getElementsByTagName('TransactionList')[0]
+            newtrans.appendChild(AccountTransactionsEntity)
 
             addressFrom = doc.createElement('addressFrom')
             AccountTransactionsEntity.appendChild(addressFrom)
@@ -430,7 +431,7 @@ def addtranslistxml\
             gas.appendChild(GAS)
 
             addressTo = doc.createElement('addressTo')
-            AccountTransactionsEntity.appendChild(toaddress)
+            AccountTransactionsEntity.appendChild(addressTo)
             taddr = doc.createTextNode(toaddr)
             addressTo.appendChild(taddr)
 
@@ -483,5 +484,9 @@ def edittransxml(doc,rootElement,address,blocktype,row):
             f.close()
 
             break
+
+
+print(getTransactionInfo('0x3d92795cb5d612b1def5013d59b056dd59b8b8d3cdba0b5e10b1d0d646dbe90b'))
+
 
 #Transaction_out('3373c7af355f86b8dc9f02d386bea047da063ed541ed927d149214134012e451', '0xFBf36B7c56258dC3e29769C1a686250B8B002dE3', 2, 200000, 0.000000036)
