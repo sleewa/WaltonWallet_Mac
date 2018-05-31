@@ -387,6 +387,8 @@ def addtransaddrxml(doc,rootElement,address,updatetime):
 def addtranslistxml\
     (doc,rootElement,address,updatetime,fromaddr,blocknum,
      toaddr,gasprice,blockhash,transacindex,txhash,Gas,Value,utctimestamp,transtype,blocktype):
+
+    foundaddr = 0
     for AddressTransactionsEntity in rootElement.getElementsByTagName('AddressTransactionsEntity'):
         if address == AddressTransactionsEntity.getElementsByTagName('Address')[0].firstChild.data:
             # walletentity = AddressTransactionsEntity.getElementsByTagName('UpdateTime')
@@ -455,7 +457,14 @@ def addtranslistxml\
             btype = doc.createTextNode(blocktype)
             blockType.appendChild(btype)
 
+            foundaddr = 1
             break
+    if foundaddr == 0:
+        addtransaddrxml(doc, rootElement, address, updatetime)
+        addtranslistxml \
+            (doc, rootElement, address, updatetime, fromaddr, blocknum,
+             toaddr, gasprice, blockhash, transacindex, txhash, Gas, Value, utctimestamp, transtype, blocktype)
+
 
     doc.appendChild(rootElement)
     xmlStr = doc.toprettyxml(indent='', newl='', encoding='utf-8')
