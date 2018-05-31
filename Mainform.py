@@ -54,29 +54,64 @@ class enterpswform(QWidget, Ui_EnterPswForm):
         self.ui = Ui_EnterPswForm()
         self.ui.setupUi(self)
         self.setWindowFlags(Qt.CustomizeWindowHint)
+        self.publishform = publishform()
         btnc = self.ui.closeenterpsw
         btnc.clicked.connect(self.closeform)
         btnconfirm = self.ui.pushButton_9
         self.addr = '0'
         btnconfirm.clicked.connect(lambda :self.getprikey(self.addr,self.ui.lineEdit_6.text()))
+        self.gotprikey = 0
+        self.needtosend = 0
 
-    def show_w2(self,str):  # 显示窗体2
+    def show_w2(self,str,send=0):  # 显示窗体2
         self.addr = str
         self.ui.lineEdit_6.clear()
+        self.gotprikey = 0
         self.show()
+        if send  == 1:
+            self.needtosend = 1
 
     def getprikey(self,addr,password):
         print(addr,password)
         filename = "Data\\Keystore\\" + addr[2:18] + ".keystore"
         file = open(filename, 'r')
         content = file.readline()
-        self.prikey = w3.toHex(Account.decrypt(content, password))
+        try:
+            self.prikey = w3.toHex(Account.decrypt(content, password))
+        except Exception as err:
+            self.publishform.show_w2('Please enter right password')
+            self.close()
+            return 1
         print(self.prikey)
-        ex.ui.lineEdit_9.setText(self.prikey)
-        ex.ui.pushButton_35.setIcon(QIcon("pic/01.png"))
-        ex.ui.lineEdit_9.setEchoMode(0)
-        ex.privatekeyeye = 0
+
+        self.gotprikey = 1
+        if self.needtosend == 1:
+            ex.m_wallet.privateKey = self.prikey
+            ret = Core_func.Transaction_out(ex.m_wallet.privateKey, ex.Trans.toaddr, ex.Trans.value, ex.Trans.Gas, ex.Trans.Gasprice)
+            if ret[0] == 1:
+
+                print('need to write into xml')
+
+                self.publishform.show_w2('transaction successfully')
+                self.closeform()
+                ex.Trans.value = ''
+                ex.Trans.Type = ''
+                ex.Trans.Gas = ''
+                ex.Trans.Gasprice = ''
+                ex.Trans.toaddr =''
+                ex.refresh()
+
+            else:
+                self.publishform.show_w2('transaction failed')
+        else:
+            ex.ui.lineEdit_9.setText(self.prikey)
+            ex.m_wallet.privateKey = self.prikey
+            ex.ui.pushButton_35.setIcon(QIcon("pic/01.png"))
+            ex.ui.lineEdit_9.setEchoMode(0)
+            ex.privatekeyeye = 0
+        self.needtosend = 0
         self.close()
+        return 0
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -307,7 +342,7 @@ class publishform(QWidget, Ui_publishForm):
         self.close()
 
 class accountform(QWidget, Ui_AccountForm):
-    def __init__(self):
+    def __init__(self,Paren):
         super().__init__()
         self.ui = Ui_AccountForm()
         self.ui.setupUi(self)
@@ -317,13 +352,13 @@ class accountform(QWidget, Ui_AccountForm):
         self.ui.Account.verticalHeader().setVisible(0)
         self.ui.Account.setShowGrid(0)
         self.ui.Account.horizontalHeader().setStretchLastSection(1)
-        self.ui.Account.verticalHeader().setDefaultSectionSize(45)
+        self.ui.Account.verticalHeader().setDefaultSectionSize(78)
         self.ui.Account.setColumnWidth(0, 200)  # 将设置第1列的单元格成20宽度
         self.ui.Account.setColumnWidth(1, 310)  # 将设置第2列的单元格成30宽度
 
         self.ui.Account.setFrameShape(QFrame.NoFrame)  # 表格无边框
         self.ui.Account.setEditTriggers(QAbstractItemView.NoEditTriggers)  # 不可编辑
-        self.ui.Account.setSelectionMode(QAbstractItemView.NoSelection)  # 单元不可选
+        self.ui.Account.setSelectionBehavior(Core_func.QTableWidget.SelectRows)
         self.ui.Account.setFocusPolicy(Qt.NoFocus)  # 无选中虚线框
         self.ui.Account.verticalScrollBar().setStyleSheet(
             "QScrollBar{background:transparent; width: 10px;}"
@@ -338,12 +373,39 @@ class accountform(QWidget, Ui_AccountForm):
         btnc = self.ui.closeenterpsw
         btnc.clicked.connect(self.closeform)
         btnconfirm = self.ui.pushButton_9
-        btnconfirm.clicked.connect(self.closeform)
+        btnconfirm.clicked.connect(lambda :self.closeform(Paren))
+        self.ui.Account.itemClicked.connect(self.choseaccount)
+
 
     def show_w2(self):  # 显示窗体2
+        if os.path.isfile('test.xml'):
+            if len(ex.addrroot.getElementsByTagName('AddressEntity')) != 0:
+                for AddressEntity in ex.addrroot.getElementsByTagName('AddressEntity'):
+                    Rcount = self.ui.Account.rowCount()
+                    self.ui.Account.setRowCount(Rcount + 1)
 
+                    itemlist1 = AddressEntity.getElementsByTagName('AccountName')
+                    item1 = itemlist1[0]
+                    itemlist2 = AddressEntity.getElementsByTagName('Address')
+                    item2 = itemlist2[0]
+
+                    newItemname = QTableWidgetItem(item1.firstChild.data)
+                    newItemaddr = QTableWidgetItem(item2.firstChild.data)
+
+                    self.ui.Account.setItem(Rcount, 0, newItemname)
+                    self.ui.Account.setItem(Rcount, 1, newItemaddr)
+
+        else:
+            print('')
         self.show()
 
+    def choseaccount(self,QTableWidgetItem):
+        # QTableWidgetItem.setForeground(QBrush(QColor(170, 0, 255)))
+        row = Core_func.QTableWidget.indexFromItem(self.ui.Account, QTableWidgetItem).row()
+        # self.ui.Account.item(row, 0).setForeground(QBrush(QColor(170, 0, 255)))
+        # self.ui.Account.item(row, 1).setForeground(QBrush(QColor(170, 0, 255)))
+        ind = Core_func.QTableWidget.indexFromItem(self.ui.Account, self.ui.Account.item(row,1))
+        ex.Trans.toaddr = ind.data()
 
 
     def mousePressEvent(self, event):
@@ -357,7 +419,8 @@ class accountform(QWidget, Ui_AccountForm):
             self.move(event.globalPos() - self.dragPosition)
             event.accept()
 
-    def closeform(self):
+    def closeform(self,Paren):
+        Paren.ui.lineEdit_7.setText(ex.Trans.toaddr)
         self.close()
 
 class messform(QWidget, Ui_MessForm):
@@ -376,8 +439,10 @@ class messform(QWidget, Ui_MessForm):
         row = Core_func.QTableWidget.indexFromItem(ex.ui.LogMessage,QTableWidgetItem).row()
         ex.ui.LogMessage.item(row,0).setForeground(QBrush(QColor(0,0,0)))
         ex.ui.LogMessage.item(row,1).setForeground(QBrush(QColor(0,0,0)))
+        ex.ui.LogMessage.item(row,2).setForeground(QBrush(QColor(0,0,0)))
 
-        ind = Core_func.QTableWidget.indexFromItem(ex.ui.LogMessage,QTableWidgetItem)
+
+        ind = Core_func.QTableWidget.indexFromItem(ex.ui.LogMessage,ex.ui.LogMessage.item(row,2))
         print(ind.data())
         print(ind.data().split('tx_hash')[1][1:])
         ret = Core_func.getTransactionInfo(ind.data().split('tx_hash')[1][1:])
@@ -596,7 +661,7 @@ class sendform(QWidget, Ui_SendForm):
         super().__init__()
         self.ui = Ui_SendForm()
         self.ui.setupUi(self)
-        self.accountform =accountform()
+        self.accountform =accountform(self)
         self.publishform = publishform()
         self.setWindowFlags(Qt.CustomizeWindowHint)
         btnc = self.ui.closeenterpsw
@@ -606,7 +671,6 @@ class sendform(QWidget, Ui_SendForm):
         btncont = self.ui.pushButton_34
         btncont.clicked.connect(self.accountform.show_w2)
 
-        self.Trans = Transaction
 
         self.ui.radioButton.toggle()
         self.ui.radioButton.toggled.connect(self.change2Eco)
@@ -621,6 +685,7 @@ class sendform(QWidget, Ui_SendForm):
         self.ui.radioButton_4.toggle()
         self.ui.radioButton_4.toggled.connect(self.change2Cus)
         self.ui.radioButton_4.setChecked(0)
+
 
 
     def change2Eco(self):
@@ -646,7 +711,7 @@ class sendform(QWidget, Ui_SendForm):
             self.ui.lineEdit_9.setPlaceholderText('Enter Gas Price')
 
     def show_w2(self,row='none'):  # 显示窗体2
-        if len(ex.m_wallet.address) <= 40 :
+        if ex.m_wallet.address =='' :
             self.publishform.show_w2('Please Choose Wallet')
         else:
             balance = requests.get(
@@ -661,40 +726,17 @@ class sendform(QWidget, Ui_SendForm):
 
     def showenterphrase(self):
         #waiting to add passsword checking
-        self.Trans.value = self.ui.lineEdit_6.text().strip()
-        self.Trans.Type = 'Send'
-        self.Trans.Gas = self.ui.lineEdit_8.text().strip()
-        self.Trans.Gasprice = self.ui.lineEdit_9.text().strip()
-        #need to get blocknumber and time
-        ret = Core_func.Transaction_out(ex.m_wallet.privateKey, self.ui.lineEdit_7.text().strip(), self.ui.lineEdit_6.text().strip(), self.ui.lineEdit_8.text().strip(), self.ui.lineEdit_9.text().strip())
-        if ret[0] == 1:
-            #self.Trans.txhash = '0x36775097df4ed6429dbe31fc56119a66f8c3dfcfda46792f4982117a90521f0a'#ret[1]
-            #tx_details = Core_func.getTransactionInfo(self.Trans.txhash)
-            #self.Trans.Blocknumber = tx_details['blockNumber']
-            #self.Trans.timestamp = tx_details['timestamp']
-            # self.Trans.toaddr = self.ui.lineEdit_7.text().strip()
-            # self.Trans.fromaddr = ex.m_wallet.address
-            # Rcount = ex.ui.TransactionHistory.rowCount()
-            # ex.ui.TransactionHistory.setRowCount(Rcount + 1)
-            # newItemTime = QTableWidgetItem(datetime.datetime.now().strftime('%Y-%m-%d'))
-            # newItemAddr = QTableWidgetItem(ex.m_wallet.address)
-            # newItemStatus = QTableWidgetItem(self.Trans.status)
-            # newItemValue = QTableWidgetItem('-'+self.Trans.value+'WTCT')
-            # ex.ui.TransactionHistory.setItem(Rcount, 0, newItemTime)
-            # ex.ui.TransactionHistory.setItem(Rcount, 1, newItemAddr)
-            # ex.ui.TransactionHistory.setItem(Rcount, 2, newItemStatus)
-            # ex.ui.TransactionHistory.setItem(Rcount, 3, newItemValue)
-            print('need to write into xml')
-
-            self.publishform.show_w2('transaction successfully')
-            self.closeform()
-
-            ex.refresh()
-
-            self.ui.lineEdit_7.clear()
-            self.ui.lineEdit_6.clear()
+        ex.Trans.value = self.ui.lineEdit_6.text().strip()
+        ex.Trans.Type = 'Send'
+        ex.Trans.Gas = self.ui.lineEdit_8.text().strip()
+        ex.Trans.Gasprice = self.ui.lineEdit_9.text().strip()
+        if ex.Trans.toaddr == '':
+            ex.Trans.toaddr = self.ui.lineEdit_7.text().strip()
         else:
-            self.publishform.show_w2('transaction failed')
+            self.ui.lineEdit_7.setText(ex.Trans.toaddr)
+        self.enterpswform = enterpswform()
+        self.enterpswform.show_w2(ex.ui.lineEdit_8.text(),1)
+
 
 
     def mousePressEvent(self, event):
@@ -709,6 +751,8 @@ class sendform(QWidget, Ui_SendForm):
             event.accept()
 
     def closeform(self):
+        self.ui.lineEdit_7.clear()
+        self.ui.lineEdit_6.clear()
         self.close()
 
 
@@ -872,7 +916,10 @@ class Example(QDialog,QWidget):
         self.ui.pushButton_41.setIcon(QIcon("pic/08.png"))
         self.passwordeye = 1
         self.ui.lineEdit_8.setText(self.m_wallet.address)
-        self.ui.lineEdit_9.setText(self.m_wallet.privateKey)
+        if self.m_wallet.privateKey == '':
+            self.ui.lineEdit_9.setText('******************************************************************')
+        else:
+            self.ui.lineEdit_9.setText(self.m_wallet.privateKey)
 
     def pressbtn2(self):
         self.ui.mywallet.setIcon(QIcon("pic/mywallet0.png"))
@@ -1017,9 +1064,9 @@ class Example(QDialog,QWidget):
             if len(enterpri.strip())== 64:
                 ret = Core_func.Import_From_Private(enterpri.strip(),self.ui.lineEdit_19.text())
                 if ret[0] == 1:
-                    self.m_wallet.password = self.ui.lineEdit_18.text()
+                    self.m_wallet.password = self.ui.lineEdit_18.text().strip()
                     self.m_wallet.address = ret[1]
-                    self.m_wallet.privateKey = self.ui.lineEdit_20.text()
+                    self.m_wallet.privateKey = self.ui.lineEdit_20.text().strip()
                     self.m_wallet.accountname = ret[1][0:10]
                     encrypted = ret[2]
                     DataKeystore = "Data\\Keystore\\" + ret[1][2:18] + ".keystore"
@@ -1168,7 +1215,7 @@ class Example(QDialog,QWidget):
         filename = "Data\\Keystore\\"+ind.data()[2:18]+".keystore"
         self.ui.multWallet.removeRow(row)
 
-        addrentity = self.walletroot.getElementsByTagName('WalletBaseEntity')[0]
+        addrentity = self.walletroot.getElementsByTagName('WalletBaseEntity')[row]
         addrentity.parentNode.removeChild(addrentity)
         f = open('wa.xml', 'w')
         self.walletdom.writexml(f, addindent=' ', newl='\n')
@@ -1459,12 +1506,19 @@ class Example(QDialog,QWidget):
                             newItemblockType = QTableWidgetItem(AccountTransactionsEntity[11].text)
                             if AccountTransactionsEntity[10].text == 'Send':
                                 newItemvalue = QTableWidgetItem('-' + AccountTransactionsEntity[8].text + 'WTCT')
+                                item = QTableWidgetItem()
+                                dela = QtGui.QIcon('pic/send3.png')
+                                item.setIcon(dela)
                             else:
+                                item = QTableWidgetItem()
+                                dela = QtGui.QIcon('pic/recieve3.png')
+                                item.setIcon(dela)
                                 newItemvalue = QTableWidgetItem(AccountTransactionsEntity[8].text + 'WTCT')
-                            self.ui.TransactionHistory.setItem(Rcount, 0, newItemtime)
-                            self.ui.TransactionHistory.setItem(Rcount, 1, newItemtoaddr)
-                            self.ui.TransactionHistory.setItem(Rcount, 2, newItemblockType)
-                            self.ui.TransactionHistory.setItem(Rcount, 3, newItemvalue)
+                            self.ui.TransactionHistory.setItem(Rcount, 0, item)
+                            self.ui.TransactionHistory.setItem(Rcount, 1, newItemtime)
+                            self.ui.TransactionHistory.setItem(Rcount, 2, newItemtoaddr)
+                            self.ui.TransactionHistory.setItem(Rcount, 3, newItemblockType)
+                            self.ui.TransactionHistory.setItem(Rcount, 4, newItemvalue)
                             if AccountTransactionsEntity[11].text == 'Success':
                                 Rcount = self.ui.LogMessage.rowCount()
                                 self.ui.LogMessage.setRowCount(Rcount + 1)
@@ -1502,14 +1556,22 @@ class Example(QDialog,QWidget):
                                elif int(ret) == int(AccountTransactionsEntity[1].text):
                                    AccountTransactionsEntity[11].text='0/12'
                             newItemblockType = QTableWidgetItem(AccountTransactionsEntity[11].text)
+
                             if AccountTransactionsEntity[10].text == 'Send':
                                 newItemvalue = QTableWidgetItem('-' + AccountTransactionsEntity[8].text + 'WTCT')
+                                item = QTableWidgetItem()
+                                dela = QtGui.QIcon('pic/send3.png')
+                                item.setIcon(dela)
                             else:
+                                item = QTableWidgetItem()
+                                dela = QtGui.QIcon('pic/recieve3.png')
+                                item.setIcon(dela)
                                 newItemvalue = QTableWidgetItem(AccountTransactionsEntity[8].text + 'WTCT')
-                            self.ui.TransactionHistory.setItem(0, 0, newItemtime)
-                            self.ui.TransactionHistory.setItem(0, 1, newItemtoaddr)
-                            self.ui.TransactionHistory.setItem(0, 2, newItemblockType)
-                            self.ui.TransactionHistory.setItem(0, 3, newItemvalue)
+                            self.ui.TransactionHistory.setItem(0, 0, item)
+                            self.ui.TransactionHistory.setItem(0, 1, newItemtime)
+                            self.ui.TransactionHistory.setItem(0, 2, newItemtoaddr)
+                            self.ui.TransactionHistory.setItem(0, 3, newItemblockType)
+                            self.ui.TransactionHistory.setItem(0, 4, newItemvalue)
                             if AccountTransactionsEntity[11].text == 'Success':
                                 Rcount = self.ui.LogMessage.rowCount()
                                 self.ui.LogMessage.setRowCount(Rcount + 1)
@@ -1529,7 +1591,7 @@ class Example(QDialog,QWidget):
                         break
 
         else:
-            print('create transaction xml')
+            Core_func.generatetransXml()
 
 
     def refreshTop(self):
@@ -2011,6 +2073,8 @@ class Example(QDialog,QWidget):
 
 
         self.m_wallet = Wallet
+        self.Trans = Transaction
+
         self.lastblacknum = 0
         self.publishform = publishform()
         self.initchart()
@@ -2278,10 +2342,11 @@ class Example(QDialog,QWidget):
         self.ui.TransactionHistory.setShowGrid(0)
         self.ui.TransactionHistory.horizontalHeader().setStretchLastSection(1)
         self.ui.TransactionHistory.verticalHeader().setDefaultSectionSize(40)
-        self.ui.TransactionHistory.setColumnWidth(0, 150)  # 将设置第1列的单元格成20宽度
-        self.ui.TransactionHistory.setColumnWidth(1, 300)  # 将设置第2列的单元格成30宽度
-        self.ui.TransactionHistory.setColumnWidth(2, 55)  # 将设置第3列的单元格成50宽度
-        self.ui.TransactionHistory.setColumnWidth(3, 105)  # 将设置第2列的单元格成30宽度
+        self.ui.TransactionHistory.setColumnWidth(0, 20)
+        self.ui.TransactionHistory.setColumnWidth(1, 150)  # 将设置第1列的单元格成20宽度
+        self.ui.TransactionHistory.setColumnWidth(2, 305)  # 将设置第2列的单元格成30宽度
+        self.ui.TransactionHistory.setColumnWidth(3, 60)  # 将设置第3列的单元格成50宽度
+        self.ui.TransactionHistory.setColumnWidth(4, 105)  # 将设置第2列的单元格成30宽度
         self.ui.TransactionHistory.setFrameShape(QFrame.NoFrame)  # 表格无边框
         self.ui.TransactionHistory.setEditTriggers(QAbstractItemView.NoEditTriggers)  # 不可编辑
         self.ui.TransactionHistory.setSelectionMode(QAbstractItemView.NoSelection)  # 单元不可选

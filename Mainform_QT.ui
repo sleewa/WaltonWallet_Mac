@@ -2126,7 +2126,7 @@ color: rgb(100, 100, 100);</string>
         <rect>
          <x>10</x>
          <y>430</y>
-         <width>611</width>
+         <width>651</width>
          <height>16</height>
         </rect>
        </property>
@@ -2167,7 +2167,7 @@ border-radius:25px;</string>
       <widget class="QPushButton" name="pushButton_7">
        <property name="geometry">
         <rect>
-         <x>730</x>
+         <x>760</x>
          <y>370</y>
          <width>51</width>
          <height>51</height>
@@ -2223,7 +2223,7 @@ border-radius:25px;</string>
         <rect>
          <x>10</x>
          <y>360</y>
-         <width>620</width>
+         <width>661</width>
          <height>160</height>
         </rect>
        </property>
@@ -2266,7 +2266,7 @@ border-radius:25px;</string>
         <rect>
          <x>10</x>
          <y>390</y>
-         <width>611</width>
+         <width>651</width>
          <height>16</height>
         </rect>
        </property>
@@ -2328,7 +2328,7 @@ border-radius: 3px;
 </string>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="tab">
         <attribute name="title">
@@ -2447,9 +2447,9 @@ border-radius: 3px;
         <widget class="QLineEdit" name="lineEdit_35">
          <property name="geometry">
           <rect>
-           <x>70</x>
+           <x>20</x>
            <y>10</y>
-           <width>271</width>
+           <width>321</width>
            <height>21</height>
           </rect>
          </property>
@@ -3088,7 +3088,7 @@ QLineEdit[echoMode=&quot;2&quot;] {
       <widget class="QPushButton" name="pushButton_5">
        <property name="geometry">
         <rect>
-         <x>660</x>
+         <x>690</x>
          <y>440</y>
          <width>51</width>
          <height>51</height>
@@ -3337,7 +3337,7 @@ background-color: rgb(230, 238, 255);
       <widget class="QPushButton" name="pushButton_8">
        <property name="geometry">
         <rect>
-         <x>730</x>
+         <x>760</x>
          <y>440</y>
          <width>51</width>
          <height>51</height>
@@ -3394,7 +3394,7 @@ background-color: rgb(230, 238, 255);</string>
       <widget class="QPushButton" name="pushButton_6">
        <property name="geometry">
         <rect>
-         <x>660</x>
+         <x>690</x>
          <y>370</y>
          <width>51</width>
          <height>51</height>
@@ -3428,7 +3428,7 @@ background-color: rgb(230, 238, 255);</string>
         <rect>
          <x>10</x>
          <y>470</y>
-         <width>611</width>
+         <width>651</width>
          <height>16</height>
         </rect>
        </property>

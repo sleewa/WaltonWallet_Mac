@@ -202,6 +202,7 @@ def Transaction_out(private_key, toaddr, value, gas, gasprice):
     acct = Account.privateKeyToAccount(private_key)
     print(acct)
     public_key = acct.address
+    print(public_key)
     nonce = requests.get(
         "https://waltonchain.net:18950/api/getSendTransactionNonce/"+public_key).json()["send_nonce"]
     print(nonce)
@@ -213,11 +214,13 @@ def Transaction_out(private_key, toaddr, value, gas, gasprice):
         'nonce': nonce,
         'chainId': 15
     }
-    key = '0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318'
+    print(transaction)
+    #key = '0x4c0883a69102937d6231471b5dbb6204fe5129617082792ae468d01a3f362318'
     signed = w3.eth.account.signTransaction(transaction, private_key)
+    print(w3.toHex(signed.rawTransaction))
     tx_hash = requests.get(
         "https://waltonchain.net:18950/api/sendRawTransaction/" + w3.toHex(signed.rawTransaction)).json()
-    print(tx_hash['tx_hash'])
+    print(tx_hash)
 
     return (1, tx_hash['tx_hash'])
 
@@ -480,3 +483,5 @@ def edittransxml(doc,rootElement,address,blocktype,row):
             f.close()
 
             break
+
+#Transaction_out('3373c7af355f86b8dc9f02d386bea047da063ed541ed927d149214134012e451', '0xFBf36B7c56258dC3e29769C1a686250B8B002dE3', 2, 200000, 0.000000036)
