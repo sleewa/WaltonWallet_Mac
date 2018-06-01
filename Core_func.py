@@ -374,7 +374,7 @@ def addtransaddrxml(doc,rootElement,address,updatetime):
     TransactionList = doc.createElement('TransactionList')
     AddressTransactionsEntity.appendChild(TransactionList)
 
-    doc.appendChild(rootElement)
+    # doc.appendChild(rootElement)
     xmlStr = doc.toprettyxml(indent='', newl='', encoding='utf-8')
     xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
     doc = minidom.parseString(xmlStr)
@@ -466,7 +466,7 @@ def addtranslistxml\
              toaddr, gasprice, blockhash, transacindex, txhash, Gas, Value, utctimestamp, transtype, blocktype)
 
 
-    doc.appendChild(rootElement)
+    # doc.appendChild(rootElement)
     xmlStr = doc.toprettyxml(indent='', newl='', encoding='utf-8')
     xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
     doc = minidom.parseString(xmlStr)
@@ -495,7 +495,7 @@ def edittransxml(doc,rootElement,address,blocktype,row):
             break
 
 
-print(getTransactionInfo('0x3d92795cb5d612b1def5013d59b056dd59b8b8d3cdba0b5e10b1d0d646dbe90b'))
+# print(getTransactionInfo('0x4a0f05cd4d901a50af76f6d8cbf56c2fd8a7fc09dcec49706e240ae068b919f5'))
 
-
+# print(getTransactionRecord('0xAB828046856F5886a3835C914862E0F5f834Ee7d'))
 #Transaction_out('3373c7af355f86b8dc9f02d386bea047da063ed541ed927d149214134012e451', '0xFBf36B7c56258dC3e29769C1a686250B8B002dE3', 2, 200000, 0.000000036)
