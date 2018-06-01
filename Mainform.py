@@ -61,7 +61,7 @@ class pswform(QWidget, Ui_PswForm):
         self.ui.setupUi(self.Dialog )
         self.publishform = publishform()
 
-        self.Dialog.setWindowFlags(Qt.CustomizeWindowHint)
+        self.Dialog.setWindowFlags(Qt.CustomizeWindowHint)#.Dialog
         btnc = self.ui.closeenterpsw
         btnc.clicked.connect(lambda :self.closeform(PRAE))
         btnsave = self.ui.pushButton_9
@@ -89,10 +89,11 @@ class pswform(QWidget, Ui_PswForm):
             hl.update(self.ui.lineEdit_6.text().encode(encoding='utf-8'))
             if PRAE.settingroot.getElementsByTagName('MinerP')[0].firstChild.data == hl.hexdigest():
                 self.Dialog.close()
-                PRAE.setEnabled(1)
+                # PRAE.setEnabled(1)
             else:
                 PRAE.close()
                 self.Dialog.close()
+                sys.exit()
 
     def seepsw(self):
         if self.passwordeye == 1:
@@ -106,18 +107,21 @@ class pswform(QWidget, Ui_PswForm):
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
-            self.Dialog.dragPosition = event.globalPos() - self.Dialog.frameGeometry().topLeft()
-            QApplication.postEvent(self.Dialog, Core_func.QEvent(174))
+            self.dragPosition = event.globalPos() - self.frameGeometry().topLeft()
+            QApplication.postEvent(self, Core_func.QEvent(174))
             event.accept()
 
     def mouseMoveEvent(self, event):
         if event.buttons() == Qt.LeftButton:
-            self.move(event.globalPos() - self.Dialog.dragPosition)
+            self.move(event.globalPos() - self.dragPosition)
             event.accept()
+
+#C:\Users\m1595\AppData\Local\Programs\Python\Python36\python.exe
 
     def closeform(self,PRAE):
         self.Dialog.close()
         PRAE.close()
+        sys.exit()
 
 class changepswform(QWidget, Ui_ChangePswForm):
     def __init__(self):
