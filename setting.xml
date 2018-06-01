@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+<MiningEntity xmlns:xsd="&quot;http://www.w3.org/2001/XMLSchema&quot;">
+           
+ <MinerP>e3ceb5881a0a1fdaad01296d7554868d</MinerP>
+           
+ <Difficulty>478705014976</Difficulty>
+           
+ <Mining_reward>3</Mining_reward>
+</MiningEntity>

@@ -41,12 +41,294 @@ from PublishForm import Ui_publishForm
 from AccountForm import Ui_AccountForm
 from WalletInfoForm import Ui_WalletInfoForm
 from ConInfoForm import Ui_ConInfoForm
+from PswForm import Ui_PswForm
+from SetPswForm import Ui_SetPswForm
+from ChangePswForm import Ui_ChangePswForm
 import xml.etree.ElementTree as ET
 import matplotlib
 import datetime
+import hashlib
+
 matplotlib.use("Qt5Agg")  # 声明使用QT5
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
+
+class pswform(QWidget, Ui_PswForm):
+    def __init__(self):
+        super().__init__()
+        self.ui = Ui_PswForm()
+        self.ui.setupUi(self)
+        self.publishform = publishform()
+
+        self.setWindowFlags(Qt.CustomizeWindowHint)
+        btnc = self.ui.closeenterpsw
+        btnc.clicked.connect(self.closeform)
+        btnsave = self.ui.pushButton_9
+        btnsave.clicked.connect(self.confirmpsw)
+        btnquit = self.ui.pushButton_10
+        btnquit.clicked.connect(self.closeform)
+        btnsee = self.ui.turn2visible1_2
+        btnsee.clicked.connect(self.seepsw)
+        self.passwordeye = 1
+
+    def show_w2(self):  # 显示窗体2
+        self.ui.lineEdit_6.clear()
+        self.show()
+
+    def confirmpsw(self):
+        if len(self.ui.lineEdit_6.text())<6:
+            ex.close()
+        else:
+            hl = hashlib.md5()
+            hl.update(self.ui.lineEdit_6.text().encode(encoding='utf-8'))
+            if ex.settingroot.getElementsByTagName('MinerP')[0].firstChild.data == hl.hexdigest():
+                self.close()
+            else:
+                ex.close()
+                self.close()
+
+    def seepsw(self):
+        if self.passwordeye == 1:
+            self.ui.lineEdit_6.setEchoMode(0)
+            self.ui.turn2visible1_2.setIcon(QIcon("pic/01.png"))
+            self.passwordeye = 0
+        else:
+            self.ui.lineEdit_6.setEchoMode(QLineEdit.Password)
+            self.ui.turn2visible1_2.setIcon(QIcon("pic/02.png"))
+            self.passwordeye = 1
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.dragPosition = event.globalPos() - self.frameGeometry().topLeft()
+            QApplication.postEvent(self, Core_func.QEvent(174))
+            event.accept()
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() == Qt.LeftButton:
+            self.move(event.globalPos() - self.dragPosition)
+            event.accept()
+
+    def closeform(self):
+        self.close()
+        ex.close()
+
+class changepswform(QWidget, Ui_ChangePswForm):
+    def __init__(self):
+        super().__init__()
+        self.ui = Ui_ChangePswForm()
+        self.ui.setupUi(self)
+        self.publishform = publishform()
+
+        self.setWindowFlags(Qt.CustomizeWindowHint)
+        btnc = self.ui.closeenterpsw
+        btnc.clicked.connect(self.closeform)
+        btnsave = self.ui.pushButton_9
+        btnsave.clicked.connect(self.savechange)
+        btnquit = self.ui.pushButton_35
+        btnquit.clicked.connect(self.setloginpsw)
+        btnsee = self.ui.turn2visible1_2
+        btnsee.clicked.connect(self.seepsw)
+        btnsee2 = self.ui.turn2visible1_3
+        btnsee2.clicked.connect(self.seepsw2)
+        btnsee3 = self.ui.turn2visible1_4
+        btnsee3.clicked.connect(self.seepsw3)
+        self.ui.lineEdit_6.setEnabled(1)
+        self.ui.lineEdit_7.setEnabled(1)
+        self.setable = 1
+        self.passwordeye = 1
+        self.passwordeye2 = 1
+        self.passwordeye3 = 1
+
+
+    def show_w2(self):  # 显示窗体2
+        self.ui.lineEdit_6.clear()
+        self.ui.lineEdit_7.clear()
+        self.ui.lineEdit_8.clear()
+        self.show()
+
+    def setloginpsw(self):
+        if self.setable == 0:
+            self.ui.pushButton_35.setIcon(QIcon("pic/open2.png"))
+            self.ui.lineEdit_6.setEnabled(1)
+            self.ui.lineEdit_7.setEnabled(1)
+            self.setable = 1
+        else:
+            self.ui.pushButton_35.setIcon(QIcon("pic/close2.png"))
+            self.ui.lineEdit_6.setEnabled(0)
+            self.ui.lineEdit_7.setEnabled(0)
+            self.setable = 0
+
+    def savechange(self):
+        if self.setable == 0:
+            if len(self.ui.lineEdit_8.text())<6:
+                self.publishform.show_w2('Please enter at least 6 characters')
+            else:
+                hl = hashlib.md5()
+                hl.update(self.ui.lineEdit_8.text().encode(encoding='utf-8'))
+                if ex.settingroot.getElementsByTagName('MinerP')[0].firstChild.data == hl.hexdigest():
+                    ex.settingroot.getElementsByTagName('MinerP')[0].firstChild.data = ' '
+                    f = open('setting.xml', 'w')
+                    ex.settingdom.writexml(f, addindent=' ', newl='\n')
+                    f.close()
+                    self.close()
+                else:
+                    self.publishform.show_w2('Please enter right password')
+        else:
+            if len(self.ui.lineEdit_8.text())<6:
+                self.publishform.show_w2('Please enter at least 6 characters')
+            elif self.ui.lineEdit_6.text() != self.ui.lineEdit_7.text():
+                self.publishform.show_w2('Please enter same passwords')
+            else:
+                hl = hashlib.md5()
+                hl.update(self.ui.lineEdit_8.text().encode(encoding='utf-8'))
+                if ex.settingroot.getElementsByTagName('MinerP')[0].firstChild.data == hl.hexdigest():
+                    h2 = hashlib.md5()
+                    h2.update(self.ui.lineEdit_6.text().encode(encoding='utf-8'))
+                    ex.settingroot.getElementsByTagName('MinerP')[0].firstChild.data = h2.hexdigest()
+                    f = open('setting.xml', 'w')
+                    ex.settingdom.writexml(f, addindent=' ', newl='\n')
+                    f.close()
+                    self.close()
+                else:
+                    self.publishform.show_w2('Please enter right password')
+        # self.close()
+
+    def seepsw(self):
+        if self.passwordeye == 1:
+            self.ui.lineEdit_6.setEchoMode(0)
+            self.ui.turn2visible1_2.setIcon(QIcon("pic/01.png"))
+            self.passwordeye = 0
+        else:
+            self.ui.lineEdit_6.setEchoMode(QLineEdit.Password)
+            self.ui.turn2visible1_2.setIcon(QIcon("pic/02.png"))
+            self.passwordeye = 1
+
+    def seepsw2(self):
+        if self.passwordeye2 == 1:
+            self.ui.lineEdit_7.setEchoMode(0)
+            self.ui.turn2visible1_3.setIcon(QIcon("pic/01.png"))
+            self.passwordeye2 = 0
+        else:
+            self.ui.lineEdit_7.setEchoMode(QLineEdit.Password)
+            self.ui.turn2visible1_3.setIcon(QIcon("pic/02.png"))
+            self.passwordeye2 = 1
+
+    def seepsw3(self):
+        if self.passwordeye3 == 1:
+            self.ui.lineEdit_8.setEchoMode(0)
+            self.ui.turn2visible1_4.setIcon(QIcon("pic/01.png"))
+            self.passwordeye3 = 0
+        else:
+            self.ui.lineEdit_8.setEchoMode(QLineEdit.Password)
+            self.ui.turn2visible1_4.setIcon(QIcon("pic/02.png"))
+            self.passwordeye3 = 1
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.dragPosition = event.globalPos() - self.frameGeometry().topLeft()
+            QApplication.postEvent(self, Core_func.QEvent(174))
+            event.accept()
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() == Qt.LeftButton:
+            self.move(event.globalPos() - self.dragPosition)
+            event.accept()
+
+    def closeform(self):
+        self.close()
+
+
+class setpswform(QWidget, Ui_SetPswForm):
+    def __init__(self):
+        super().__init__()
+        self.ui = Ui_SetPswForm()
+        self.ui.setupUi(self)
+        self.publishform = publishform()
+        self.changepswform = changepswform()
+        self.setWindowFlags(Qt.CustomizeWindowHint)
+        btnc = self.ui.closeenterpsw
+        btnc.clicked.connect(self.closeform)
+        btnsave = self.ui.pushButton_9
+        btnsave.clicked.connect(self.savechange)
+        btnquit = self.ui.pushButton_35
+        btnquit.clicked.connect(self.setloginpsw)
+        btnsee = self.ui.turn2visible1_2
+        btnsee.clicked.connect(self.seepsw)
+        btnsee2 = self.ui.turn2visible1_3
+        btnsee2.clicked.connect(self.seepsw2)
+        self.ui.lineEdit_6.setEnabled(0)
+        self.ui.lineEdit_7.setEnabled(0)
+        self.setable = 0
+        self.passwordeye = 1
+        self.passwordeye2 = 1
+
+    def show_w2(self):  # 显示窗体2
+        if ex.settingroot.getElementsByTagName('MinerP')[0].firstChild.data ==' ':
+            self.ui.lineEdit_6.clear()
+            self.ui.lineEdit_7.clear()
+            self.show()
+        else:
+            self.changepswform.show_w2()
+
+    def setloginpsw(self):
+        if self.setable == 0:
+            self.ui.pushButton_35.setIcon(QIcon("pic/open2.png"))
+            self.ui.lineEdit_6.setEnabled(1)
+            self.ui.lineEdit_7.setEnabled(1)
+            self.setable = 1
+        else:
+            self.ui.pushButton_35.setIcon(QIcon("pic/close2.png"))
+            self.ui.lineEdit_6.setEnabled(0)
+            self.ui.lineEdit_7.setEnabled(0)
+            self.setable = 0
+
+    def savechange(self):
+        if len(self.ui.lineEdit_6.text())<6:
+            self.publishform.show_w2('Please enter at least 6 characters')
+        elif self.ui.lineEdit_6.text() != self.ui.lineEdit_7.text():
+            self.publishform.show_w2('Please enter same passwords')
+        else:
+            hl = hashlib.md5()
+            hl.update(self.ui.lineEdit_6.text().encode(encoding='utf-8'))
+            ex.settingroot.getElementsByTagName('MinerP')[0].firstChild.data = hl.hexdigest()
+            f = open('setting.xml', 'w')
+            ex.settingdom.writexml(f, addindent=' ', newl='\n')
+            f.close()
+        self.close()
+
+    def seepsw(self):
+        if self.passwordeye == 1:
+            self.ui.lineEdit_6.setEchoMode(0)
+            self.ui.turn2visible1_2.setIcon(QIcon("pic/01.png"))
+            self.passwordeye = 0
+        else:
+            self.ui.lineEdit_6.setEchoMode(QLineEdit.Password)
+            self.ui.turn2visible1_2.setIcon(QIcon("pic/02.png"))
+            self.passwordeye = 1
+
+    def seepsw2(self):
+        if self.passwordeye2 == 1:
+            self.ui.lineEdit_7.setEchoMode(0)
+            self.ui.turn2visible1_3.setIcon(QIcon("pic/01.png"))
+            self.passwordeye2 = 0
+        else:
+            self.ui.lineEdit_7.setEchoMode(QLineEdit.Password)
+            self.ui.turn2visible1_3.setIcon(QIcon("pic/02.png"))
+            self.passwordeye2 = 1
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.dragPosition = event.globalPos() - self.frameGeometry().topLeft()
+            QApplication.postEvent(self, Core_func.QEvent(174))
+            event.accept()
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() == Qt.LeftButton:
+            self.move(event.globalPos() - self.dragPosition)
+            event.accept()
+
+    def closeform(self):
+        self.close()
 
 class enterpswform(QWidget, Ui_EnterPswForm):
     def __init__(self):
@@ -2178,6 +2460,9 @@ class Example(QDialog,QWidget):
         '显示窗口'
         self.ui = Ui_Form()
         self.ui.setupUi(self)
+        self.setpswform =setpswform()
+        self.changepswform= changepswform()
+        self.pswform = pswform()
         if os.path.isfile('test.xml'):
             self.addrdom = xml.dom.minidom.parse("test.xml") # 打开xml文档
             xmlStr = self.addrdom.toprettyxml(indent='', newl='', encoding='utf-8')
@@ -2246,6 +2531,36 @@ class Example(QDialog,QWidget):
             xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
             self.transdom = xml.dom.minidom.parseString(xmlStr)
 
+        if os.path.isfile('setting.xml'):
+            self.settingdom = xml.dom.minidom.parse("setting.xml")  # 打开xml文档
+            xmlStr = self.settingdom.toprettyxml(indent='', newl='', encoding='utf-8')
+            xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
+            self.settingdom = xml.dom.minidom.parseString(xmlStr)
+            xmlStr = self.settingdom.toprettyxml(indent='', newl='', encoding='utf-8')
+            xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
+            self.settingdom = xml.dom.minidom.parseString(xmlStr)
+            self.settingroot = self.settingdom.documentElement  # 得到xml文档
+
+            if self.settingroot.getElementsByTagName('MinerP')[0].firstChild.data == ' ':
+                self.setpswform.ui.pushButton_35.setIcon(QIcon("pic/close2.png"))
+                self.setpswform.setable = 0
+                self.show()
+            else:
+                self.setpswform.ui.pushButton_35.setIcon(QIcon("pic/open2.png"))
+                self.setpswform.setable = 1
+                self.show()
+                self.pswform.show_w2()
+        else:
+            Core_func.generatesettingXml()
+            self.settingdom = xml.dom.minidom.parse("setting.xml")  # 打开xml文档
+            xmlStr = self.settingdom.toprettyxml(indent='', newl='', encoding='utf-8')
+            xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
+            self.settingdom = xml.dom.minidom.parseString(xmlStr)
+            xmlStr = self.settingdom.toprettyxml(indent='', newl='', encoding='utf-8')
+            xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
+            self.settingdom = xml.dom.minidom.parseString(xmlStr)
+            self.settingroot = self.settingdom.documentElement  # 得到xml文档
+            self.show()
 
         self.m_wallet = Wallet
         self.Trans = Transaction
@@ -2422,6 +2737,8 @@ class Example(QDialog,QWidget):
         btn2create.clicked.connect(self.pressbtn0)
         btn2create1 = self.ui.pushButton_33
         btn2create1.clicked.connect(self.pressbtn0)
+        btn2set1 = self.ui.pushButton_31
+        btn2set1.clicked.connect(self.setpswform.show_w2)
 
 
         # Message page
@@ -2793,7 +3110,7 @@ if __name__ == '__main__':
     messform =messform()
     #s = Warning_Form.SecondWindow()
     #ex.ui.cw.clicked.connect(s.handle_click)
-    ex.show()
+    # ex.show()
     ex.ui.pushButton_10.clicked.connect(recieveform.show_w2)
     ex.ui.pushButton_36.clicked.connect(pubaddrForm.show_w2)
     ex.ui.pushButton_38.clicked.connect(newcontactform.show_w2)

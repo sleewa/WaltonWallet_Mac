@@ -494,6 +494,34 @@ def edittransxml(doc,rootElement,address,blocktype,row):
 
             break
 
+def generatesettingXml():
+    doc = minidom.Document()
+
+    rootElement = doc.createElement('MiningEntity')
+    rootElement.setAttribute('xmlns:xsd', '"http://www.w3.org/2001/XMLSchema"')
+    doc.appendChild(rootElement)
+
+    password = doc.createElement('MinerP')
+    rootElement.appendChild(password)
+    addr = doc.createTextNode(' ')
+    password.appendChild(addr)
+
+    minediff = doc.createElement('Difficulty')
+    rootElement.appendChild(minediff)
+    diff = doc.createTextNode('478705014976')
+    minediff.appendChild(diff)
+
+    minereward = doc.createElement('Mining_reward')
+    rootElement.appendChild(minereward)
+    reward = doc.createTextNode('3')
+    minereward.appendChild(reward)
+
+    f = open('setting.xml', 'w')
+    doc.writexml(f, addindent='  ', newl='\n')
+    f.close()
+
+    return (doc, rootElement)
+
 
 # print(getTransactionInfo('0x4a0f05cd4d901a50af76f6d8cbf56c2fd8a7fc09dcec49706e240ae068b919f5'))
 
