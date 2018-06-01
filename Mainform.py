@@ -54,38 +54,45 @@ from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 
 class pswform(QWidget, Ui_PswForm):
-    def __init__(self):
+    def __init__(self,PRAE):
         super().__init__()
         self.ui = Ui_PswForm()
-        self.ui.setupUi(self)
+        self.Dialog  = QDialog (PRAE)
+        self.ui.setupUi(self.Dialog )
         self.publishform = publishform()
 
-        self.setWindowFlags(Qt.CustomizeWindowHint)
+        self.Dialog.setWindowFlags(Qt.CustomizeWindowHint)
         btnc = self.ui.closeenterpsw
-        btnc.clicked.connect(self.closeform)
+        btnc.clicked.connect(lambda :self.closeform(PRAE))
         btnsave = self.ui.pushButton_9
-        btnsave.clicked.connect(self.confirmpsw)
+        btnsave.clicked.connect(lambda :self.confirmpsw(PRAE))
         btnquit = self.ui.pushButton_10
-        btnquit.clicked.connect(self.closeform)
+        btnquit.clicked.connect(lambda :self.closeform(PRAE))
         btnsee = self.ui.turn2visible1_2
         btnsee.clicked.connect(self.seepsw)
         self.passwordeye = 1
 
-    def show_w2(self):  # 显示窗体2
+    def show_w2(self,PRAE):  # 显示窗体2
         self.ui.lineEdit_6.clear()
-        self.show()
+        screen = PRAE.geometry()
+        size = self.Dialog.geometry()
+        self.Dialog.move((screen.width() - size.width()) / 2,
+                  (screen.height() - size.height()) / 2)
+        self.Dialog.show()
+        self.Dialog.exec_()
 
-    def confirmpsw(self):
+    def confirmpsw(self,PRAE):
         if len(self.ui.lineEdit_6.text())<6:
-            ex.close()
+            PRAE.close()
         else:
             hl = hashlib.md5()
             hl.update(self.ui.lineEdit_6.text().encode(encoding='utf-8'))
-            if ex.settingroot.getElementsByTagName('MinerP')[0].firstChild.data == hl.hexdigest():
-                self.close()
+            if PRAE.settingroot.getElementsByTagName('MinerP')[0].firstChild.data == hl.hexdigest():
+                self.Dialog.close()
+                PRAE.setEnabled(1)
             else:
-                ex.close()
-                self.close()
+                PRAE.close()
+                self.Dialog.close()
 
     def seepsw(self):
         if self.passwordeye == 1:
@@ -99,18 +106,18 @@ class pswform(QWidget, Ui_PswForm):
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
-            self.dragPosition = event.globalPos() - self.frameGeometry().topLeft()
-            QApplication.postEvent(self, Core_func.QEvent(174))
+            self.Dialog.dragPosition = event.globalPos() - self.Dialog.frameGeometry().topLeft()
+            QApplication.postEvent(self.Dialog, Core_func.QEvent(174))
             event.accept()
 
     def mouseMoveEvent(self, event):
         if event.buttons() == Qt.LeftButton:
-            self.move(event.globalPos() - self.dragPosition)
+            self.move(event.globalPos() - self.Dialog.dragPosition)
             event.accept()
 
-    def closeform(self):
-        self.close()
-        ex.close()
+    def closeform(self,PRAE):
+        self.Dialog.close()
+        PRAE.close()
 
 class changepswform(QWidget, Ui_ChangePswForm):
     def __init__(self):
@@ -2462,7 +2469,6 @@ class Example(QDialog,QWidget):
         self.ui.setupUi(self)
         self.setpswform =setpswform()
         self.changepswform= changepswform()
-        self.pswform = pswform()
         if os.path.isfile('test.xml'):
             self.addrdom = xml.dom.minidom.parse("test.xml") # 打开xml文档
             xmlStr = self.addrdom.toprettyxml(indent='', newl='', encoding='utf-8')
@@ -2531,6 +2537,9 @@ class Example(QDialog,QWidget):
             xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
             self.transdom = xml.dom.minidom.parseString(xmlStr)
 
+        stackedW = self.ui.stackedWidget
+        stackedW.setCurrentIndex(0)
+
         if os.path.isfile('setting.xml'):
             self.settingdom = xml.dom.minidom.parse("setting.xml")  # 打开xml文档
             xmlStr = self.settingdom.toprettyxml(indent='', newl='', encoding='utf-8')
@@ -2544,12 +2553,16 @@ class Example(QDialog,QWidget):
             if self.settingroot.getElementsByTagName('MinerP')[0].firstChild.data == ' ':
                 self.setpswform.ui.pushButton_35.setIcon(QIcon("pic/close2.png"))
                 self.setpswform.setable = 0
+                self.pswform = pswform(self)
+
                 self.show()
             else:
                 self.setpswform.ui.pushButton_35.setIcon(QIcon("pic/open2.png"))
                 self.setpswform.setable = 1
+                self.pswform = pswform(self)
+
                 self.show()
-                self.pswform.show_w2()
+                self.pswform.show_w2(self)
         else:
             Core_func.generatesettingXml()
             self.settingdom = xml.dom.minidom.parse("setting.xml")  # 打开xml文档
@@ -2560,6 +2573,8 @@ class Example(QDialog,QWidget):
             xmlStr = xmlStr.decode().replace('\t', '').replace('\n', '')
             self.settingdom = xml.dom.minidom.parseString(xmlStr)
             self.settingroot = self.settingdom.documentElement  # 得到xml文档
+            self.pswform = pswform(self)
+
             self.show()
 
         self.m_wallet = Wallet
@@ -2606,7 +2621,6 @@ class Example(QDialog,QWidget):
         self.peers = 0
 
         #Page of Create Wallet
-        stackedW = self.ui.stackedWidget
         btncnw = self.ui.creat_new_wallet
         btncnw.clicked.connect(self.pressCreatNewWallet)
         btnimportKeys = self.ui.import_Keystore
@@ -2681,7 +2695,6 @@ class Example(QDialog,QWidget):
 
 
         #all pages shift
-        stackedW.setCurrentIndex(0)
         btn1 = self.ui.mywallet
         btn1.clicked.connect(self.pressbtn1)
         btn2 = self.ui.statistic
