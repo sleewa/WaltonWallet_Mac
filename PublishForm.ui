@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
+    <width>390</width>
     <height>182</height>
    </rect>
   </property>
@@ -14,12 +14,12 @@
    <string>Form</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(255, 255, 255);</string>
+   <string notr="true"/>
   </property>
   <widget class="QPushButton" name="pushButton_9">
    <property name="geometry">
     <rect>
-     <x>80</x>
+     <x>60</x>
      <y>120</y>
      <width>231</width>
      <height>41</height>
@@ -49,7 +49,7 @@ border-radius:18px;</string>
   <widget class="QPushButton" name="closeenterpsw">
    <property name="geometry">
     <rect>
-     <x>360</x>
+     <x>350</x>
      <y>0</y>
      <width>41</width>
      <height>31</height>
@@ -69,7 +69,7 @@ border-radius:18px;</string>
   <widget class="QTextEdit" name="textEdit">
    <property name="geometry">
     <rect>
-     <x>50</x>
+     <x>30</x>
      <y>40</y>
      <width>301</width>
      <height>71</height>
@@ -100,6 +100,35 @@ border-radius:18px;</string>
     <bool>true</bool>
    </property>
   </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>391</width>
+     <height>181</height>
+    </rect>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="pixmap">
+    <pixmap>pic/图表.png</pixmap>
+   </property>
+   <property name="scaledContents">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <zorder>label</zorder>
+  <zorder>pushButton_9</zorder>
+  <zorder>closeenterpsw</zorder>
+  <zorder>textEdit</zorder>
  </widget>
  <resources/>
  <connections/>

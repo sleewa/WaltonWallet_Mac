@@ -2,13 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2cb5a557-5c71-4f3d-abef-ea3994e1e70c" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mainform.py" beforeDir="false" afterPath="$PROJECT_DIR$/Mainform.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pic/recieve.png" beforeDir="false" afterPath="$PROJECT_DIR$/pic/recieve.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/setting.xml" beforeDir="false" afterPath="$PROJECT_DIR$/setting.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test.xml" beforeDir="false" afterPath="$PROJECT_DIR$/test.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PublishForm.py" beforeDir="false" afterPath="$PROJECT_DIR$/PublishForm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/PublishForm.ui" beforeDir="false" afterPath="$PROJECT_DIR$/PublishForm.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enterPswForm.py" beforeDir="false" afterPath="$PROJECT_DIR$/enterPswForm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enterPswForm.ui" beforeDir="false" afterPath="$PROJECT_DIR$/enterPswForm.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/trans.xml" beforeDir="false" afterPath="$PROJECT_DIR$/trans.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wa.xml" beforeDir="false" afterPath="$PROJECT_DIR$/wa.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -233,8 +232,8 @@
       <file leaf-file-name="Mainform.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Mainform.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="316">
-              <caret line="2151" column="32" selection-start-line="2151" selection-start-column="32" selection-end-line="2151" selection-end-column="32" />
+            <state relative-caret-position="355">
+              <caret line="1982" column="54" lean-forward="true" selection-start-line="1982" selection-start-column="54" selection-end-line="1982" selection-end-column="54" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
                 <element signature="e#1755#4229#0" />
@@ -242,15 +241,13 @@
                 <element signature="e#5704#7509#0" />
                 <element signature="e#9169#12608#0" />
                 <element signature="e#10058#10289#0" />
-                <element signature="e#13572#17894#0" />
+                <element signature="e#13647#18124#0" />
                 <element signature="e#16782#19929#0" />
                 <element signature="e#19979#21533#0" />
                 <element signature="e#21589#23152#0" />
                 <element signature="e#22139#22320#0" />
                 <element signature="e#23202#24112#0" />
                 <element signature="e#24162#27792#0" />
-                <element signature="e#24827#26507#0" />
-                <element signature="e#27836#29943#0" />
                 <element signature="e#29999#32954#0" />
                 <element signature="e#30548#30629#0" />
                 <element signature="e#34032#35878#0" />
@@ -259,7 +256,6 @@
                 <element signature="e#35571#37136#0" />
                 <element signature="e#37180#40878#0" />
                 <element signature="e#38703#39984#0" />
-                <element signature="e#39816#40331#0" />
                 <element signature="e#41041#41410#0" />
                 <element signature="e#41462#41881#0" />
                 <element signature="e#41922#43854#0" />
@@ -316,7 +312,6 @@
                 <element signature="e#72678#72694#0" />
                 <element signature="e#72731#72747#0" />
                 <element signature="e#72780#72817#0" />
-                <element signature="e#72850#85897#0" />
                 <element signature="e#91562#100571#0" />
                 <element signature="e#100606#104278#0" />
                 <element signature="e#104313#105075#0" />
@@ -358,8 +353,8 @@
       <file leaf-file-name="Core_func.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Core_func.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="12636">
-              <caret line="496" column="22" selection-start-line="496" selection-start-column="4" selection-end-line="496" selection-end-column="22" />
+            <state relative-caret-position="400">
+              <caret line="305" column="4" selection-start-line="305" selection-start-column="4" selection-end-line="305" selection-end-column="4" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
                 <element signature="e#418#813#0" />
@@ -380,7 +375,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>NewWalletstacked</find>
       <find>Newwallets</find>
       <find>35</find>
       <find>39</find>
@@ -410,6 +404,7 @@
       <find>localtime</find>
       <find>range(</find>
       <find>refresh</find>
+      <find>accountform</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -426,8 +421,8 @@
         <option value="$PROJECT_DIR$/Create_or_import.py" />
         <option value="$PROJECT_DIR$/Mainform_QT.py" />
         <option value="$USER_HOME$/Desktop/new 1.py" />
-        <option value="$PROJECT_DIR$/Core_func.py" />
         <option value="$USER_HOME$/Desktop/subwidget/new 1.py" />
+        <option value="$PROJECT_DIR$/Core_func.py" />
         <option value="$PROJECT_DIR$/Mainform.py" />
       </list>
     </option>
@@ -605,7 +600,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18018967" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -911,18 +905,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Core_func.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="12636">
-          <caret line="496" column="22" selection-start-line="496" selection-start-column="4" selection-end-line="496" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#14#0" expanded="true" />
-            <element signature="e#418#813#0" />
-            <element signature="e#1882#2323#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/AccountForm.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1431">
@@ -968,10 +950,22 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Core_func.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="305" column="4" selection-start-line="305" selection-start-column="4" selection-end-line="305" selection-end-column="4" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#418#813#0" />
+            <element signature="e#1882#2323#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Mainform.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="316">
-          <caret line="2151" column="32" selection-start-line="2151" selection-start-column="32" selection-end-line="2151" selection-end-column="32" />
+        <state relative-caret-position="355">
+          <caret line="1982" column="54" lean-forward="true" selection-start-line="1982" selection-start-column="54" selection-end-line="1982" selection-end-column="54" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
             <element signature="e#1755#4229#0" />
@@ -979,15 +973,13 @@
             <element signature="e#5704#7509#0" />
             <element signature="e#9169#12608#0" />
             <element signature="e#10058#10289#0" />
-            <element signature="e#13572#17894#0" />
+            <element signature="e#13647#18124#0" />
             <element signature="e#16782#19929#0" />
             <element signature="e#19979#21533#0" />
             <element signature="e#21589#23152#0" />
             <element signature="e#22139#22320#0" />
             <element signature="e#23202#24112#0" />
             <element signature="e#24162#27792#0" />
-            <element signature="e#24827#26507#0" />
-            <element signature="e#27836#29943#0" />
             <element signature="e#29999#32954#0" />
             <element signature="e#30548#30629#0" />
             <element signature="e#34032#35878#0" />
@@ -996,7 +988,6 @@
             <element signature="e#35571#37136#0" />
             <element signature="e#37180#40878#0" />
             <element signature="e#38703#39984#0" />
-            <element signature="e#39816#40331#0" />
             <element signature="e#41041#41410#0" />
             <element signature="e#41462#41881#0" />
             <element signature="e#41922#43854#0" />
@@ -1053,7 +1044,6 @@
             <element signature="e#72678#72694#0" />
             <element signature="e#72731#72747#0" />
             <element signature="e#72780#72817#0" />
-            <element signature="e#72850#85897#0" />
             <element signature="e#91562#100571#0" />
             <element signature="e#100606#104278#0" />
             <element signature="e#104313#105075#0" />

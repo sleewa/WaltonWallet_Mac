@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>436</width>
-    <height>223</height>
+    <height>225</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
   <widget class="QPushButton" name="pushButton_9">
    <property name="geometry">
     <rect>
-     <x>80</x>
+     <x>74</x>
      <y>160</y>
      <width>261</width>
      <height>41</height>
@@ -50,7 +50,7 @@ border-radius:18px;</string>
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>90</y>
+     <y>100</y>
      <width>331</width>
      <height>31</height>
     </rect>
@@ -94,7 +94,7 @@ QLineEdit[echoMode=&quot;2&quot;] {
    <property name="geometry">
     <rect>
      <x>34</x>
-     <y>120</y>
+     <y>130</y>
      <width>371</width>
      <height>10</height>
     </rect>
@@ -107,7 +107,7 @@ QLineEdit[echoMode=&quot;2&quot;] {
    <property name="geometry">
     <rect>
      <x>360</x>
-     <y>90</y>
+     <y>100</y>
      <width>41</width>
      <height>41</height>
     </rect>
@@ -143,7 +143,7 @@ QLineEdit[echoMode=&quot;2&quot;] {
   <widget class="QLabel" name="label_15">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>14</x>
      <y>10</y>
      <width>231</width>
      <height>41</height>
@@ -167,7 +167,7 @@ QLineEdit[echoMode=&quot;2&quot;] {
   <widget class="QPushButton" name="closeenterpsw">
    <property name="geometry">
     <rect>
-     <x>390</x>
+     <x>400</x>
      <y>0</y>
      <width>41</width>
      <height>31</height>

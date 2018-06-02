@@ -364,10 +364,11 @@ class enterpswform(QWidget, Ui_EnterPswForm):
     def __init__(self,PRAE):
         super().__init__()
         self.ui = Ui_EnterPswForm()
-        self.Dialog = QDialog(PRAE)
-        self.ui.setupUi(self.Dialog)
-        # self.ui.setupUi(self)
-        self.Dialog.setWindowFlags(Qt.CustomizeWindowHint)
+        # self.Dialog = QDialog(PRAE)
+        # self.ui.setupUi(self.Dialog)
+        self.ui.setupUi(self)
+        # self.Dialog.setWindowFlags(Qt.CustomizeWindowHint)
+        self.setWindowFlags(Qt.CustomizeWindowHint)
         self.publishform = publishform(self)
         btnc = self.ui.closeenterpsw
         btnc.clicked.connect(self.closeform)
@@ -377,24 +378,24 @@ class enterpswform(QWidget, Ui_EnterPswForm):
         self.gotprikey = 0
         self.needtosend = 0
 
-        self.Dialog.close()
+        # self.Dialog.close()
 
     def show_w2(self,str,PRAE,send=0):  # 显示窗体2
         self.addr = str
         self.ui.lineEdit_6.clear()
         self.gotprikey = 0
-        # self.show()
+        self.show()
         if send  == 1:
             self.needtosend = 1
 
-        screen = PRAE.geometry()
-        size = self.Dialog.geometry()
-        self.Dialog.move((screen.width() - size.width()) / 2,
-                         (screen.height() - size.height()) / 2)
-        print('enter 2')
-        self.Dialog.show()
-        print('enter 3')
-        self.Dialog.exec_()
+        # screen = PRAE.geometry()
+        # size = self.Dialog.geometry()
+        # self.Dialog.move((screen.width() - size.width()) / 2,
+        #                  (screen.height() - size.height()) / 2)
+        # print('enter 2')
+        # self.Dialog.show()
+        # print('enter 3')
+        # self.Dialog.exec_()
 
     def getprikey(self,addr,password):
         print(addr,password)
@@ -405,7 +406,8 @@ class enterpswform(QWidget, Ui_EnterPswForm):
             self.prikey = w3.toHex(Account.decrypt(content, password))
         except Exception as err:
             self.publishform.show_w2('Please enter right password',self)
-            self.Dialog.close()
+            # self.Dialog.close()
+            self.close()
             return 1
         print(self.prikey)
 
@@ -437,16 +439,16 @@ class enterpswform(QWidget, Ui_EnterPswForm):
                      ex.Trans.toaddr, ex.Trans.Gasprice, ' ', ' ', ret[1],
                      ex.Trans.Gas, ex.Trans.value, datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S'),
                      'Recieve', 'Submitted')
-
+                # self.closeform()
                 self.publishform.show_w2('transaction successfully',self)
-                self.closeform()
+
                 ex.Trans.value = ''
                 ex.Trans.Type = ''
                 ex.Trans.Gas = ''
                 ex.Trans.Gasprice = ''
                 ex.Trans.toaddr =''
                 ex.refresh()
-
+                self.closeform()
             else:
                 self.publishform.show_w2('transaction failed',self)
         else:
@@ -456,7 +458,8 @@ class enterpswform(QWidget, Ui_EnterPswForm):
             ex.ui.lineEdit_9.setEchoMode(0)
             ex.privatekeyeye = 0
         self.needtosend = 0
-        self.Dialog.close()
+        # self.Dialog.close()
+        self.close()
         return 0
 
     def mousePressEvent(self, event):
@@ -471,7 +474,8 @@ class enterpswform(QWidget, Ui_EnterPswForm):
             event.accept()
 
     def closeform(self):
-        self.Dialog.close()
+        # self.Dialog.close()
+        self.close()
 
 class Figure_Canvas(FigureCanvas):   # 通过继承FigureCanvas类，使得该类既是一个PyQt5的Qwidget，又是一个matplotlib的FigureCanvas，这是连接pyqt5与matplot                                          lib的关键
 
@@ -714,10 +718,10 @@ class accountform(QWidget, Ui_AccountForm):
     def __init__(self,Paren):
         super().__init__()
         self.ui = Ui_AccountForm()
-        # self.ui.setupUi(self)
-        self.Dialog = QDialog(Paren)
-        self.ui.setupUi(self.Dialog)
-        self.Dialog.setWindowFlags(Qt.CustomizeWindowHint)
+        self.ui.setupUi(self)
+        # self.Dialog = QDialog(Paren)
+        # self.ui.setupUi(self.Dialog)
+        self.setWindowFlags(Qt.CustomizeWindowHint)
 
         self.ui.Account.horizontalHeader().setVisible(0)
         self.ui.Account.verticalHeader().setVisible(0)
@@ -746,7 +750,7 @@ class accountform(QWidget, Ui_AccountForm):
         btnconfirm = self.ui.pushButton_9
         btnconfirm.clicked.connect(lambda :self.closeform(Paren))
         self.ui.Account.itemClicked.connect(self.choseaccount)
-        self.Dialog.close()
+        # self.Dialog.close()
 
     def show_w2(self,PRAE):  # 显示窗体2
         if os.path.isfile('test.xml'):
@@ -769,12 +773,13 @@ class accountform(QWidget, Ui_AccountForm):
 
         else:
             print('')
-        screen = PRAE.geometry()
-        size = self.Dialog.geometry()
-        self.Dialog.move((screen.width() - size.width()) / 2,
-                         (screen.height() - size.height()) / 2)
-        self.Dialog.show()
-        self.Dialog.exec_()
+        # screen = PRAE.geometry()
+        # size = self.Dialog.geometry()
+        # self.Dialog.move((screen.width() - size.width()) / 2,
+        #                  (screen.height() - size.height()) / 2)
+        # self.Dialog.show()
+        # self.Dialog.exec_()
+        self.show()
 
     def choseaccount(self,QTableWidgetItem):
         # QTableWidgetItem.setForeground(QBrush(QColor(170, 0, 255)))
@@ -783,7 +788,6 @@ class accountform(QWidget, Ui_AccountForm):
         # self.ui.Account.item(row, 1).setForeground(QBrush(QColor(170, 0, 255)))
         ind = Core_func.QTableWidget.indexFromItem(self.ui.Account, self.ui.Account.item(row,1))
         ex.Trans.toaddr = ind.data()
-        self.Dialog.close()
 
 
     def mousePressEvent(self, event):
@@ -799,7 +803,7 @@ class accountform(QWidget, Ui_AccountForm):
 
     def closeform(self,Paren):
         Paren.ui.lineEdit_7.setText(ex.Trans.toaddr)
-        self.Dialog.close()
+        self.close()
 
 class messform(QWidget, Ui_MessForm):
     def __init__(self,PRAE):
@@ -828,21 +832,25 @@ class messform(QWidget, Ui_MessForm):
         indtime = Core_func.QTableWidget.indexFromItem(ex.ui.LogMessage, ex.ui.LogMessage.item(row, 1))
         print(ind.data())
         print(ind.data().split('tx_hash')[1][1:])
-        ret = Core_func.getTransactionInfo(ind.data().split('tx_hash')[1][1:])
-        self.ui.lineEdit_12.setText(str(ret[1][0]['blockNumber']))
-        self.ui.lineEdit_11.setText(indtime.data())
-        self.ui.lineEdit_9.setText(str(ret[1][0]['gas']))
-        self.ui.lineEdit_10.setText(str(ret[1][0]['gasPrice']))
-        self.ui.lineEdit_8.setText(str(ret[1][0]['addressTo']))
-        self.ui.lineEdit_7.setText(str(ret[1][0]['addressFrom']))
-        self.ui.lineEdit_6.setText(str(ret[1][0]['value']))
-        self.ui.textEdit.setText(str(ret[1][0]['tx_hash']))
-        screen = self.parentw.geometry()
-        size = self.Dialog.geometry()
-        self.Dialog.move((screen.width() - size.width()) / 2,
-                         (screen.height() - size.height()) / 2)
-        self.Dialog.show()
-        self.Dialog.exec_()
+        try:
+            ret = Core_func.getTransactionInfo(ind.data().split('tx_hash')[1][1:])
+            self.ui.lineEdit_12.setText(str(ret[1][0]['blockNumber']))
+            self.ui.lineEdit_11.setText(indtime.data())
+            self.ui.lineEdit_9.setText(str(ret[1][0]['gas']))
+            self.ui.lineEdit_10.setText(str(ret[1][0]['gasPrice']))
+            self.ui.lineEdit_8.setText(str(ret[1][0]['addressTo']))
+            self.ui.lineEdit_7.setText(str(ret[1][0]['addressFrom']))
+            self.ui.lineEdit_6.setText(str(ret[1][0]['value']))
+            self.ui.textEdit.setText(str(ret[1][0]['tx_hash']))
+            screen = self.parentw.geometry()
+            size = self.Dialog.geometry()
+            self.Dialog.move((screen.width() - size.width()) / 2,
+                             (screen.height() - size.height()) / 2)
+            self.Dialog.show()
+            self.Dialog.exec_()
+        except Exception as err:
+            self.publishform.show_w2('get information failed,please try again', self)
+            return 1
 
 
     def mousePressEvent(self, event):
@@ -1162,7 +1170,7 @@ class sendform(QWidget, Ui_SendForm):
             self.Dialog.move((screen.width() - size.width()) / 2,
                              (screen.height() - size.height()) / 2)
             self.Dialog.show()
-            # self.Dialog.exec_()
+            self.Dialog.exec_()
 
     def showenterphrase(self):
         #waiting to add passsword checking
@@ -1177,6 +1185,7 @@ class sendform(QWidget, Ui_SendForm):
         self.enterpswform = enterpswform(self)
         print('enter')
         self.enterpswform.show_w2(ex.ui.lineEdit_8.text(),self,1)
+        # self.Dialog.close()
 
 
 
@@ -1961,16 +1970,20 @@ class Example(QDialog,QWidget):
                                             AccountTransactionsEntity.getElementsByTagName('transacIndex')[0].firstChild.data = retlist[1][i]['transacIndex']
                                             print(retlist[1][i]['transacIndex'])
                                 elif AccountTransactionsEntity.getElementsByTagName('blockType')[0].firstChild.data != 'Success':
-                                   ret = Core_func.getLatestBlock()[1]
-                                   num = str(AccountTransactionsEntity.getElementsByTagName('blockNumber')[0].firstChild.data)
-                                   if int(ret) > int(num):
-                                       deta = int(ret)-int(num)
-                                       if deta >= 12:
-                                           AccountTransactionsEntity.getElementsByTagName('blockType')[0].firstChild.data='Success'
-                                       else:
-                                           AccountTransactionsEntity.getElementsByTagName('blockType')[0].firstChild.data=str(deta)+'/12'
-                                   elif int(ret) == int(AccountTransactionsEntity.getElementsByTagName('blockNumber')[0].firstChild.data):
-                                       AccountTransactionsEntity.getElementsByTagName('blockType')[0].firstChild.data='0/12'
+                                   try:
+                                       ret = Core_func.getLatestBlock()[1]
+                                       num = str(AccountTransactionsEntity.getElementsByTagName('blockNumber')[0].firstChild.data)
+                                       if int(ret) > int(num):
+                                           deta = int(ret)-int(num)
+                                           if deta >= 12:
+                                               AccountTransactionsEntity.getElementsByTagName('blockType')[0].firstChild.data='Success'
+                                           else:
+                                               AccountTransactionsEntity.getElementsByTagName('blockType')[0].firstChild.data=str(deta)+'/12'
+                                       elif int(ret) == int(AccountTransactionsEntity.getElementsByTagName('blockNumber')[0].firstChild.data):
+                                           AccountTransactionsEntity.getElementsByTagName('blockType')[0].firstChild.data='0/12'
+                                   except Exception as err:
+                                       self.publishform.show_w2('refresh failed,please try again', self)
+                                       return 1
                                 newItemblockType = QTableWidgetItem(AccountTransactionsEntity.getElementsByTagName('blockType')[0].firstChild.data)
                                 f = open('trans.xml', 'w')
                                 self.transdom.writexml(f, addindent=' ', newl='\n')
