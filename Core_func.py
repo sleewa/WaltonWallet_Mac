@@ -1,5 +1,6 @@
 import getpass
 import json
+import os
 import sys
 import time
 import requests
@@ -9,6 +10,8 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from web3.auto import w3
 import datetime
+import commands
+import subprocess
 
 """
 failure reason for Generate_Two_Key function
@@ -153,11 +156,20 @@ def Generate_Three_Key(password1, password2):
             print('less than 6')
             return (0, 10000)
         else:
-            acct = Account.create(password1)
-            public_key = acct.address
-            private_key = acct.privateKey
-            encrypted = Account.encrypt(private_key, password1)
-            return (1, [public_key, w3.toHex(private_key), json.dumps(encrypted)])
+            # acct = Account.create(password1)
+            # public_key = acct.address
+            # private_key = acct.privateKey
+            # encrypted = Account.encrypt(private_key, password1)
+            cmd = 'ma -genkey ' + '-pass ' + password2
+            a = subprocess.getstatusoutput(cmd)
+            if a[0] == 0:
+                ret = (a[1].split('{')[1].split('}')[0], a[1].split('{')[2].split('}')[0])
+                # return ret      #ret[0]助记词   ret[1]私钥
+                acct = Account.privateKeyToAccount(ret[1])
+                public_key = acct.address
+                encrypted = Account.encrypt(ret[1], password2)
+                return (1, [public_key, ret[1], json.dumps(encrypted),ret[0]])
+            # return (1, [public_key, w3.toHex(private_key), json.dumps(encrypted)])
     else:
         print('wrong')
         return (0, 10001)
@@ -190,9 +202,17 @@ def Import_Keystore(passphrase, filecontent):
 
 def Import_mnemonic(passphrase1, passphrase2, mnemonicwords):
     if passphrase1 == passphrase2:
-        print(passphrase1)
-        print(mnemonicwords)
-        return (1, 0)
+        cmd = 'ma -m \"' + mnemonicwords + '\" -pass \"' + passphrase2 +'\"'
+        a = subprocess.getstatusoutput(cmd)
+        if a[0] == 0:
+            ret = (a[1].split('{')[1].split('}')[0],a[1].split('{')[2].split('}')[0])
+            # return ret      #ret[0]助记词   ret[1]私钥
+            acct = Account.privateKeyToAccount(ret[1])
+            public_key = acct.address
+            encrypted = Account.encrypt(ret[1], passphrase2)
+            return (1, [public_key, ret[1],json.dumps(encrypted)])
+        else:
+            return (0, 0)
     else:
         return (0, 0)
 
@@ -526,4 +546,6 @@ def generatesettingXml():
 # print(getTransactionInfo('0x4a0f05cd4d901a50af76f6d8cbf56c2fd8a7fc09dcec49706e240ae068b919f5'))
 
 # print(getTransactionRecord('0xAB828046856F5886a3835C914862E0F5f834Ee7d'))
+# ret = Import_mnemonic('111111', '111111', 'antique profit purse nut forum cactus amount genius rally army behind elbow')
+# print(ret)
 #Transaction_out('3373c7af355f86b8dc9f02d386bea047da063ed541ed927d149214134012e451', '0xFBf36B7c56258dC3e29769C1a686250B8B002dE3', 2, 200000, 0.000000036)

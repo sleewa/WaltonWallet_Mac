@@ -1481,16 +1481,18 @@ class Example(QDialog,QWidget):
             if ret[0]== 1:
                 self.ui.NewWalletstacked.setCurrentIndex(1)
                 self.ui.stackedWidget.setCurrentIndex(1)
-                self.ui.lineEdit_21.setText('******')
+                self.ui.lineEdit_21.setText(self.ui.lineEdit_4.text().strip())
                 self.ui.lineEdit_22.setText(ret[1][0])
                 self.ui.lineEdit_23.setText(ret[1][1])
                 self.ui.lineEdit_25.setText(ret[1][0][0:10])
+                self.ui.lineEdit_24.setText(ret[1][3])
                 encrypted = ret[1][2]
                 #self.m_wallet = Wallet
                 self.m_wallet.password = self.ui.lineEdit_4.text()
                 self.m_wallet.address = ret[1][0]
                 self.m_wallet.privateKey = ret[1][1]
                 self.m_wallet.accountname = self.ui.lineEdit_25.text()
+                self.m_wallet.mnem = ret[1][3]
                 self.addWallet()
                 self.ui.lineEdit_8.setText(ret[1][0])
                 self.ui.lineEdit_9.setText(ret[1][1])
@@ -1543,6 +1545,28 @@ class Example(QDialog,QWidget):
 
     def importmnemonic(self):
         ret = Core_func.Import_mnemonic(self.ui.lineEdit_15.text(), self.ui.lineEdit_16.text(), self.ui.lineEdit_17.text())
+        if ret[0] == 1:
+
+            encrypted = ret[1][2]
+            # self.m_wallet = Wallet
+            self.m_wallet.password = self.ui.lineEdit_15.text().strip()
+            self.m_wallet.address = ret[1][0]
+            self.m_wallet.privateKey = ret[1][1]
+            self.m_wallet.accountname = ret[1][0:10]
+            self.addWallet()
+            self.ui.lineEdit_8.setText(ret[1][0])
+            self.ui.lineEdit_9.setText(ret[1][1])
+            DataKeystore = "Data\\Keystore\\" + ret[1][0][2:18] + ".keystore"
+            fh = open(DataKeystore, "w")
+            fh.write(str(encrypted))
+            fh.close()
+            self.m_wallet.filename = DataKeystore
+            self.imgpub = qrcode.make(self.m_wallet.address)
+            self.imgpub.save("pic\\public.png")
+            self.ui.stackedWidget.setCurrentIndex(1)
+            self.ui.NewWalletstacked.setCurrentIndex(0)
+        else:
+            self.publishform.show_w2('error', self)
 
     def importfile(self):
         dlg = win32ui.CreateFileDialog(1)  # 1表示打开文件对话框
