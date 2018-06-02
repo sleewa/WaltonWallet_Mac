@@ -1,21 +1,27 @@
 <?xml version="1.0" ?>
 <ArrayOfAddressEntity xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-                                                                                
+                                                                                  
  <AddressEntity>
-    
+        
   <UAddress/>
-    
+        
   <GuidNo/>
-    
+        
   <AccountName>gu</AccountName>
-    
+        
   <Address>0xFBf36B7c56258dC3e29769C1a686250B8B002dE3</Address>
-   
+      
  </AddressEntity>
+  
  <AddressEntity>
+    
   <UAddress/>
+    
   <GuidNo/>
+    
   <AccountName>1</AccountName>
+    
   <Address>0xAB828046856F5886a3835C914862E0F5f834Ee7d</Address>
+   
  </AddressEntity>
 </ArrayOfAddressEntity>

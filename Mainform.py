@@ -57,9 +57,9 @@ class pswform(QWidget, Ui_PswForm):
     def __init__(self,PRAE):
         super().__init__()
         self.ui = Ui_PswForm()
-        self.Dialog  = QDialog (PRAE)
+        self.Dialog = QDialog(PRAE)
         self.ui.setupUi(self.Dialog )
-        self.publishform = publishform()
+        self.publishform = publishform(self)
 
         self.Dialog.setWindowFlags(Qt.CustomizeWindowHint)#.Dialog
         btnc = self.ui.closeenterpsw
@@ -71,6 +71,7 @@ class pswform(QWidget, Ui_PswForm):
         btnsee = self.ui.turn2visible1_2
         btnsee.clicked.connect(self.seepsw)
         self.passwordeye = 1
+        self.Dialog.close()
 
     def show_w2(self,PRAE):  # 显示窗体2
         self.ui.lineEdit_6.clear()
@@ -124,13 +125,15 @@ class pswform(QWidget, Ui_PswForm):
         sys.exit()
 
 class changepswform(QWidget, Ui_ChangePswForm):
-    def __init__(self):
+    def __init__(self,PRAE):
         super().__init__()
         self.ui = Ui_ChangePswForm()
-        self.ui.setupUi(self)
-        self.publishform = publishform()
+        self.Dialog = QDialog(PRAE)
+        self.ui.setupUi(self.Dialog)
+        # self.ui.setupUi(self)
+        self.publishform = publishform(self)
 
-        self.setWindowFlags(Qt.CustomizeWindowHint)
+        self.Dialog.setWindowFlags(Qt.CustomizeWindowHint)
         btnc = self.ui.closeenterpsw
         btnc.clicked.connect(self.closeform)
         btnsave = self.ui.pushButton_9
@@ -150,12 +153,18 @@ class changepswform(QWidget, Ui_ChangePswForm):
         self.passwordeye2 = 1
         self.passwordeye3 = 1
 
+        self.Dialog.close()
 
-    def show_w2(self):  # 显示窗体2
+    def show_w2(self,PRAE):  # 显示窗体2
         self.ui.lineEdit_6.clear()
         self.ui.lineEdit_7.clear()
         self.ui.lineEdit_8.clear()
-        self.show()
+        screen = PRAE.geometry()
+        size = self.Dialog.geometry()
+        self.Dialog.move((screen.width() - size.width()) / 2,
+                         (screen.height() - size.height()) / 2)
+        self.Dialog.show()
+        self.Dialog.exec_()
 
     def setloginpsw(self):
         if self.setable == 0:
@@ -172,7 +181,7 @@ class changepswform(QWidget, Ui_ChangePswForm):
     def savechange(self):
         if self.setable == 0:
             if len(self.ui.lineEdit_8.text())<6:
-                self.publishform.show_w2('Please enter at least 6 characters')
+                self.publishform.show_w2('Please enter at least 6 characters',self)
             else:
                 hl = hashlib.md5()
                 hl.update(self.ui.lineEdit_8.text().encode(encoding='utf-8'))
@@ -181,14 +190,14 @@ class changepswform(QWidget, Ui_ChangePswForm):
                     f = open('setting.xml', 'w')
                     ex.settingdom.writexml(f, addindent=' ', newl='\n')
                     f.close()
-                    self.close()
+                    self.Dialog.close()
                 else:
-                    self.publishform.show_w2('Please enter right password')
+                    self.publishform.show_w2('Please enter right password',self)
         else:
             if len(self.ui.lineEdit_8.text())<6:
-                self.publishform.show_w2('Please enter at least 6 characters')
+                self.publishform.show_w2('Please enter at least 6 characters',self)
             elif self.ui.lineEdit_6.text() != self.ui.lineEdit_7.text():
-                self.publishform.show_w2('Please enter same passwords')
+                self.publishform.show_w2('Please enter same passwords',self)
             else:
                 hl = hashlib.md5()
                 hl.update(self.ui.lineEdit_8.text().encode(encoding='utf-8'))
@@ -199,9 +208,9 @@ class changepswform(QWidget, Ui_ChangePswForm):
                     f = open('setting.xml', 'w')
                     ex.settingdom.writexml(f, addindent=' ', newl='\n')
                     f.close()
-                    self.close()
+                    self.Dialog.close()
                 else:
-                    self.publishform.show_w2('Please enter right password')
+                    self.publishform.show_w2('Please enter right password',self)
         # self.close()
 
     def seepsw(self):
@@ -246,17 +255,19 @@ class changepswform(QWidget, Ui_ChangePswForm):
             event.accept()
 
     def closeform(self):
-        self.close()
+        self.Dialog.close()
 
 
 class setpswform(QWidget, Ui_SetPswForm):
-    def __init__(self):
+    def __init__(self,PRAE):
         super().__init__()
         self.ui = Ui_SetPswForm()
-        self.ui.setupUi(self)
-        self.publishform = publishform()
-        self.changepswform = changepswform()
-        self.setWindowFlags(Qt.CustomizeWindowHint)
+        self.Dialog = QDialog(PRAE)
+        self.ui.setupUi(self.Dialog)
+        # self.ui.setupUi(self)
+        self.publishform = publishform(self)
+
+        self.Dialog.setWindowFlags(Qt.CustomizeWindowHint)
         btnc = self.ui.closeenterpsw
         btnc.clicked.connect(self.closeform)
         btnsave = self.ui.pushButton_9
@@ -273,13 +284,21 @@ class setpswform(QWidget, Ui_SetPswForm):
         self.passwordeye = 1
         self.passwordeye2 = 1
 
-    def show_w2(self):  # 显示窗体2
+        self.Dialog.close()
+
+    def show_w2(self,PRAE):  # 显示窗体2
         if ex.settingroot.getElementsByTagName('MinerP')[0].firstChild.data ==' ':
             self.ui.lineEdit_6.clear()
             self.ui.lineEdit_7.clear()
-            self.show()
+            screen = PRAE.geometry()
+            size = self.Dialog.geometry()
+            self.Dialog.move((screen.width() - size.width()) / 2,
+                             (screen.height() - size.height()) / 2)
+            self.Dialog.show()
+            self.Dialog.exec_()
         else:
-            self.changepswform.show_w2()
+            self.changepswform = changepswform(PRAE)
+            self.changepswform.show_w2(PRAE)
 
     def setloginpsw(self):
         if self.setable == 0:
@@ -295,9 +314,9 @@ class setpswform(QWidget, Ui_SetPswForm):
 
     def savechange(self):
         if len(self.ui.lineEdit_6.text())<6:
-            self.publishform.show_w2('Please enter at least 6 characters')
+            self.publishform.show_w2('Please enter at least 6 characters',self)
         elif self.ui.lineEdit_6.text() != self.ui.lineEdit_7.text():
-            self.publishform.show_w2('Please enter same passwords')
+            self.publishform.show_w2('Please enter same passwords',self)
         else:
             hl = hashlib.md5()
             hl.update(self.ui.lineEdit_6.text().encode(encoding='utf-8'))
@@ -305,7 +324,7 @@ class setpswform(QWidget, Ui_SetPswForm):
             f = open('setting.xml', 'w')
             ex.settingdom.writexml(f, addindent=' ', newl='\n')
             f.close()
-        self.close()
+        self.Dialog.close()
 
     def seepsw(self):
         if self.passwordeye == 1:
@@ -339,15 +358,17 @@ class setpswform(QWidget, Ui_SetPswForm):
             event.accept()
 
     def closeform(self):
-        self.close()
+        self.Dialog.close()
 
 class enterpswform(QWidget, Ui_EnterPswForm):
-    def __init__(self):
+    def __init__(self,PRAE):
         super().__init__()
         self.ui = Ui_EnterPswForm()
-        self.ui.setupUi(self)
-        self.setWindowFlags(Qt.CustomizeWindowHint)
-        self.publishform = publishform()
+        self.Dialog = QDialog(PRAE)
+        self.ui.setupUi(self.Dialog)
+        # self.ui.setupUi(self)
+        self.Dialog.setWindowFlags(Qt.CustomizeWindowHint)
+        self.publishform = publishform(self)
         btnc = self.ui.closeenterpsw
         btnc.clicked.connect(self.closeform)
         btnconfirm = self.ui.pushButton_9
@@ -356,13 +377,24 @@ class enterpswform(QWidget, Ui_EnterPswForm):
         self.gotprikey = 0
         self.needtosend = 0
 
-    def show_w2(self,str,send=0):  # 显示窗体2
+        self.Dialog.close()
+
+    def show_w2(self,str,PRAE,send=0):  # 显示窗体2
         self.addr = str
         self.ui.lineEdit_6.clear()
         self.gotprikey = 0
-        self.show()
+        # self.show()
         if send  == 1:
             self.needtosend = 1
+
+        screen = PRAE.geometry()
+        size = self.Dialog.geometry()
+        self.Dialog.move((screen.width() - size.width()) / 2,
+                         (screen.height() - size.height()) / 2)
+        print('enter 2')
+        self.Dialog.show()
+        print('enter 3')
+        self.Dialog.exec_()
 
     def getprikey(self,addr,password):
         print(addr,password)
@@ -372,8 +404,8 @@ class enterpswform(QWidget, Ui_EnterPswForm):
         try:
             self.prikey = w3.toHex(Account.decrypt(content, password))
         except Exception as err:
-            self.publishform.show_w2('Please enter right password')
-            self.close()
+            self.publishform.show_w2('Please enter right password',self)
+            self.Dialog.close()
             return 1
         print(self.prikey)
 
@@ -383,7 +415,7 @@ class enterpswform(QWidget, Ui_EnterPswForm):
             try:
                 ret = Core_func.Transaction_out(ex.m_wallet.privateKey, ex.Trans.toaddr, ex.Trans.value, ex.Trans.Gas, ex.Trans.Gasprice)
             except Exception as err:
-                self.publishform.show_w2('transaction failed')
+                self.publishform.show_w2('transaction failed',self)
                 return 1
             if ret[0] == 1:
                 # print(ret[1][1])
@@ -406,7 +438,7 @@ class enterpswform(QWidget, Ui_EnterPswForm):
                      ex.Trans.Gas, ex.Trans.value, datetime.datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S'),
                      'Recieve', 'Submitted')
 
-                self.publishform.show_w2('transaction successfully')
+                self.publishform.show_w2('transaction successfully',self)
                 self.closeform()
                 ex.Trans.value = ''
                 ex.Trans.Type = ''
@@ -416,7 +448,7 @@ class enterpswform(QWidget, Ui_EnterPswForm):
                 ex.refresh()
 
             else:
-                self.publishform.show_w2('transaction failed')
+                self.publishform.show_w2('transaction failed',self)
         else:
             ex.ui.lineEdit_9.setText(self.prikey)
             ex.m_wallet.privateKey = self.prikey
@@ -424,7 +456,7 @@ class enterpswform(QWidget, Ui_EnterPswForm):
             ex.ui.lineEdit_9.setEchoMode(0)
             ex.privatekeyeye = 0
         self.needtosend = 0
-        self.close()
+        self.Dialog.close()
         return 0
 
     def mousePressEvent(self, event):
@@ -439,7 +471,7 @@ class enterpswform(QWidget, Ui_EnterPswForm):
             event.accept()
 
     def closeform(self):
-        self.close()
+        self.Dialog.close()
 
 class Figure_Canvas(FigureCanvas):   # 通过继承FigureCanvas类，使得该类既是一个PyQt5的Qwidget，又是一个matplotlib的FigureCanvas，这是连接pyqt5与matplot                                          lib的关键
 
@@ -535,24 +567,31 @@ class Figure_Canvas(FigureCanvas):   # 通过继承FigureCanvas类，使得该�
             return 0
 
 class conInfoform(QWidget, Ui_ConInfoForm):
-    def __init__(self):
+    def __init__(self,PRAE):
         super().__init__()
         self.ui = Ui_ConInfoForm()
-        self.ui.setupUi(self)
-        self.setWindowFlags(Qt.CustomizeWindowHint)
+        self.Dialog = QDialog(PRAE)
+        self.ui.setupUi(self.Dialog)
+        # self.ui.setupUi(self)
+        self.Dialog.setWindowFlags(Qt.CustomizeWindowHint)
         btnc = self.ui.closeenterpsw
         btnc.clicked.connect(self.closeform)
         btnsave = self.ui.pushButton_9
         self.Row = 0
         btnsave.clicked.connect(lambda :self.savechange(self.Row))
-        #self.ui.lineEdit_6.changeEvent.connect(self.showqrcode)
-        #self.ui.lineEdit_6.keyPressEvent(self,self.showqrcode)
 
-    def show_w2(self,row):  # 显示窗体2
+        self.Dialog.close()
+
+    def show_w2(self,row,PRAE):  # 显示窗体2
         self.Row = row
         ind = Core_func.QTableWidget.indexFromItem(ex.ui.ContactsT, ex.ui.ContactsT.item(row, 1))
         self.ui.lineEdit_6.setText(ind.data())
-        self.show()
+        screen = PRAE.geometry()
+        size = self.Dialog.geometry()
+        self.Dialog.move((screen.width() - size.width()) / 2,
+                         (screen.height() - size.height()) / 2)
+        self.Dialog.show()
+        self.Dialog.exec_()
 
     def savechange(self,row):
         ################
@@ -563,7 +602,7 @@ class conInfoform(QWidget, Ui_ConInfoForm):
         ex.ui.ContactsT.setItem(row, 0, newItemName)
 
         Core_func.editaddressxml(ex.addrdom,ex.addrroot,self.ui.lineEdit_7.text(),row)
-
+        self.Dialog.close()
 
 
     def mousePressEvent(self, event):
@@ -578,28 +617,34 @@ class conInfoform(QWidget, Ui_ConInfoForm):
             event.accept()
 
     def closeform(self):
-        self.close()
+        self.Dialog.close()
 
 class walletInfoform(QWidget, Ui_WalletInfoForm):
-    def __init__(self):
+    def __init__(self,PRAE):
         super().__init__()
         self.ui = Ui_WalletInfoForm()
-        self.ui.setupUi(self)
-        self.setWindowFlags(Qt.CustomizeWindowHint)
+        self.Dialog = QDialog(PRAE)
+        self.ui.setupUi(self.Dialog)
+        # self.ui.setupUi(self)
+        self.Dialog.setWindowFlags(Qt.CustomizeWindowHint)
         btnc = self.ui.closeenterpsw
         btnc.clicked.connect(self.closeform)
         btnsave = self.ui.pushButton_9
         self.Row = 0
         btnsave.clicked.connect(lambda: self.savechange(self.Row))
-        #self.ui.lineEdit_6.changeEvent.connect(self.showqrcode)
-        #self.ui.lineEdit_6.keyPressEvent(self,self.showqrcode)
+        self.Dialog.close()
 
-    def show_w2(self,row):  # 显示窗体2
+    def show_w2(self,PRAE,row):  # 显示窗体2
         self.Row = row
 
         ind = Core_func.QTableWidget.indexFromItem(ex.ui.multWallet, ex.ui.multWallet.item(row,1))
         self.ui.lineEdit_6.setText(ind.data())
-        self.show()
+        screen = PRAE.geometry()
+        size = self.Dialog.geometry()
+        self.Dialog.move((screen.width() - size.width()) / 2,
+                         (screen.height() - size.height()) / 2)
+        self.Dialog.show()
+        self.Dialog.exec_()
 
     def savechange(self,row):
         ################
@@ -609,6 +654,7 @@ class walletInfoform(QWidget, Ui_WalletInfoForm):
         newItemName = QTableWidgetItem(self.ui.lineEdit_7.text())
         ex.ui.multWallet.setItem(row, 0, newItemName)
         Core_func.editwalletxml(ex.walletdom, ex.walletroot, self.ui.lineEdit_7.text(), row)
+        self.Dialog.close()
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -622,22 +668,31 @@ class walletInfoform(QWidget, Ui_WalletInfoForm):
             event.accept()
 
     def closeform(self):
-        self.close()
+        self.Dialog.close()
 
 class publishform(QWidget, Ui_publishForm):
-    def __init__(self):
+    def __init__(self,PRAE):
         super().__init__()
         self.ui = Ui_publishForm()
-        self.ui.setupUi(self)
-        self.setWindowFlags(Qt.CustomizeWindowHint)
+        self.Dialog = QDialog(PRAE)
+        self.ui.setupUi(self.Dialog)
+        # self.ui.setupUi(self)
+        self.Dialog.setWindowFlags(Qt.CustomizeWindowHint)
         btnc = self.ui.closeenterpsw
         btnc.clicked.connect(self.closeform)
         btnconfirm = self.ui.pushButton_9
         btnconfirm.clicked.connect(self.closeform)
 
-    def show_w2(self,str):  # 显示窗体2
+        self.Dialog.close()
+
+    def show_w2(self,str,PRAE):  # 显示窗体2
         self.ui.textEdit.setText(str)
-        self.show()
+        screen = PRAE.geometry()
+        size = self.Dialog.geometry()
+        self.Dialog.move((screen.width() - size.width()) / 2,
+                         (screen.height() - size.height()) / 2)
+        self.Dialog.show()
+        self.Dialog.exec_()
 
 
 
@@ -653,14 +708,16 @@ class publishform(QWidget, Ui_publishForm):
             event.accept()
 
     def closeform(self):
-        self.close()
+        self.Dialog.close()
 
 class accountform(QWidget, Ui_AccountForm):
     def __init__(self,Paren):
         super().__init__()
         self.ui = Ui_AccountForm()
-        self.ui.setupUi(self)
-        self.setWindowFlags(Qt.CustomizeWindowHint)
+        # self.ui.setupUi(self)
+        self.Dialog = QDialog(Paren)
+        self.ui.setupUi(self.Dialog)
+        self.Dialog.setWindowFlags(Qt.CustomizeWindowHint)
 
         self.ui.Account.horizontalHeader().setVisible(0)
         self.ui.Account.verticalHeader().setVisible(0)
@@ -689,9 +746,9 @@ class accountform(QWidget, Ui_AccountForm):
         btnconfirm = self.ui.pushButton_9
         btnconfirm.clicked.connect(lambda :self.closeform(Paren))
         self.ui.Account.itemClicked.connect(self.choseaccount)
+        self.Dialog.close()
 
-
-    def show_w2(self):  # 显示窗体2
+    def show_w2(self,PRAE):  # 显示窗体2
         if os.path.isfile('test.xml'):
             if len(ex.addrroot.getElementsByTagName('AddressEntity')) != 0:
                 self.ui.Account.setRowCount(0)
@@ -712,7 +769,12 @@ class accountform(QWidget, Ui_AccountForm):
 
         else:
             print('')
-        self.show()
+        screen = PRAE.geometry()
+        size = self.Dialog.geometry()
+        self.Dialog.move((screen.width() - size.width()) / 2,
+                         (screen.height() - size.height()) / 2)
+        self.Dialog.show()
+        self.Dialog.exec_()
 
     def choseaccount(self,QTableWidgetItem):
         # QTableWidgetItem.setForeground(QBrush(QColor(170, 0, 255)))
@@ -721,6 +783,7 @@ class accountform(QWidget, Ui_AccountForm):
         # self.ui.Account.item(row, 1).setForeground(QBrush(QColor(170, 0, 255)))
         ind = Core_func.QTableWidget.indexFromItem(self.ui.Account, self.ui.Account.item(row,1))
         ex.Trans.toaddr = ind.data()
+        self.Dialog.close()
 
 
     def mousePressEvent(self, event):
@@ -736,18 +799,22 @@ class accountform(QWidget, Ui_AccountForm):
 
     def closeform(self,Paren):
         Paren.ui.lineEdit_7.setText(ex.Trans.toaddr)
-        self.close()
+        self.Dialog.close()
 
 class messform(QWidget, Ui_MessForm):
-    def __init__(self):
+    def __init__(self,PRAE):
         super().__init__()
         self.ui = Ui_MessForm()
-        self.ui.setupUi(self)
-        self.setWindowFlags(Qt.CustomizeWindowHint)
+        # self.ui.setupUi(self)
+        self.Dialog = QDialog(PRAE)
+        self.ui.setupUi(self.Dialog)
+        self.Dialog.setWindowFlags(Qt.CustomizeWindowHint)
         btnc = self.ui.closeenterpsw
         btnc.clicked.connect(self.closeform)
         btnconfirm = self.ui.pushButton_9
         btnconfirm.clicked.connect(self.closeform)
+        self.parentw = PRAE
+        self.Dialog.close()
 
     def show_w2(self,QTableWidgetItem):  # 显示窗体2
         QTableWidgetItem.setForeground(QBrush(QColor(0,0,0)))
@@ -770,7 +837,12 @@ class messform(QWidget, Ui_MessForm):
         self.ui.lineEdit_7.setText(str(ret[1][0]['addressFrom']))
         self.ui.lineEdit_6.setText(str(ret[1][0]['value']))
         self.ui.textEdit.setText(str(ret[1][0]['tx_hash']))
-        self.show()
+        screen = self.parentw.geometry()
+        size = self.Dialog.geometry()
+        self.Dialog.move((screen.width() - size.width()) / 2,
+                         (screen.height() - size.height()) / 2)
+        self.Dialog.show()
+        self.Dialog.exec_()
 
 
     def mousePressEvent(self, event):
@@ -785,27 +857,34 @@ class messform(QWidget, Ui_MessForm):
             event.accept()
 
     def closeform(self):
-        self.close()
+        self.Dialog.close()
 
 class newcontactform(QWidget, Ui_NewContactForm):
-    def __init__(self):
+    def __init__(self,PRAE):
         super().__init__()
         self.ui = Ui_NewContactForm()
-        self.ui.setupUi(self)
-        self.publishform = publishform()
-
-        self.setWindowFlags(Qt.CustomizeWindowHint)
+        # self.ui.setupUi(self)
+        self.publishform = publishform(self)
+        self.Dialog = QDialog(PRAE)
+        self.ui.setupUi(self.Dialog)
+        self.Dialog.setWindowFlags(Qt.CustomizeWindowHint)
         btnc = self.ui.closeenterpsw
         btnc.clicked.connect(self.closeform)
         btnsave = self.ui.pushButton_9
         btnsave.clicked.connect(self.savechange)
         #self.ui.lineEdit_6.changeEvent.connect(self.showqrcode)
         #self.ui.lineEdit_6.keyPressEvent(self,self.showqrcode)
+        self.Dialog.close()
 
-    def show_w2(self):  # 显示窗体2
+    def show_w2(self,PRAE):  # 显示窗体2
         self.ui.lineEdit_6.clear()
         self.ui.lineEdit_7.clear()
-        self.show()
+        screen = PRAE.geometry()
+        size = self.Dialog.geometry()
+        self.Dialog.move((screen.width() - size.width()) / 2,
+                         (screen.height() - size.height()) / 2)
+        self.Dialog.show()
+        self.Dialog.exec_()
 
     def savechange(self):
         ################
@@ -814,7 +893,7 @@ class newcontactform(QWidget, Ui_NewContactForm):
         for i in range(ex.ui.ContactsT.rowCount()):
             ind = Core_func.QTableWidget.indexFromItem(ex.ui.ContactsT, ex.ui.ContactsT.item(i, 1))
             if self.ui.lineEdit_6.text() == ind.data():
-                self.publishform.show_w2('Address already exist')
+                self.publishform.show_w2('Address already exist',self)
                 break
             if i == ex.ui.ContactsT.rowCount()-1:
                 Rcount = ex.ui.ContactsT.rowCount()
@@ -841,7 +920,7 @@ class newcontactform(QWidget, Ui_NewContactForm):
                 ex.ui.ContactsT.setItem(Rcount, 4, newItemdel)
 
                 Core_func.addaddressxml(ex.addrdom, ex.addrroot, self.ui.lineEdit_7.text(), self.ui.lineEdit_6.text())
-
+        self.Dialog.close()
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -855,24 +934,34 @@ class newcontactform(QWidget, Ui_NewContactForm):
             event.accept()
 
     def closeform(self):
-        self.close()
+        self.Dialog.close()
 
 class pubaddrForm(QWidget, Ui_PubAddrForm):
-    def __init__(self):
+    def __init__(self,PRAE):
         super().__init__()
         self.ui = Ui_PubAddrForm()
-        self.ui.setupUi(self)
-        self.setWindowFlags(Qt.CustomizeWindowHint)
+        # self.ui.setupUi(self)
+        self.Dialog = QDialog(PRAE)
+        self.ui.setupUi(self.Dialog)
+        self.Dialog.setWindowFlags(Qt.CustomizeWindowHint)
+        # self.setWindowFlags(Qt.CustomizeWindowHint)
         btnc = self.ui.closeenterpsw
         btnc.clicked.connect(self.closeform)
         btncopy = self.ui.pushButton_35
         btncopy.clicked.connect(self.copyaddr)
         #self.ui.lineEdit_6.changeEvent.connect(self.showqrcode)
         #self.ui.lineEdit_6.keyPressEvent(self,self.showqrcode)
+        self.Dialog.close()
 
-    def show_w2(self):  # 显示窗体2
-        self.show()
+    def show_w2(self,PRAE):  # 显示窗体2
+        # self.show()
         self.showqrcode()
+        screen = PRAE.geometry()
+        size = self.Dialog.geometry()
+        self.Dialog.move((screen.width() - size.width()) / 2,
+                         (screen.height() - size.height()) / 2)
+        self.Dialog.show()
+        self.Dialog.exec_()
 
     def showqrcode(self):
         self.ui.lineEdit_8.setText(ex.m_wallet.address)
@@ -898,26 +987,34 @@ class pubaddrForm(QWidget, Ui_PubAddrForm):
             event.accept()
 
     def closeform(self):
-        self.close()
+        self.Dialog.close()
 
 class mulwalform(QWidget, Ui_MulWalForm):
-    def __init__(self):
+    def __init__(self,PRAE):
         super().__init__()
         self.ui = Ui_MulWalForm()
-        self.ui.setupUi(self)
-        self.setWindowFlags(Qt.CustomizeWindowHint)
+        # self.ui.setupUi(self)
+        #         # self.setWindowFlags(Qt.CustomizeWindowHint)
+        self.Dialog = QDialog(PRAE)
+        self.ui.setupUi(self.Dialog)
+        self.Dialog.setWindowFlags(Qt.CustomizeWindowHint)
         btnc = self.ui.closeenterpsw
         btnc.clicked.connect(self.closeform)
         btnsave = self.ui.pushButton_9
         btnsave.clicked.connect(self.savechange)
+        self.Dialog.close()
 
-
-    def show_w2(self):  # 显示窗体2
-        self.show()
+    def show_w2(self,PRAE):  # 显示窗体2
+        screen = PRAE.geometry()
+        size = self.Dialog.geometry()
+        self.Dialog.move((screen.width() - size.width()) / 2,
+                         (screen.height() - size.height()) / 2)
+        self.Dialog.show()
+        self.Dialog.exec_()
 
     def savechange(self):
         ex.m_wallet.accountname = self.ui.lineEdit_7.text()
-
+        self.Dialog.close()
 
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
@@ -931,21 +1028,24 @@ class mulwalform(QWidget, Ui_MulWalForm):
             event.accept()
 
     def closeform(self):
-        self.close()
+        self.Dialog.close()
 
 class recieveform(QWidget, Ui_ReceiveForm):
-    def __init__(self):
+    def __init__(self,PRAE):
         super().__init__()
         self.ui = Ui_ReceiveForm()
-        self.ui.setupUi(self)
-        self.setWindowFlags(Qt.CustomizeWindowHint)
+        # self.ui.setupUi(self)
+        # self.setWindowFlags(Qt.CustomizeWindowHint)
+        self.Dialog = QDialog(PRAE)
+        self.ui.setupUi(self.Dialog)
+        self.Dialog.setWindowFlags(Qt.CustomizeWindowHint)
         btnc = self.ui.closeenterpsw
         btnc.clicked.connect(self.closeform)
         btncopy = self.ui.pushButton_34
         btncopy.clicked.connect(self.copyaddr)
         #self.ui.lineEdit_6.changeEvent.connect(self.showqrcode)
         #self.ui.lineEdit_6.keyPressEvent(self,self.showqrcode)
-
+        self.Dialog.close()
 
 
     def showqrcode(self):
@@ -957,9 +1057,15 @@ class recieveform(QWidget, Ui_ReceiveForm):
         self.ui.label.setPixmap(QPixmap("pic\\recieve.png"))
         self.ui.label.setAutoFillBackground(1)
 
-    def show_w2(self):  # 显示窗体2
-        self.show()
+    def show_w2(self,PRAE):  # 显示窗体2
+        # self.show()
         self.showqrcode()
+        screen = PRAE.geometry()
+        size = self.Dialog.geometry()
+        self.Dialog.move((screen.width() - size.width()) / 2,
+                         (screen.height() - size.height()) / 2)
+        self.Dialog.show()
+        self.Dialog.exec_()
 
     def copyaddr(self):
         self.clipboard_public_key = QApplication.clipboard()
@@ -978,22 +1084,26 @@ class recieveform(QWidget, Ui_ReceiveForm):
             event.accept()
 
     def closeform(self):
-        self.close()
+        self.Dialog.close()
 
 class sendform(QWidget, Ui_SendForm):
-    def __init__(self):
+    def __init__(self,PRAE):
         super().__init__()
         self.ui = Ui_SendForm()
-        self.ui.setupUi(self)
-        self.accountform =accountform(self)
-        self.publishform = publishform()
-        self.setWindowFlags(Qt.CustomizeWindowHint)
+        # self.ui.setupUi(self)
+
+        self.Dialog = QDialog(PRAE)
+        self.ui.setupUi(self.Dialog)
+        self.Dialog.setWindowFlags(Qt.CustomizeWindowHint)
+        # self.setWindowFlags(Qt.CustomizeWindowHint)
         btnc = self.ui.closeenterpsw
         btnc.clicked.connect(self.closeform)
         btnsend = self.ui.pushButton_9
         btnsend.clicked.connect(self.showenterphrase)
+        self.accountform = accountform(self)
+        self.publishform = publishform(self)
         btncont = self.ui.pushButton_34
-        btncont.clicked.connect(self.accountform.show_w2)
+        btncont.clicked.connect(lambda :self.accountform.show_w2(self))
 
 
         self.ui.radioButton.toggle()
@@ -1010,6 +1120,7 @@ class sendform(QWidget, Ui_SendForm):
         self.ui.radioButton_4.toggled.connect(self.change2Cus)
         self.ui.radioButton_4.setChecked(0)
 
+        self.Dialog.close()
 
 
     def change2Eco(self):
@@ -1034,9 +1145,9 @@ class sendform(QWidget, Ui_SendForm):
             self.ui.lineEdit_8.setPlaceholderText('Enter Gas Limit')
             self.ui.lineEdit_9.setPlaceholderText('Enter Gas Price')
 
-    def show_w2(self,row='none'):  # 显示窗体2
+    def show_w2(self,PRAE,row='none'):  # 显示窗体2
         if ex.m_wallet.address =='' :
-            self.publishform.show_w2('Please Choose Wallet')
+            self.publishform.show_w2('Please Choose Wallet',self)
         else:
             balance = requests.get(
                 "https://waltonchain.net:18950/api/getBalance/" + ex.m_wallet.address).json()
@@ -1046,7 +1157,12 @@ class sendform(QWidget, Ui_SendForm):
             if row != 'none':
                 ind = Core_func.QTableWidget.indexFromItem(ex.ui.ContactsT, ex.ui.ContactsT.item(row, 1))
                 self.ui.lineEdit_7.setText(ind.data())
-            self.show()
+            screen = PRAE.geometry()
+            size = self.Dialog.geometry()
+            self.Dialog.move((screen.width() - size.width()) / 2,
+                             (screen.height() - size.height()) / 2)
+            self.Dialog.show()
+            # self.Dialog.exec_()
 
     def showenterphrase(self):
         #waiting to add passsword checking
@@ -1058,8 +1174,9 @@ class sendform(QWidget, Ui_SendForm):
             ex.Trans.toaddr = self.ui.lineEdit_7.text().strip()
         else:
             self.ui.lineEdit_7.setText(ex.Trans.toaddr)
-        self.enterpswform = enterpswform()
-        self.enterpswform.show_w2(ex.ui.lineEdit_8.text(),1)
+        self.enterpswform = enterpswform(self)
+        print('enter')
+        self.enterpswform.show_w2(ex.ui.lineEdit_8.text(),self,1)
 
 
 
@@ -1077,7 +1194,7 @@ class sendform(QWidget, Ui_SendForm):
     def closeform(self):
         self.ui.lineEdit_7.clear()
         self.ui.lineEdit_6.clear()
-        self.close()
+        self.Dialog.close()
 
 
 
@@ -1175,8 +1292,8 @@ class Example(QDialog,QWidget):
 
 
     def editwallet(self,row):
-        self.walletInfoform = walletInfoform()
-        self.walletInfoform.show_w2(row)
+        self.walletInfoform = walletInfoform(self)
+        self.walletInfoform.show_w2(self,row)
 
     def delcontact(self,row):
         print(row)
@@ -1213,13 +1330,13 @@ class Example(QDialog,QWidget):
 
     def sendcontact(self,row):
         print(row)
-        self.sendform = sendform()
-        self.sendform.show_w2(row)
+        self.sendform = sendform(self)
+        self.sendform.show_w2(self,row)
 
     def editcontact(self,row):
         print(row)
-        self.conInfoform = conInfoform()
-        self.conInfoform.show_w2(row)
+        self.conInfoform = conInfoform(self)
+        self.conInfoform.show_w2(row,self)
 
 
 
@@ -1347,9 +1464,9 @@ class Example(QDialog,QWidget):
 
     def generateKey(self):
         if len(self.ui.lineEdit_4.text()) < 6:
-            self.publishform.show_w2('Please enter at least 6 characters')
+            self.publishform.show_w2('Please enter at least 6 characters',self)
         elif self.ui.lineEdit_4.text() != self.ui.lineEdit_5.text():
-            self.publishform.show_w2('Passphrases do not match')
+            self.publishform.show_w2('Passphrases do not match',self)
         else:
             ret = Core_func.Generate_Three_Key(self.ui.lineEdit_4.text(), self.ui.lineEdit_5.text())
             if ret[0]== 1:
@@ -1382,7 +1499,7 @@ class Example(QDialog,QWidget):
                 #self.ui.label_10.setPixmap(QPixmap("pic\\private.png"))
                 #self.ui.label_10.setAutoFillBackground(1)
             else:
-                self.publishform.show_w2('error')
+                self.publishform.show_w2('error',self)
 
     def importsecret(self):
         if  self.ui.lineEdit_18.text() ==  self.ui.lineEdit_19.text():
@@ -1409,11 +1526,11 @@ class Example(QDialog,QWidget):
                     self.ui.stackedWidget.setCurrentIndex(1)
                     self.ui.NewWalletstacked.setCurrentIndex(0)
                 else:
-                    self.publishform.show_w2('Please enter right password')
+                    self.publishform.show_w2('Please enter right password',self)
             else:
-                self.publishform.show_w2('Private Key is illegal')
+                self.publishform.show_w2('Private Key is illegal',self)
         else:
-            self.publishform.show_w2('Passphrases do not match')
+            self.publishform.show_w2('Passphrases do not match',self)
 
     def importmnemonic(self):
         ret = Core_func.Import_mnemonic(self.ui.lineEdit_15.text(), self.ui.lineEdit_16.text(), self.ui.lineEdit_17.text())
@@ -1429,7 +1546,7 @@ class Example(QDialog,QWidget):
                 string_filename += str(filenames[i])
             self.ui.lineEdit_26.setText(string_filename)
         else:
-            self.publishform.show_w2('Please choose a right Keystore')
+            self.publishform.show_w2('Please choose a right Keystore',self)
 
     def importKetstore(self):
         file = open(self.ui.lineEdit_26.text(), 'r')
@@ -1459,11 +1576,11 @@ class Example(QDialog,QWidget):
                     self.ui.NewWalletstacked.setCurrentIndex(0)
 
                 else:
-                    self.publishform.show_w2('Please enter right password')
+                    self.publishform.show_w2('Please enter right password',self)
             else:
-                self.publishform.show_w2('Please enter at least 6 characters')
+                self.publishform.show_w2('Please enter at least 6 characters',self)
         else:
-            self.publishform.show_w2('Please choose a right Keystore')
+            self.publishform.show_w2('Please choose a right Keystore',self)
 
     def seepassword(self):
         if self.passwordeye == 1:
@@ -1478,8 +1595,8 @@ class Example(QDialog,QWidget):
 
     def seeprivatekey(self):
         if self.privatekeyeye == 1:
-            self.enterpswform = enterpswform()
-            self.enterpswform.show_w2(self.ui.lineEdit_8.text())
+            self.enterpswform = enterpswform(self)
+            self.enterpswform.show_w2(self.ui.lineEdit_8.text(),self)
             print(self.ui.lineEdit_8.text())
             #self.ui.lineEdit_9.setText(self.m_wallet.privateKey)
 
@@ -1601,7 +1718,7 @@ class Example(QDialog,QWidget):
         self.ui.multWallet.setItem(Rcount-1, 5, newItemsave)
 
         Core_func.editwalletxml(self.walletdom,self.walletroot,self.m_wallet.accountname,Rcount-1)
-        self.publishform.show_w2('Saved successfully')
+        self.publishform.show_w2('Saved successfully',self)
 
     def copyPublicKey(self):
         self.clipboard_public_key = QApplication.clipboard()
@@ -1970,7 +2087,7 @@ class Example(QDialog,QWidget):
         self.refreshlog()
 
     def refreshlog(self):
-        print('')
+        print(self.ui.LogMessage.rowCount())
         for AddressTransactionsEntity in self.transroot.getElementsByTagName('AddressTransactionsEntity'):
             self.logcount = 0
             if AddressTransactionsEntity.getElementsByTagName('Address')[0].firstChild.data == self.m_wallet.address:
@@ -1981,7 +2098,7 @@ class Example(QDialog,QWidget):
                     for AccountTransactionsEntity in TransactionList.getElementsByTagName('AccountTransactionsEntity'):
                         if AccountTransactionsEntity.getElementsByTagName('blockType')[0].firstChild.data == 'Success':
                             self.logcount += 1
-                            print('loncount= '+str(self.logcount))
+                            print('logcount= '+str(self.logcount))
                     if self.ui.LogMessage.rowCount() == 0:
                         logreverse = range(len(TransactionList.getElementsByTagName('AccountTransactionsEntity')))
                         for i in reversed(logreverse):
@@ -2008,7 +2125,7 @@ class Example(QDialog,QWidget):
                                 self.ui.LogMessage.setItem(logrowcount, 1, newItemTime)
                                 self.ui.LogMessage.setItem(logrowcount, 2, newItemContent)
 
-                            if self.logcount == self.ui.TransactionHistory.rowCount():
+                            if self.logcount == self.ui.LogMessage.rowCount():
                                 break
                     elif self.logcount == self.ui.LogMessage.rowCount():
                         print('LogMessage= ' + str(self.ui.LogMessage.rowCount()))
@@ -2031,7 +2148,7 @@ class Example(QDialog,QWidget):
                             self.ui.LogMessage.setItem(0, 1, newItemTime)
                             self.ui.LogMessage.setItem(0, 2, newItemContent)
 
-                            if self.logcount == self.ui.TransactionHistory.rowCount():
+                            if self.logcount == self.ui.LogMessage.rowCount():
                                 break
 
 
@@ -2471,8 +2588,7 @@ class Example(QDialog,QWidget):
         '显示窗口'
         self.ui = Ui_Form()
         self.ui.setupUi(self)
-        self.setpswform =setpswform()
-        self.changepswform= changepswform()
+
         if os.path.isfile('test.xml'):
             self.addrdom = xml.dom.minidom.parse("test.xml") # 打开xml文档
             xmlStr = self.addrdom.toprettyxml(indent='', newl='', encoding='utf-8')
@@ -2543,6 +2659,8 @@ class Example(QDialog,QWidget):
 
         stackedW = self.ui.stackedWidget
         stackedW.setCurrentIndex(0)
+        self.ui.importstack.setCurrentIndex(0)
+        self.setpswform = setpswform(self)
 
         if os.path.isfile('setting.xml'):
             self.settingdom = xml.dom.minidom.parse("setting.xml")  # 打开xml文档
@@ -2583,13 +2701,11 @@ class Example(QDialog,QWidget):
 
         self.m_wallet = Wallet
         self.Trans = Transaction
-
         self.lastblacknum = 0
-        self.publishform = publishform()
         self.initchart()
         self.initmap()
         self.initcontact()
-        self.sendform = sendform()
+
         #self.nationpos()
         #self.timer = QTimer(self)  # 初始化一个定时器
         #self.timer.timeout.connect(self.operate)  # 计时结束调用operate()方法
@@ -2691,7 +2807,7 @@ class Example(QDialog,QWidget):
 
         btnloginkeys.clicked.connect(lambda :self.importKetstore())
 
-        self.ui.importstack.setCurrentIndex(0)
+
 
 
         #all pages shift
@@ -2747,7 +2863,7 @@ class Example(QDialog,QWidget):
         btntme.clicked.connect(self.totme)
         btnsta = self.ui.pushButton_8
         btnsta.clicked.connect(self.tostack)
-        self.ui.pushButton_9.clicked.connect(lambda :self.sendform.show_w2('none'))
+        self.ui.pushButton_9.clicked.connect(lambda :self.sendform.show_w2(self,'none'))
 
         #Multiple Wallet page
         btn2create = self.ui.pushButton_32
@@ -2755,7 +2871,7 @@ class Example(QDialog,QWidget):
         btn2create1 = self.ui.pushButton_33
         btn2create1.clicked.connect(self.pressbtn0)
         btn2set1 = self.ui.pushButton_31
-        btn2set1.clicked.connect(self.setpswform.show_w2)
+        btn2set1.clicked.connect(lambda :self.setpswform.show_w2(self))
 
 
         # Message page
@@ -2916,7 +3032,9 @@ class Example(QDialog,QWidget):
             "QScrollBar::add-line{background:transparent;}")
 
 
-
+        self.changepswform = changepswform(self)
+        self.publishform = publishform(self)
+        self.sendform = sendform(self)
 
 
 
@@ -3120,17 +3238,17 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = Example()
     #publishform = publishform()
-    recieveform = recieveform()
-    mulwalform =mulwalform()
-    pubaddrForm = pubaddrForm()
-    newcontactform = newcontactform()
-    messform =messform()
+    recieveform = recieveform(ex)
+    mulwalform =mulwalform(ex)
+    pubaddrForm = pubaddrForm(ex)
+    newcontactform = newcontactform(ex)
+    messform =messform(ex)
     #s = Warning_Form.SecondWindow()
     #ex.ui.cw.clicked.connect(s.handle_click)
     # ex.show()
-    ex.ui.pushButton_10.clicked.connect(recieveform.show_w2)
-    ex.ui.pushButton_36.clicked.connect(pubaddrForm.show_w2)
-    ex.ui.pushButton_38.clicked.connect(newcontactform.show_w2)
+    ex.ui.pushButton_10.clicked.connect(lambda :recieveform.show_w2(ex))
+    ex.ui.pushButton_36.clicked.connect(lambda :pubaddrForm.show_w2(ex))
+    ex.ui.pushButton_38.clicked.connect(lambda :newcontactform.show_w2(ex))
     ex.ui.LogMessage.itemClicked.connect(messform.show_w2)
     ex.ui.ContactsT.itemClicked.connect(ex.choosebtn)
     ex.ui.multWallet.itemClicked.connect(ex.walletbtn)
