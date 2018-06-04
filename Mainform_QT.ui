@@ -2177,7 +2177,7 @@ border-radius:25px;</string>
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="autoFillBackground">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="text">
         <string/>
@@ -3098,7 +3098,7 @@ QLineEdit[echoMode=&quot;2&quot;] {
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="autoFillBackground">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="text">
         <string/>
@@ -3347,7 +3347,7 @@ background-color: rgb(230, 238, 255);
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="autoFillBackground">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="text">
         <string/>
@@ -3404,7 +3404,7 @@ background-color: rgb(230, 238, 255);</string>
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="autoFillBackground">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="text">
         <string/>

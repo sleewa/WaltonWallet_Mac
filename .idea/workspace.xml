@@ -4,10 +4,10 @@
     <list default="true" id="2cb5a557-5c71-4f3d-abef-ea3994e1e70c" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/Core_func.py" beforeDir="false" afterPath="$PROJECT_DIR$/Core_func.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Mainform.py" beforeDir="false" afterPath="$PROJECT_DIR$/Mainform.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pic/private.png" beforeDir="false" afterPath="$PROJECT_DIR$/pic/private.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pic/public.png" beforeDir="false" afterPath="$PROJECT_DIR$/pic/public.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mainform_QT.py" beforeDir="false" afterPath="$PROJECT_DIR$/Mainform_QT.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Mainform_QT.ui" beforeDir="false" afterPath="$PROJECT_DIR$/Mainform_QT.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pic/recieve.png" beforeDir="false" afterPath="$PROJECT_DIR$/pic/recieve.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/trans.xml" beforeDir="false" afterPath="$PROJECT_DIR$/trans.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wa.xml" beforeDir="false" afterPath="$PROJECT_DIR$/wa.xml" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -232,8 +232,8 @@
       <file leaf-file-name="Mainform.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Mainform.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="169">
-              <caret line="1554" column="52" selection-start-line="1554" selection-start-column="52" selection-end-line="1554" selection-end-column="52" />
+            <state relative-caret-position="245">
+              <caret line="2053" column="52" selection-start-line="2053" selection-start-column="44" selection-end-line="2053" selection-end-column="52" />
               <folding>
                 <element signature="e#1755#4229#0" />
                 <element signature="e#4142#9120#0" />
@@ -247,7 +247,6 @@
                 <element signature="e#22139#22320#0" />
                 <element signature="e#23202#24112#0" />
                 <element signature="e#24162#27792#0" />
-                <element signature="e#27836#29943#0" />
                 <element signature="e#29999#32954#0" />
                 <element signature="e#30548#30629#0" />
                 <element signature="e#34032#35878#0" />
@@ -256,6 +255,7 @@
                 <element signature="e#35571#37136#0" />
                 <element signature="e#37180#40878#0" />
                 <element signature="e#38703#39984#0" />
+                <element signature="e#40946#40989#0" />
                 <element signature="e#41041#41410#0" />
                 <element signature="e#41462#41881#0" />
                 <element signature="e#41922#43854#0" />
@@ -263,6 +263,7 @@
                 <element signature="e#49365#49453#0" />
                 <element signature="e#44549#46239#0" />
                 <element signature="e#51224#51313#0" />
+                <element signature="e#51354#51452#0" />
                 <element signature="e#46553#47737#0" />
                 <element signature="e#47772#48210#0" />
                 <element signature="e#48245#48683#0" />
@@ -276,12 +277,14 @@
                 <element signature="e#51600#51746#0" />
                 <element signature="e#51788#51826#0" />
                 <element signature="e#57615#59618#0" />
+                <element signature="e#53890#55461#0" />
+                <element signature="e#61282#62368#0" />
                 <element signature="e#55652#56122#0" />
                 <element signature="e#56162#57765#0" />
+                <element signature="e#57802#58208#0" />
                 <element signature="e#58247#58673#0" />
                 <element signature="e#58708#59239#0" />
                 <element signature="e#59274#61531#0" />
-                <element signature="e#61570#62089#0" />
                 <element signature="e#62128#62874#0" />
                 <element signature="e#62909#64401#0" />
                 <element signature="e#64440#64557#0" />
@@ -309,15 +312,18 @@
                 <element signature="e#72678#72694#0" />
                 <element signature="e#72731#72747#0" />
                 <element signature="e#72780#72817#0" />
-                <element signature="e#72850#85897#0" />
-                <element signature="e#85933#91525#0" />
-                <element signature="e#91562#100571#0" />
+                <element signature="e#83934#89612#0" />
+                <element signature="e#98766#108209#0" />
+                <element signature="e#91599#93084#0" />
+                <element signature="e#93111#94547#0" />
+                <element signature="e#94594#96072#0" />
+                <element signature="e#96099#97479#0" />
+                <element signature="e#97520#99061#0" />
                 <element signature="e#100606#104278#0" />
                 <element signature="e#104313#105075#0" />
                 <element signature="e#105112#107811#0" />
                 <element signature="e#107848#109956#0" />
                 <element signature="e#109989#115802#0" />
-                <element signature="e#115834#137551#0" />
                 <element signature="e#116032#116598#0" />
                 <element signature="e#116626#117242#0" />
                 <element signature="e#117293#117871#0" />
@@ -331,11 +337,20 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="WaltonWallet.py" pinned="false" current-in-tab="false">
+        <entry file="file://D:/PyExe_Crypto_Exe/WaltonWallet.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="205">
+              <caret line="976" column="24" selection-start-line="976" selection-start-column="24" selection-end-line="976" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="Core_func.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Core_func.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="474">
-              <caret line="170" column="75" selection-start-line="170" selection-start-column="75" selection-end-line="170" selection-end-column="75" />
+            <state relative-caret-position="1408">
+              <caret line="282" column="23" lean-forward="true" selection-start-line="282" selection-start-column="23" selection-end-line="282" selection-end-column="23" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
                 <element signature="e#418#813#0" />
@@ -344,12 +359,13 @@
                 <element signature="e#2354#2675#0" />
                 <element signature="e#2757#3932#0" />
                 <element signature="e#3990#4436#0" />
+                <element signature="e#4532#5594#0" />
                 <element signature="e#5103#5326#0" />
                 <element signature="e#5379#5774#0" />
+                <element signature="e#5843#5983#0" />
                 <element signature="e#6054#6965#0" />
                 <element signature="e#7072#7288#0" />
                 <element signature="e#7328#7580#0" />
-                <element signature="e#7625#7888#0" />
                 <element signature="e#7924#8145#0" />
                 <element signature="e#8238#8453#0" />
                 <element signature="e#8512#8755#0" />
@@ -368,36 +384,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="builtins.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/.PyCharmCE2018.1/system/python_stubs/133899476/builtins.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="183">
-              <caret line="5018" column="8" selection-start-line="5018" selection-start-column="8" selection-end-line="5018" selection-end-column="8" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="WaltonWallet.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/WaltonWallet.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="278">
-              <caret line="981" column="50" selection-start-line="981" selection-start-column="50" selection-end-line="981" selection-end-column="50" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="new 1.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/Desktop/exe/new 1.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="347">
-              <caret line="15" column="4" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
@@ -409,7 +395,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>35</find>
       <find>39</find>
       <find>pushButton_41</find>
       <find>messform</find>
@@ -439,6 +424,7 @@
       <find>refresh</find>
       <find>os.system</find>
       <find>accountform</find>
+      <find>refreshTop</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -457,6 +443,7 @@
         <option value="$USER_HOME$/Desktop/subwidget/new 1.py" />
         <option value="$USER_HOME$/Desktop/new 1.py" />
         <option value="$USER_HOME$/Desktop/exe/new 1.py" />
+        <option value="$USER_HOME$/.PyCharmCE2018.1/system/python_stubs/133899476/PyQt5/QtWidgets/QAbstractButton.py" />
         <option value="$PROJECT_DIR$/Core_func.py" />
         <option value="$PROJECT_DIR$/Mainform.py" />
       </list>
@@ -671,22 +658,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/warning Form.py" />
-    <entry file="file://$PROJECT_DIR$/Login.py" />
-    <entry file="file://D:/wtc_py/Mainform.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2585">
-          <caret line="91" column="25" selection-start-line="91" selection-start-column="18" selection-end-line="91" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2018.1/system/python_stubs/-2088650933/PyQt5/QtWidgets/QWidget.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="873" column="8" selection-start-line="873" selection-start-column="8" selection-end-line="873" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.PyCharmCE2018.1/system/python_stubs/-2088650933/PyQt5/QtWidgets/QTableView.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -769,13 +740,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1585">
           <caret line="99" column="8" selection-start-line="99" selection-start-column="8" selection-end-line="99" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://D:/PyExe_Crypto_Exe/WaltonWallet.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="178">
-          <caret line="975" column="56" selection-start-line="975" selection-start-column="46" selection-end-line="975" selection-end-column="56" />
         </state>
       </provider>
     </entry>
@@ -919,13 +883,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.PyCharmCE2018.1/system/python_stubs/133899476/PyQt5/QtWidgets/QAbstractButton.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="192">
-          <caret line="282" column="8" selection-start-line="282" selection-start-column="8" selection-end-line="282" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/AccountForm.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1431">
@@ -984,16 +941,6 @@
     <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/site-packages/commands/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$USER_HOME$/Desktop/exe/new 1.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="347">
-          <caret line="15" column="4" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.PyCharmCE2018.1/system/python_stubs/133899476/builtins.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="183">
@@ -1001,10 +948,62 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/.PyCharmCE2018.1/system/python_stubs/133899476/nt.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2463">
+          <caret line="546" column="4" selection-start-line="546" selection-start-column="4" selection-end-line="546" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/AppData/Local/Programs/Python/Python36/Lib/subprocess.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1240">
+          <caret line="1147" column="8" selection-start-line="1147" selection-start-column="8" selection-end-line="1147" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/exe/new 1.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="21" column="13" lean-forward="true" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharmCE2018.1/system/python_stubs/133899476/PyQt5/QtWidgets/QAbstractButton.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="282" column="8" selection-start-line="282" selection-start-column="8" selection-end-line="282" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/PyExe_Crypto_Exe/getMiner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-316">
+          <caret line="1" column="21" selection-start-line="1" selection-start-column="21" selection-end-line="1" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/PyExe_Crypto_Exe/miner.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="27">
+          <caret line="1" column="46" selection-start-line="1" selection-start-column="46" selection-end-line="1" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/PyExe_Crypto_Exe/WaltonWallet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="205">
+          <caret line="976" column="24" selection-start-line="976" selection-start-column="24" selection-end-line="976" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Core_func.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="474">
-          <caret line="170" column="75" selection-start-line="170" selection-start-column="75" selection-end-line="170" selection-end-column="75" />
+        <state relative-caret-position="1408">
+          <caret line="282" column="23" lean-forward="true" selection-start-line="282" selection-start-column="23" selection-end-line="282" selection-end-column="23" />
           <folding>
             <element signature="e#0#14#0" expanded="true" />
             <element signature="e#418#813#0" />
@@ -1013,12 +1012,13 @@
             <element signature="e#2354#2675#0" />
             <element signature="e#2757#3932#0" />
             <element signature="e#3990#4436#0" />
+            <element signature="e#4532#5594#0" />
             <element signature="e#5103#5326#0" />
             <element signature="e#5379#5774#0" />
+            <element signature="e#5843#5983#0" />
             <element signature="e#6054#6965#0" />
             <element signature="e#7072#7288#0" />
             <element signature="e#7328#7580#0" />
-            <element signature="e#7625#7888#0" />
             <element signature="e#7924#8145#0" />
             <element signature="e#8238#8453#0" />
             <element signature="e#8512#8755#0" />
@@ -1038,8 +1038,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Mainform.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="1554" column="52" selection-start-line="1554" selection-start-column="52" selection-end-line="1554" selection-end-column="52" />
+        <state relative-caret-position="245">
+          <caret line="2053" column="52" selection-start-line="2053" selection-start-column="44" selection-end-line="2053" selection-end-column="52" />
           <folding>
             <element signature="e#1755#4229#0" />
             <element signature="e#4142#9120#0" />
@@ -1053,7 +1053,6 @@
             <element signature="e#22139#22320#0" />
             <element signature="e#23202#24112#0" />
             <element signature="e#24162#27792#0" />
-            <element signature="e#27836#29943#0" />
             <element signature="e#29999#32954#0" />
             <element signature="e#30548#30629#0" />
             <element signature="e#34032#35878#0" />
@@ -1062,6 +1061,7 @@
             <element signature="e#35571#37136#0" />
             <element signature="e#37180#40878#0" />
             <element signature="e#38703#39984#0" />
+            <element signature="e#40946#40989#0" />
             <element signature="e#41041#41410#0" />
             <element signature="e#41462#41881#0" />
             <element signature="e#41922#43854#0" />
@@ -1069,6 +1069,7 @@
             <element signature="e#49365#49453#0" />
             <element signature="e#44549#46239#0" />
             <element signature="e#51224#51313#0" />
+            <element signature="e#51354#51452#0" />
             <element signature="e#46553#47737#0" />
             <element signature="e#47772#48210#0" />
             <element signature="e#48245#48683#0" />
@@ -1082,12 +1083,14 @@
             <element signature="e#51600#51746#0" />
             <element signature="e#51788#51826#0" />
             <element signature="e#57615#59618#0" />
+            <element signature="e#53890#55461#0" />
+            <element signature="e#61282#62368#0" />
             <element signature="e#55652#56122#0" />
             <element signature="e#56162#57765#0" />
+            <element signature="e#57802#58208#0" />
             <element signature="e#58247#58673#0" />
             <element signature="e#58708#59239#0" />
             <element signature="e#59274#61531#0" />
-            <element signature="e#61570#62089#0" />
             <element signature="e#62128#62874#0" />
             <element signature="e#62909#64401#0" />
             <element signature="e#64440#64557#0" />
@@ -1115,15 +1118,18 @@
             <element signature="e#72678#72694#0" />
             <element signature="e#72731#72747#0" />
             <element signature="e#72780#72817#0" />
-            <element signature="e#72850#85897#0" />
-            <element signature="e#85933#91525#0" />
-            <element signature="e#91562#100571#0" />
+            <element signature="e#83934#89612#0" />
+            <element signature="e#98766#108209#0" />
+            <element signature="e#91599#93084#0" />
+            <element signature="e#93111#94547#0" />
+            <element signature="e#94594#96072#0" />
+            <element signature="e#96099#97479#0" />
+            <element signature="e#97520#99061#0" />
             <element signature="e#100606#104278#0" />
             <element signature="e#104313#105075#0" />
             <element signature="e#105112#107811#0" />
             <element signature="e#107848#109956#0" />
             <element signature="e#109989#115802#0" />
-            <element signature="e#115834#137551#0" />
             <element signature="e#116032#116598#0" />
             <element signature="e#116626#117242#0" />
             <element signature="e#117293#117871#0" />

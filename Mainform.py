@@ -1119,7 +1119,7 @@ class sendform(QWidget, Ui_SendForm):
         self.ui.radioButton.setChecked(0)
         self.ui.radioButton_2.toggle()
         self.ui.radioButton_2.toggled.connect(self.change2Sta)
-        self.ui.radioButton_2.setChecked(1)
+        self.ui.radioButton_2.setChecked(True)
         self.ui.radioButton_2.isChecked()
         self.ui.radioButton_3.toggle()
         self.ui.radioButton_3.toggled.connect(self.change2Qui)
@@ -1959,138 +1959,69 @@ class Example(QDialog,QWidget):
         print('tick')
 
     def refresh(self):
-        print('')
         if os.path.isfile('trans.xml'):
             for AddressTransactionsEntity in self.transroot.getElementsByTagName('AddressTransactionsEntity'):
-                # self.ui.TransactionHistory.setRowCount(0)
-                # self.ui.LogMessage.setRowCount(0)
                 if AddressTransactionsEntity.getElementsByTagName('Address')[0].firstChild.data == self.m_wallet.address:
                     TransactionList = AddressTransactionsEntity.getElementsByTagName('TransactionList')[0]
-                    if len(TransactionList.getElementsByTagName('AccountTransactionsEntity'))==self.ui.TransactionHistory.rowCount():
-                        print('123456')
-                        if len(AddressTransactionsEntity.getElementsByTagName('TransactionList')[0].childNodes)==0:
-                            break
-                        else:
-                            TransactionList = AddressTransactionsEntity.getElementsByTagName('TransactionList')[0]
-                            addrreverse = range(len(TransactionList.getElementsByTagName('AccountTransactionsEntity')))
+                    try:
+                        self.newblock = Core_func.getLatestBlock()[1]
+                    except Exception as err:
+                        self.publishform.show_w2('refresh failed,please try again', self)
+                        return 1
+                    if len(TransactionList.getElementsByTagName('AccountTransactionsEntity')) == 0:
+                        ret = Core_func.getTransactionRecord(self.m_wallet.address)
+                        if ret[0] == 1:
                             self.ui.TransactionHistory.setRowCount(0)
-                            for i in reversed(addrreverse):
-                                AccountTransactionsEntity = \
-                                TransactionList.getElementsByTagName('AccountTransactionsEntity')[i]
-                                Rcount = self.ui.TransactionHistory.rowCount()
-                                self.ui.TransactionHistory.setRowCount(Rcount + 1)
-                                print(str(self.ui.TransactionHistory.rowCount())+'        addtranslist')
-                                utc_times = AccountTransactionsEntity.getElementsByTagName('utc_timestamp')[0].childNodes
-                                time_s = datetime.datetime.strptime(utc_times[0].nodeValue, "%Y-%m-%d %H:%M:%S")
-                                localtime = Core_func.utc2local(time_s)
-                                newItemtime = QTableWidgetItem(localtime.strftime('%Y-%m-%d %H:%M:%S'))
-                                if AccountTransactionsEntity.getElementsByTagName('blockType')[0].firstChild.data == 'Submitted':
-                                    retlist = Core_func.getTransactionRecord(self.m_wallet.address)
-                                    for i in range(len(retlist[1])):
-                                        if retlist[1][i]['tx_hash'] == AccountTransactionsEntity.getElementsByTagName('tx_hash')[0].firstChild.data:
-                                            AccountTransactionsEntity.getElementsByTagName('blockType')[0].firstChild.data = '0/12'
-                                            AccountTransactionsEntity.getElementsByTagName('blockNumber')[0].firstChild.data = retlist[1][i]['blockNumber']
-                                            AddressTransactionsEntity.getElementsByTagName('UpdateTime')[0].firstChild.data = localtime.strftime('%Y-%m-%d %H:%M:%S')
-                                            AccountTransactionsEntity.getElementsByTagName('transacIndex')[0].firstChild.data = retlist[1][i]['transacIndex']
-                                            print(retlist[1][i]['transacIndex'])
-                                elif AccountTransactionsEntity.getElementsByTagName('blockType')[0].firstChild.data != 'Success':
-                                   try:
-                                       ret = Core_func.getLatestBlock()[1]
-                                       num = str(AccountTransactionsEntity.getElementsByTagName('blockNumber')[0].firstChild.data)
-                                       if int(ret) > int(num):
-                                           deta = int(ret)-int(num)
-                                           if deta >= 12:
-                                               AccountTransactionsEntity.getElementsByTagName('blockType')[0].firstChild.data='Success'
-                                           else:
-                                               AccountTransactionsEntity.getElementsByTagName('blockType')[0].firstChild.data=str(deta)+'/12'
-                                       elif int(ret) == int(AccountTransactionsEntity.getElementsByTagName('blockNumber')[0].firstChild.data):
-                                           AccountTransactionsEntity.getElementsByTagName('blockType')[0].firstChild.data='0/12'
-                                   except Exception as err:
-                                       self.publishform.show_w2('refresh failed,please try again', self)
-                                       return 1
-                                newItemblockType = QTableWidgetItem(AccountTransactionsEntity.getElementsByTagName('blockType')[0].firstChild.data)
-                                f = open('trans.xml', 'w')
-                                self.transdom.writexml(f, addindent=' ', newl='\n')
-                                f.close()
-                                if AccountTransactionsEntity.getElementsByTagName('transType')[0].firstChild.data == 'Send':
-                                    newItemvalue = QTableWidgetItem('-' + AccountTransactionsEntity.getElementsByTagName('value')[0].firstChild.data + 'WTCT')
+
+                            for i in range(len(ret[1])):
+                                Transrow = self.ui.TransactionHistory.rowCount()
+                                self.ui.TransactionHistory.setRowCount(Transrow+1)
+                                if int(self.newblock) - int(ret[1][i]['blockNumber'])>11:
+                                    newItemblockType = QTableWidgetItem('Success')
+                                else:
+                                    newItemblockType = QTableWidgetItem(str(int(self.newblock) - int(ret[1][i]['blockNumber']))+'/12')
+                                if self.m_wallet.address.lower() == ret[1][i]['addressFrom']:
                                     item = QTableWidgetItem()
                                     dela = QtGui.QIcon('pic/send3.png')
                                     item.setIcon(dela)
-                                    newItemtoaddr = QTableWidgetItem(
-                                        AccountTransactionsEntity.getElementsByTagName('addressTo')[0].firstChild.data)
-
+                                    newItemvalue = QTableWidgetItem('-' + str(ret[1][i]['value']) + 'WTCT')
+                                    newItemtoaddr = QTableWidgetItem( ret[1][i]['addressTo'])
                                 else:
                                     item = QTableWidgetItem()
                                     dela = QtGui.QIcon('pic/recieve3.png')
                                     item.setIcon(dela)
-                                    newItemtoaddr = QTableWidgetItem(
-                                        AccountTransactionsEntity.getElementsByTagName('addressFrom')[
-                                            0].firstChild.data)
-                                    newItemvalue = QTableWidgetItem(AccountTransactionsEntity.getElementsByTagName('value')[0].firstChild.data + 'WTCT')
-                                self.ui.TransactionHistory.setItem(Rcount, 0, item)
-                                self.ui.TransactionHistory.setItem(Rcount, 1, newItemtime)
-                                self.ui.TransactionHistory.setItem(Rcount, 2, newItemtoaddr)
-                                self.ui.TransactionHistory.setItem(Rcount, 3, newItemblockType)
-                                self.ui.TransactionHistory.setItem(Rcount, 4, newItemvalue)
-
-
-                                if len(AddressTransactionsEntity.getElementsByTagName('TransactionList')[0].childNodes) == self.ui.LogMessage.rowCount() :
-                                    break
-
-                            break
-                    elif len(TransactionList.getElementsByTagName('AccountTransactionsEntity'))>self.ui.TransactionHistory.rowCount():
-                        print(str(self.ui.LogMessage.rowCount())+'    7890')
-                        print(str(len(AddressTransactionsEntity.getElementsByTagName('TransactionList'))) + '    7890')
-                        TransactionList = AddressTransactionsEntity.getElementsByTagName('TransactionList')[0]
-                        addrreverse = range(len(TransactionList.getElementsByTagName('AccountTransactionsEntity')))
+                                    newItemtoaddr = QTableWidgetItem(ret[1][i]['addressFrom'])
+                                    newItemvalue = QTableWidgetItem(str(ret[1][i]['value']) + 'WTCT')
+                                time_s = datetime.datetime.strptime(ret[1][i]['utc_timestamp'], "%Y-%m-%d %H:%M:%S")
+                                localtime = Core_func.utc2local(time_s)
+                                newItemTime = QTableWidgetItem(localtime.strftime('%Y-%m-%d %H:%M:%S'))
+                                self.ui.TransactionHistory.setItem(Transrow, 0, item)
+                                self.ui.TransactionHistory.setItem(Transrow, 1, newItemTime)
+                                self.ui.TransactionHistory.setItem(Transrow, 2, newItemtoaddr)
+                                self.ui.TransactionHistory.setItem(Transrow, 3, newItemblockType)
+                                self.ui.TransactionHistory.setItem(Transrow, 4, newItemvalue)
+                    else:
+                        ret = Core_func.getTransactionRecord(self.m_wallet.address)
                         self.ui.TransactionHistory.setRowCount(0)
-                        for i in reversed(addrreverse):
+                        for i in range(len(TransactionList.getElementsByTagName('AccountTransactionsEntity'))):
                             AccountTransactionsEntity = TransactionList.getElementsByTagName('AccountTransactionsEntity')[i]
-                            Rcount = self.ui.TransactionHistory.rowCount()
-                            self.ui.TransactionHistory.setRowCount(Rcount+1)
-                            # self.ui.TransactionHistory.insertRow(0)
+                            if ret[0] == 1:
+                                for j in range(len(ret[1])):
+                                    if ret[1][j]['tx_hash']  == AccountTransactionsEntity.getElementsByTagName('tx_hash')[0].firstChild.data:
+                                        AccountTransactionsEntity.parentNode.removeChild(AccountTransactionsEntity)
+                                        f = open('trans.xml', 'w')
+                                        self.transdom.writexml(f, addindent=' ', newl='\n')
+                                        f.close()
+                                        break
+                        a = range(len(TransactionList.getElementsByTagName('AccountTransactionsEntity')))
+                        for i in reversed(a):
+                            AccountTransactionsEntity = TransactionList.getElementsByTagName('AccountTransactionsEntity')[i]
+                            self.ui.TransactionHistory.insertRow(0)
                             utc_times = AccountTransactionsEntity.getElementsByTagName('utc_timestamp')[0].childNodes
                             time_s = datetime.datetime.strptime(utc_times[0].nodeValue, "%Y-%m-%d %H:%M:%S")
                             localtime = Core_func.utc2local(time_s)
                             newItemtime = QTableWidgetItem(localtime.strftime('%Y-%m-%d %H:%M:%S'))
-
-                            if AccountTransactionsEntity.getElementsByTagName('blockType')[
-                                0].firstChild.data == 'Submitted':
-                                retlist = Core_func.getTransactionRecord(self.m_wallet.address)
-                                for i in range(len(retlist[1])):
-                                    if retlist[1][i]['tx_hash'] == \
-                                            AccountTransactionsEntity.getElementsByTagName('tx_hash')[
-                                                0].firstChild.data:
-                                        AccountTransactionsEntity.getElementsByTagName('blockType')[
-                                            0].firstChild.data = '0/12'
-                                        AccountTransactionsEntity.getElementsByTagName('blockNumber')[
-                                            0].firstChild.data = retlist[1][i]['blockNumber']
-                                        AccountTransactionsEntity.getElementsByTagName('transacIndex')[
-                                            0].firstChild.data = retlist[1][i]['transacIndex']
-                                        AddressTransactionsEntity.getElementsByTagName('UpdateTime')[
-                                            0].firstChild.data = localtime.strftime('%Y-%m-%d %H:%M:%S')
-                            elif AccountTransactionsEntity.getElementsByTagName('blockType')[
-                                0].firstChild.data != 'Success':
-                                ret = Core_func.getLatestBlock()[1]
-                                num = str(
-                                    AccountTransactionsEntity.getElementsByTagName('blockNumber')[0].firstChild.data)
-                                if int(ret) > int(num):
-                                    deta = int(ret) - int(num)
-                                    if deta >= 12:
-                                        AccountTransactionsEntity.getElementsByTagName('blockType')[
-                                            0].firstChild.data = 'Success'
-                                    else:
-                                        AccountTransactionsEntity.getElementsByTagName('blockType')[
-                                            0].firstChild.data = str(deta) + '/12'
-                                elif int(ret) == int(
-                                        AccountTransactionsEntity.getElementsByTagName('blockNumber')[0].firstChild.data):
-                                    AccountTransactionsEntity.getElementsByTagName('blockType')[0].firstChild.data = '0/12'
-                            newItemblockType = QTableWidgetItem(
-                                AccountTransactionsEntity.getElementsByTagName('blockType')[0].firstChild.data)
-                            f = open('trans.xml', 'w')
-                            self.transdom.writexml(f, addindent=' ', newl='\n')
-                            f.close()
+                            newItemblockType = QTableWidgetItem('Submitted')
                             if AccountTransactionsEntity.getElementsByTagName('transType')[0].firstChild.data == 'Send':
                                 newItemvalue = QTableWidgetItem(
                                     '-' + AccountTransactionsEntity.getElementsByTagName('value')[
@@ -2100,96 +2031,133 @@ class Example(QDialog,QWidget):
                                 item.setIcon(dela)
                                 newItemtoaddr = QTableWidgetItem(
                                     AccountTransactionsEntity.getElementsByTagName('addressTo')[0].firstChild.data)
+
                             else:
                                 item = QTableWidgetItem()
                                 dela = QtGui.QIcon('pic/recieve3.png')
                                 item.setIcon(dela)
+                                newItemtoaddr = QTableWidgetItem(
+                                    AccountTransactionsEntity.getElementsByTagName('addressFrom')[
+                                        0].firstChild.data)
                                 newItemvalue = QTableWidgetItem(
                                     AccountTransactionsEntity.getElementsByTagName('value')[0].firstChild.data + 'WTCT')
-                                newItemtoaddr = QTableWidgetItem(
-                                    AccountTransactionsEntity.getElementsByTagName('addressFrom')[0].firstChild.data)
-
-                            self.ui.TransactionHistory.setItem(Rcount, 0, item)
-                            self.ui.TransactionHistory.setItem(Rcount, 1, newItemtime)
-                            self.ui.TransactionHistory.setItem(Rcount, 2, newItemtoaddr)
-                            self.ui.TransactionHistory.setItem(Rcount, 3, newItemblockType)
-                            self.ui.TransactionHistory.setItem(Rcount, 4, newItemvalue)
-                            if len(AddressTransactionsEntity.getElementsByTagName('TransactionList')[0].childNodes) == self.ui.TransactionHistory.rowCount() :
-                                break
-                        break
-            print('write translog xml')
-        else:
-            Core_func.generatetransXml()
+                            self.ui.TransactionHistory.setItem(0, 0, item)
+                            self.ui.TransactionHistory.setItem(0, 1, newItemtime)
+                            self.ui.TransactionHistory.setItem(0, 2, newItemtoaddr)
+                            self.ui.TransactionHistory.setItem(0, 3, newItemblockType)
+                            self.ui.TransactionHistory.setItem(0, 4, newItemvalue)
+                        ret = Core_func.getTransactionRecord(self.m_wallet.address)
+                        if ret[0] == 1:
+                            for i in range(len(ret[1])):
+                                Transrow = self.ui.TransactionHistory.rowCount()
+                                self.ui.TransactionHistory.setRowCount(Transrow+1)
+                                if int(self.newblock) - int(ret[1][i]['blockNumber'])>11:
+                                    newItemblockType = QTableWidgetItem('Success')
+                                else:
+                                    newItemblockType = QTableWidgetItem(str(int(self.newblock) - int(ret[1][i]['blockNumber']))+'/12')
+                                if self.m_wallet.address.lower() == ret[1][i]['addressFrom']:
+                                    item = QTableWidgetItem()
+                                    dela = QtGui.QIcon('pic/send3.png')
+                                    item.setIcon(dela)
+                                    newItemvalue = QTableWidgetItem('-' + str(ret[1][i]['value']) + 'WTCT')
+                                    newItemtoaddr = QTableWidgetItem( ret[1][i]['addressTo'])
+                                else:
+                                    item = QTableWidgetItem()
+                                    dela = QtGui.QIcon('pic/recieve3.png')
+                                    item.setIcon(dela)
+                                    newItemtoaddr = QTableWidgetItem(ret[1][i]['addressFrom'])
+                                    newItemvalue = QTableWidgetItem(str(ret[1][i]['value']) + 'WTCT')
+                                time_s = datetime.datetime.strptime(ret[1][i]['utc_timestamp'], "%Y-%m-%d %H:%M:%S")
+                                localtime = Core_func.utc2local(time_s)
+                                newItemTime = QTableWidgetItem(localtime.strftime('%Y-%m-%d %H:%M:%S'))
+                                self.ui.TransactionHistory.setItem(Transrow, 0, item)
+                                self.ui.TransactionHistory.setItem(Transrow, 1, newItemTime)
+                                self.ui.TransactionHistory.setItem(Transrow, 2, newItemtoaddr)
+                                self.ui.TransactionHistory.setItem(Transrow, 3, newItemblockType)
+                                self.ui.TransactionHistory.setItem(Transrow, 4, newItemvalue)
 
         self.refreshlog()
 
     def refreshlog(self):
         print(self.ui.LogMessage.rowCount())
-        for AddressTransactionsEntity in self.transroot.getElementsByTagName('AddressTransactionsEntity'):
-            self.logcount = 0
-            if AddressTransactionsEntity.getElementsByTagName('Address')[0].firstChild.data == self.m_wallet.address:
-                TransactionList = AddressTransactionsEntity.getElementsByTagName('TransactionList')[0]
-                if len(AddressTransactionsEntity.getElementsByTagName('TransactionList')[0].childNodes) == 0:
-                    break
-                else:
-                    for AccountTransactionsEntity in TransactionList.getElementsByTagName('AccountTransactionsEntity'):
-                        if AccountTransactionsEntity.getElementsByTagName('blockType')[0].firstChild.data == 'Success':
-                            self.logcount += 1
-                            print('logcount= '+str(self.logcount))
-                    if self.ui.LogMessage.rowCount() == 0:
-                        logreverse = range(len(TransactionList.getElementsByTagName('AccountTransactionsEntity')))
-                        for i in reversed(logreverse):
-                            AccountTransactionsEntity = TransactionList.getElementsByTagName('AccountTransactionsEntity')[i]
-                            if AccountTransactionsEntity.getElementsByTagName('blockType')[0].firstChild.data == 'Success':
-                                logrowcount = self.ui.LogMessage.rowCount()
-                                self.ui.LogMessage.setRowCount(logrowcount+1)
-                                newItemContent = QTableWidgetItem(
-                                    'From:' + AccountTransactionsEntity.getElementsByTagName('addressFrom')[
-                                        0].firstChild.data + '\n' + 'To:' +
-                                    AccountTransactionsEntity.getElementsByTagName('addressTo')[
-                                        0].firstChild.data + '\n' + 'Value:' +
-                                    AccountTransactionsEntity.getElementsByTagName('value')[
-                                        0].firstChild.data + '                                                                                                                         ' + '\n' + 'tx_hash:' +
-                                    AccountTransactionsEntity.getElementsByTagName('tx_hash')[0].firstChild.data)
-                                newItemType = QTableWidgetItem(
-                                    AccountTransactionsEntity.getElementsByTagName('transType')[0].firstChild.data)
-                                time_s = datetime.datetime.strptime(
-                                    AccountTransactionsEntity.getElementsByTagName('utc_timestamp')[0].firstChild.data,
-                                    "%Y-%m-%d %H:%M:%S")
-                                localtime = Core_func.utc2local(time_s)
-                                newItemTime = QTableWidgetItem(localtime.strftime('%Y-%m-%d %H:%M:%S'))
-                                self.ui.LogMessage.setItem(logrowcount, 0, newItemType)
-                                self.ui.LogMessage.setItem(logrowcount, 1, newItemTime)
-                                self.ui.LogMessage.setItem(logrowcount, 2, newItemContent)
-
-                            if self.logcount == self.ui.LogMessage.rowCount():
-                                break
-                    elif self.logcount == self.ui.LogMessage.rowCount():
-                        print('LogMessage= ' + str(self.ui.LogMessage.rowCount()))
+        ret = Core_func.getTransactionRecord(self.m_wallet.address)
+        if ret[0] == 1:
+            if self.ui.LogMessage.rowCount() == 0:
+                for i in range(len(ret[1])):
+                    logrowcount = self.ui.LogMessage.rowCount()
+                    self.ui.LogMessage.setRowCount(logrowcount+1)
+                    newItemContent = QTableWidgetItem(
+                        'From:' + ret[1][i]['addressFrom'] + '\n' + 'To:' +
+                        ret[1][i]['addressTo'] + '\n' + 'Value:' +
+                        str(ret[1][i]['value']) + '                                                                                                                         ' + '\n' + 'tx_hash:' +
+                        ret[1][i]['tx_hash'])
+                    if self.m_wallet.address.lower() == ret[1][i]['addressFrom']:
+                        newItemType = QTableWidgetItem('Send')
+                    else:
+                        newItemType = QTableWidgetItem('Recieve')
+                    time_s = datetime.datetime.strptime(ret[1][i]['utc_timestamp'],"%Y-%m-%d %H:%M:%S")
+                    localtime = Core_func.utc2local(time_s)
+                    newItemTime = QTableWidgetItem(localtime.strftime('%Y-%m-%d %H:%M:%S'))
+                    self.ui.LogMessage.setItem(logrowcount, 0, newItemType)
+                    self.ui.LogMessage.setItem(logrowcount, 1, newItemTime)
+                    self.ui.LogMessage.setItem(logrowcount, 2, newItemContent)
+            else:
+                ind = Core_func.QTableWidget.indexFromItem(self.ui.LogMessage, self.ui.LogMessage.item(0, 2))
+                print(ind.data().split('tx_hash')[1][1:])
+                self.foundmeslog = 0
+                for i in range(len(ret[1])):
+                    if ret[1][i]['tx_hash'] == ind.data().split('tx_hash')[1][1:]:
+                        self.foundmeslog = i
                         break
-                    elif self.logcount > self.ui.LogMessage.rowCount():
-                        print('self.logcount > self.ui.LogMessage.rowCount' + str(self.ui.LogMessage.rowCount()) +'  '+str(self.logcount))
-                        logreverse = range(len(TransactionList.getElementsByTagName('AccountTransactionsEntity')))
-                        for i in reversed(logreverse):
-                            AccountTransactionsEntity = TransactionList.getElementsByTagName('AccountTransactionsEntity')[i]
-                            self.ui.LogMessage.insertRow(0)
-                            newItemContent = QTableWidgetItem('From:' + AccountTransactionsEntity.getElementsByTagName('addressFrom')[0].firstChild.data + '\n' + 'To:' +
-                                AccountTransactionsEntity.getElementsByTagName('addressTo')[0].firstChild.data + '\n' + 'Value:' +
-                                AccountTransactionsEntity.getElementsByTagName('value')[0].firstChild.data + '                                                                                                                         ' + '\n' + 'tx_hash:' +
-                                AccountTransactionsEntity.getElementsByTagName('tx_hash')[0].firstChild.data)
-                            newItemType = QTableWidgetItem(AccountTransactionsEntity.getElementsByTagName('transType')[0].firstChild.data)
-                            time_s = datetime.datetime.strptime(AccountTransactionsEntity.getElementsByTagName('utc_timestamp')[0].firstChild.data,"%Y-%m-%d %H:%M:%S")
+                    if i == 11:
+                        self.ui.LogMessage.setRowCount(0)
+                        for i in range(len(ret[1])):
+                            logrowcount = self.ui.LogMessage.rowCount()
+                            self.ui.LogMessage.setRowCount(logrowcount + 1)
+                            newItemContent = QTableWidgetItem(
+                                'From:' + ret[1][i]['addressFrom'] + '\n' + 'To:' +
+                                ret[1][i]['addressTo'] + '\n' + 'Value:' +
+                                str(ret[1][i]['value']) + '                                                                                                                         ' + '\n' + 'tx_hash:' +
+                                ret[1][i]['tx_hash'])
+                            if self.m_wallet.address.lower() == ret[1][i]['addressFrom']:
+                                newItemType = QTableWidgetItem('Send')
+                            else:
+                                newItemType = QTableWidgetItem('Recieve')
+                            time_s = datetime.datetime.strptime(ret[1][i]['utc_timestamp'], "%Y-%m-%d %H:%M:%S")
                             localtime = Core_func.utc2local(time_s)
                             newItemTime = QTableWidgetItem(localtime.strftime('%Y-%m-%d %H:%M:%S'))
-                            self.ui.LogMessage.setItem(0, 0, newItemType)
-                            self.ui.LogMessage.setItem(0, 1, newItemTime)
-                            self.ui.LogMessage.setItem(0, 2, newItemContent)
-
-                            if self.logcount == self.ui.LogMessage.rowCount():
-                                break
+                            self.ui.LogMessage.setItem(logrowcount, 0, newItemType)
+                            self.ui.LogMessage.setItem(logrowcount, 1, newItemTime)
+                            self.ui.LogMessage.setItem(logrowcount, 2, newItemContent)
+                a = range(self.foundmeslog)
+                for i in reversed(a):
+                    self.ui.LogMessage.insertRow(0)
+                    newItemContent = QTableWidgetItem(
+                        'From:' + ret[1][i]['addressFrom'] + '\n' + 'To:' +
+                        ret[1][i]['addressTo'] + '\n' + 'Value:' +
+                        str(ret[1][i]['value']) + '                                                                                                                         ' + '\n' + 'tx_hash:' +
+                        ret[1][i]['tx_hash'])
+                    if self.m_wallet.address.lower() == ret[1][i]['addressFrom']:
+                        newItemType = QTableWidgetItem('Send')
+                    else:
+                        newItemType = QTableWidgetItem('Recieve')
+                    time_s = datetime.datetime.strptime(ret[1][i]['utc_timestamp'], "%Y-%m-%d %H:%M:%S")
+                    localtime = Core_func.utc2local(time_s)
+                    newItemTime = QTableWidgetItem(localtime.strftime('%Y-%m-%d %H:%M:%S'))
+                    self.ui.LogMessage.setItem(0, 0, newItemType)
+                    self.ui.LogMessage.setItem(0, 1, newItemTime)
+                    self.ui.LogMessage.setItem(0, 2, newItemContent)
 
 
     def refreshTop(self):
+        # r1 = requests.post('http://httpbin.org/post', data={
+        #     "jsonrpc": "2.0", "method": "admin_peers", "params": [], "id": 4}).json()
+        # print(r1)
+        # r2 = requests.post('http://httpbin.org/post', data={
+        #     "jsonrpc": "2.0", "method": "eth_syncing", "params": [], "id": 0}).json()
+        # print(r2)
+        # print(r2['result']['currentBlock'])
+        # print(r2['result']['highestBlock'])
         if self.syncstatus == 0:
             self.ui.toolButton_25.setText(' Syncing')
             self.ui.toolButton_25.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
