@@ -1954,33 +1954,39 @@ class Example(QDialog,QWidget):
 
     def startmining(self):
         if self.startstop == 1:
-            self.startstop = 0
-            self.ui.pushButton_30.setStyleSheet("border-width: 1px;"
-                                                "border-color: rgb(170, 0, 255);"
-                                                "background-color: rgb(170, 0, 255);"
-                                                "color: rgb(255, 255, 255);"
-                                                "border-radius:20px;"
-                                                "border-style:solid; ")
-            self.ui.pushButton_30.setText('Stop Mining')
-            ######################################
-            self.miningtatus = 1
-            ######################################
-            self.ui.radioButton.setEnabled(0)
-            self.ui.radioButton_2.setEnabled(0)
-            self.ui.radioButton_3.setEnabled(0)
-            self.ui.radioButton_4.setEnabled(0)
-            self.ui.radioButton_5.setEnabled(0)
-            self.ui.radioButton_6.setEnabled(0)
-            self.ui.horizontalSlider.setEnabled(0)
-            if self.cpumode == 1:
-                if self.ui.lineEdit_7 == '':
-                    self.publishform.show_w2('Please add an address',self)
-                else:
+            if self.ui.lineEdit_7 == '':
+                self.publishform.show_w2('Please add an address', self)
+            elif len(self.w3.admin.peers) == 0:
+                self.publishform.show_w2('need peers connected', self)
+            else:
+                self.startstop = 0
+                self.ui.pushButton_30.setStyleSheet("border-width: 1px;"
+                                                    "border-color: rgb(170, 0, 255);"
+                                                    "background-color: rgb(170, 0, 255);"
+                                                    "color: rgb(255, 255, 255);"
+                                                    "border-radius:20px;"
+                                                    "border-style:solid; ")
+                self.ui.pushButton_30.setText('Stop Mining')
+                ######################################
+                self.miningtatus = 1
+                ######################################
+                self.ui.radioButton.setEnabled(0)
+                self.ui.radioButton_2.setEnabled(0)
+                self.ui.radioButton_3.setEnabled(0)
+                self.ui.radioButton_4.setEnabled(0)
+                self.ui.radioButton_5.setEnabled(0)
+                self.ui.radioButton_6.setEnabled(0)
+                self.ui.horizontalSlider.setEnabled(0)
+                if self.cpumode == 1:
+
                     self.w3.miner.setEtherBase(self.ui.lineEdit_7.text().strip())
                     self.w3.miner.start(self.cpures)
                     print(self.cpures)
-            else:
-                print('gpu')
+                    self.ui.lineEdit_10.setText(str(Core_func.getDifficulty()[1][0][1]))
+                    self.ui.lineEdit_12.setText('2')
+                    self.ui.lineEdit_11.setText(str(self.w3.eth.hashrate))
+                else:
+                    print('gpu')
         else:
             self.startstop = 1
             self.w3.miner.stop()
@@ -2225,14 +2231,11 @@ class Example(QDialog,QWidget):
 
 
     def refreshTop(self):
-        # r1 = requests.post('http://httpbin.org/post', data={
-        #     "jsonrpc": "2.0", "method": "admin_peers", "params": [], "id": 4}).json()
-        # print(r1)
-        # r2 = requests.post('http://httpbin.org/post', data={
-        #     "jsonrpc": "2.0", "method": "eth_syncing", "params": [], "id": 0}).json()
-        # print(r2)
-        # print(r2['result']['currentBlock'])
-        # print(r2['result']['highestBlock'])
+        if len(self.w3.admin.peers)!=0:
+            self.peers = len(self.w3.admin.peers)
+        print('peers= '+str(self.peers))
+        self.ui.lineEdit_11.setText(str(self.w3.eth.hashrate))
+
         if self.syncstatus == 0:
             self.ui.toolButton_25.setText(' Syncing')
             self.ui.toolButton_25.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
@@ -2344,25 +2347,25 @@ class Example(QDialog,QWidget):
             self.ui.toolButton_40.setStyleSheet('color: rgb(100, 100, 100);border:0px;')
             self.ui.toolButton_40.setIcon(QIcon("pic/tubiaoer.png"))
         else:
-            self.ui.toolButton_24.setText(' Peers Connected:'+'')
+            self.ui.toolButton_24.setText(' Peers Connected:'+str(self.peers))
             self.ui.toolButton_24.setStyleSheet('color: #aa00ff;border:0px;')
             self.ui.toolButton_24.setIcon(QIcon("pic/tubiao1.png"))
-            self.ui.toolButton_23.setText(' Peers Connected:' + '')
+            self.ui.toolButton_23.setText(' Peers Connected:' + str(self.peers))
             self.ui.toolButton_23.setStyleSheet('color: #aa00ff;border:0px;')
             self.ui.toolButton_23.setIcon(QIcon("pic/tubiao1.png"))
-            self.ui.toolButton_27.setText(' Peers Connected:' + '')
+            self.ui.toolButton_27.setText(' Peers Connected:' + str(self.peers))
             self.ui.toolButton_27.setStyleSheet('color: #aa00ff;border:0px;')
             self.ui.toolButton_27.setIcon(QIcon("pic/tubiao1.png"))
-            self.ui.toolButton_33.setText(' Peers Connected:' + '')
+            self.ui.toolButton_33.setText(' Peers Connected:' + str(self.peers))
             self.ui.toolButton_33.setStyleSheet('color: #aa00ff;border:0px;')
             self.ui.toolButton_33.setIcon(QIcon("pic/tubiao1.png"))
-            self.ui.toolButton_36.setText(' Peers Connected:' + '')
+            self.ui.toolButton_36.setText(' Peers Connected:' + str(self.peers))
             self.ui.toolButton_36.setStyleSheet('color: #aa00ff;border:0px;')
             self.ui.toolButton_36.setIcon(QIcon("pic/tubiao1.png"))
-            self.ui.toolButton_30.setText(' Peers Connected:' + '')
+            self.ui.toolButton_30.setText(' Peers Connected:' + str(self.peers))
             self.ui.toolButton_30.setStyleSheet('color: #aa00ff;border:0px;')
             self.ui.toolButton_30.setIcon(QIcon("pic/tubiao1.png"))
-            self.ui.toolButton_40.setText(' Peers Connected:' + '')
+            self.ui.toolButton_40.setText(' Peers Connected:' + str(self.peers))
             self.ui.toolButton_40.setStyleSheet('color: #aa00ff;border:0px;')
             self.ui.toolButton_40.setIcon(QIcon("pic/tubiao1.png"))
 

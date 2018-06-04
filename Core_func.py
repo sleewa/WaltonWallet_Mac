@@ -332,6 +332,15 @@ def getLatestBlock():
         print(err)
         return (0, err)
 
+def getDifficulty():
+    try:
+        r1 = requests.get(
+            "https://waltonchain.net:18950/api/getWTCBlockDifficulty/1").json()
+        return (1, r1)
+    except Exception as err:
+        print(err)
+        return (0, err)
+
 
 def getGasPrice():
     try:
@@ -547,6 +556,6 @@ def generatesettingXml():
 
 # print(getTransactionRecord('0xAB828046856F5886a3835C914862E0F5f834Ee7d'))
 # ret = Import_mnemonic('111111', '111111', 'antique profit purse nut forum cactus amount genius rally army behind elbow')
-# print(ret)
+print(getDifficulty()[1][0][1])
 # print(getTransactionRecord('0xAB828046856F5886a3835C914862E0F5f834Ee7d')[1][1])
 #Transaction_out('3373c7af355f86b8dc9f02d386bea047da063ed541ed927d149214134012e451', '0xFBf36B7c56258dC3e29769C1a686250B8B002dE3', 2, 200000, 0.000000036)

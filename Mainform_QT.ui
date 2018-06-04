@@ -375,7 +375,7 @@ color: rgb(93, 93, 93);</string>
     <enum>QFrame::NoFrame</enum>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>5</number>
    </property>
    <widget class="QWidget" name="p0">
     <widget class="QLabel" name="label_3">
@@ -2177,7 +2177,7 @@ border-radius:25px;</string>
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="autoFillBackground">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="text">
         <string/>
@@ -3098,7 +3098,7 @@ QLineEdit[echoMode=&quot;2&quot;] {
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="autoFillBackground">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="text">
         <string/>
@@ -3347,7 +3347,7 @@ background-color: rgb(230, 238, 255);
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="autoFillBackground">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="text">
         <string/>
@@ -3404,7 +3404,7 @@ background-color: rgb(230, 238, 255);</string>
         <cursorShape>PointingHandCursor</cursorShape>
        </property>
        <property name="autoFillBackground">
-        <bool>true</bool>
+        <bool>false</bool>
        </property>
        <property name="text">
         <string/>
@@ -5795,7 +5795,7 @@ color: rgb(100, 100, 100);</string>
       <rect>
        <x>20</x>
        <y>90</y>
-       <width>201</width>
+       <width>161</width>
        <height>16</height>
       </rect>
      </property>
@@ -5818,7 +5818,7 @@ color: rgb(100, 100, 100);</string>
       <rect>
        <x>20</x>
        <y>120</y>
-       <width>201</width>
+       <width>151</width>
        <height>16</height>
       </rect>
      </property>
@@ -5840,7 +5840,7 @@ color: rgb(100, 100, 100);</string>
       <rect>
        <x>20</x>
        <y>150</y>
-       <width>201</width>
+       <width>151</width>
        <height>16</height>
       </rect>
      </property>
@@ -6252,75 +6252,6 @@ border-style:solid;
       <number>0</number>
      </property>
     </widget>
-    <widget class="QLabel" name="label_22">
-     <property name="geometry">
-      <rect>
-       <x>230</x>
-       <y>90</y>
-       <width>171</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>等线</family>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">
-color: rgb(0, 0, 0);</string>
-     </property>
-     <property name="text">
-      <string>Getting..</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_23">
-     <property name="geometry">
-      <rect>
-       <x>230</x>
-       <y>120</y>
-       <width>171</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>等线</family>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">
-color: rgb(0, 0, 0);</string>
-     </property>
-     <property name="text">
-      <string>0</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_24">
-     <property name="geometry">
-      <rect>
-       <x>230</x>
-       <y>150</y>
-       <width>171</width>
-       <height>16</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>等线</family>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">
-color: rgb(0, 0, 0);</string>
-     </property>
-     <property name="text">
-      <string>Getting..</string>
-     </property>
-    </widget>
     <widget class="QPushButton" name="pushButton_45">
      <property name="geometry">
       <rect>
@@ -6490,6 +6421,150 @@ color: rgb(0, 0, 0);</string>
       </property>
      </widget>
     </widget>
+    <widget class="QLineEdit" name="lineEdit_10">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>90</y>
+       <width>201</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>等线</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="statusTip">
+      <string/>
+     </property>
+     <property name="whatsThis">
+      <string/>
+     </property>
+     <property name="accessibleName">
+      <string/>
+     </property>
+     <property name="accessibleDescription">
+      <string/>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">
+QLineEdit[echoMode=&quot;2&quot;] {
+    lineedit-password-character:42;
+}
+</string>
+     </property>
+     <property name="text">
+      <string>Getting</string>
+     </property>
+     <property name="frame">
+      <bool>false</bool>
+     </property>
+     <property name="echoMode">
+      <enum>QLineEdit::Normal</enum>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_11">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>120</y>
+       <width>191</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>等线</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="statusTip">
+      <string/>
+     </property>
+     <property name="whatsThis">
+      <string/>
+     </property>
+     <property name="accessibleName">
+      <string/>
+     </property>
+     <property name="accessibleDescription">
+      <string/>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">
+QLineEdit[echoMode=&quot;2&quot;] {
+    lineedit-password-character:42;
+}
+</string>
+     </property>
+     <property name="text">
+      <string>0</string>
+     </property>
+     <property name="maxLength">
+      <number>1000</number>
+     </property>
+     <property name="frame">
+      <bool>false</bool>
+     </property>
+     <property name="echoMode">
+      <enum>QLineEdit::Normal</enum>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit_12">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>150</y>
+       <width>191</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>等线</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="statusTip">
+      <string/>
+     </property>
+     <property name="whatsThis">
+      <string/>
+     </property>
+     <property name="accessibleName">
+      <string/>
+     </property>
+     <property name="accessibleDescription">
+      <string/>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">
+QLineEdit[echoMode=&quot;2&quot;] {
+    lineedit-password-character:42;
+}
+</string>
+     </property>
+     <property name="text">
+      <string>Getting</string>
+     </property>
+     <property name="frame">
+      <bool>false</bool>
+     </property>
+     <property name="echoMode">
+      <enum>QLineEdit::Normal</enum>
+     </property>
+    </widget>
     <zorder>label_6</zorder>
     <zorder>toolButton_21</zorder>
     <zorder>toolButton_22</zorder>
@@ -6521,12 +6596,12 @@ color: rgb(0, 0, 0);</string>
     <zorder>line_3</zorder>
     <zorder>line_4</zorder>
     <zorder>line_5</zorder>
-    <zorder>label_22</zorder>
-    <zorder>label_23</zorder>
-    <zorder>label_24</zorder>
     <zorder>pushButton_45</zorder>
     <zorder>widget</zorder>
     <zorder>widget_2</zorder>
+    <zorder>lineEdit_10</zorder>
+    <zorder>lineEdit_11</zorder>
+    <zorder>lineEdit_12</zorder>
    </widget>
    <widget class="QWidget" name="p6">
     <widget class="QLabel" name="label_15">
