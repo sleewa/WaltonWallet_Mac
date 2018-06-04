@@ -1,7 +1,12 @@
+import subprocess
 import sys
 import win32ui
 from typing import Type
 import win32gui
+
+from web3 import Web3
+from web3 import HTTPProvider
+
 import Warning_Form
 import Core_func
 from web3.auto import w3
@@ -45,7 +50,7 @@ from PswForm import Ui_PswForm
 from SetPswForm import Ui_SetPswForm
 from ChangePswForm import Ui_ChangePswForm
 from PriKeyForm import Ui_PriKeyForm
-
+import subprocess
 import xml.etree.ElementTree as ET
 import matplotlib
 import datetime
@@ -1968,11 +1973,15 @@ class Example(QDialog,QWidget):
             self.ui.radioButton_6.setEnabled(0)
             self.ui.horizontalSlider.setEnabled(0)
             if self.cpumode == 1:
-                print('cpu')
+
+                subprocess.Popen('walton', shell=True)
+                self.w3.miner.setEtherBase('0xfbf36b7c56258dc3e29769c1a686250b8b002de3')
+                self.w3.miner.start(2)
             else:
                 print('gpu')
         else:
             self.startstop = 1
+            self.w3.miner.stop()
             ######################################
             self.miningtatus = 0
             ######################################
@@ -2657,7 +2666,7 @@ class Example(QDialog,QWidget):
         '显示窗口'
         self.ui = Ui_Form()
         self.ui.setupUi(self)
-
+        self.w3 = Web3(HTTPProvider('http://127.0.0.1:8545', request_kwargs={'timeout': 3}))
         if os.path.isfile('test.xml'):
             self.addrdom = xml.dom.minidom.parse("test.xml") # 打开xml文档
             xmlStr = self.addrdom.toprettyxml(indent='', newl='', encoding='utf-8')
