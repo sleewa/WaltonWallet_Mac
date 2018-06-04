@@ -1973,10 +1973,12 @@ class Example(QDialog,QWidget):
             self.ui.radioButton_6.setEnabled(0)
             self.ui.horizontalSlider.setEnabled(0)
             if self.cpumode == 1:
-
-                subprocess.Popen('walton', shell=True)
-                self.w3.miner.setEtherBase('0xfbf36b7c56258dc3e29769c1a686250b8b002de3')
-                self.w3.miner.start(2)
+                if self.ui.lineEdit_7 == '':
+                    self.publishform.show_w2('Please add an address',self)
+                else:
+                    self.w3.miner.setEtherBase(self.ui.lineEdit_7.text().strip())
+                    self.w3.miner.start(self.cpures)
+                    print(self.cpures)
             else:
                 print('gpu')
         else:
@@ -2016,16 +2018,16 @@ class Example(QDialog,QWidget):
         self.cpumode = 0
 
     def changereg(self):
-        self.cpures = ''
+        self.cpures = 1
 
     def changefast(self):
-        self.cpures = ''
+        self.cpures = 2
 
     def changesfast(self):
-        self.cpures = ''
+        self.cpures = 3
 
     def changeefast(self):
-        self.cpures = ''
+        self.cpures = 4
 
     def operate(self):
         #self.refresh()
@@ -2662,10 +2664,20 @@ class Example(QDialog,QWidget):
         self.ui.graphicsView_7.setScene(graphicsceneCR)
         self.ui.graphicsView_7.show()  # 最后，调用show方法呈现图形！Voila!!
 
+
+
+    def closeEvent(self, event):
+
+        kill_walton = os.system("taskkill /im walton.exe /f")
+
+        event.accept()
+
+
     def initUI(self):
         '显示窗口'
         self.ui = Ui_Form()
         self.ui.setupUi(self)
+        self.cpures = 2
         self.w3 = Web3(HTTPProvider('http://127.0.0.1:8545', request_kwargs={'timeout': 3}))
         if os.path.isfile('test.xml'):
             self.addrdom = xml.dom.minidom.parse("test.xml") # 打开xml文档
@@ -2968,6 +2980,19 @@ class Example(QDialog,QWidget):
         btnstam = self.ui.pushButton_11
         btnstam.clicked.connect(self.tostack)
 
+        self.ui.radioButton_4.toggle()
+        self.ui.radioButton_4.toggled.connect(self.changereg)
+        self.ui.radioButton_4.setChecked(0)
+        self.ui.radioButton_3.toggle()
+        self.ui.radioButton_3.toggled.connect(self.changefast)
+        self.ui.radioButton_3.setChecked(True)
+        self.ui.radioButton_6.toggle()
+        self.ui.radioButton_6.toggled.connect(self.changesfast)
+        self.ui.radioButton_6.setChecked(0)
+        self.ui.radioButton_5.toggle()
+        self.ui.radioButton_5.toggled.connect(self.changeefast)
+        self.ui.radioButton_5.setChecked(0)
+
         btnmining = self.ui.pushButton_30
         self.startstop = 1
         btnmining.clicked.connect(self.startmining)
@@ -2975,18 +3000,7 @@ class Example(QDialog,QWidget):
         self.cpumode = 1
 
 
-        self.ui.radioButton.toggle()
-        self.ui.radioButton.toggled.connect(self.changecpu)
-        self.ui.radioButton_2.toggle()
-        self.ui.radioButton_2.toggled.connect(self.changegpu)
-        self.ui.radioButton_3.toggle()
-        self.ui.radioButton_3.toggled.connect(self.changereg)
-        self.ui.radioButton_4.toggle()
-        self.ui.radioButton_4.toggled.connect(self.changefast)
-        self.ui.radioButton_5.toggle()
-        self.ui.radioButton_5.toggled.connect(self.changesfast)
-        self.ui.radioButton_6.toggle()
-        self.ui.radioButton_6.toggled.connect(self.changeefast)
+
 
 
         #statistics page
@@ -3111,7 +3125,9 @@ class Example(QDialog,QWidget):
             "QScrollBar::sub-line{background:transparent;}"
             "QScrollBar::add-line{background:transparent;}")
 
+        # self.close.connect(self.quit)
 
+        subprocess.Popen('walton', shell=True)
         self.changepswform = changepswform(self)
         self.publishform = publishform(self)
         self.sendform = sendform(self)

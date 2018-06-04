@@ -24,3 +24,41 @@
 18:03:55.727613 version@stat F·[2] S·1MiB[1MiB] Sc·[0.50]
 18:03:55.733569 db@janitor F·4 G·0
 18:03:55.733569 db@open done T·44.8491ms
+=============== Jun 4, 2018 (CST) ===============
+20:39:49.355055 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+20:39:49.375002 version@stat F·[2] S·1MiB[1MiB] Sc·[0.50]
+20:39:49.375002 db@open opening
+20:39:49.375002 journal@recovery F·1
+20:39:49.380986 journal@recovery recovering @6
+20:39:49.406917 memdb@flush created L0@8 N·2 S·243B "Blo..ion,v21272":"Las..der,v21273"
+20:39:49.418885 version@stat F·[3] S·1MiB[1MiB] Sc·[0.75]
+20:39:49.432847 db@janitor F·5 G·0
+20:39:49.432847 db@open done T·57.8455ms
+=============== Jun 4, 2018 (CST) ===============
+20:56:01.051855 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+20:56:01.070816 version@stat F·[3] S·1MiB[1MiB] Sc·[0.75]
+20:56:01.070816 db@open opening
+20:56:01.070816 journal@recovery F·1
+20:56:01.078782 journal@recovery recovering @9
+20:56:01.098729 memdb@flush created L0@11 N·2 S·243B "Blo..ion,v21275":"Las..der,v21276"
+20:56:01.112692 version@stat F·[4] S·1MiB[1MiB] Sc·[1.00]
+20:56:01.142613 db@janitor F·6 G·0
+20:56:01.142613 db@open done T·71.7964ms
+20:56:01.143610 table@compaction L0·4 -> L1·0 S·1MiB Q·21277
+20:56:01.586461 table@build created L1@14 N·21266 S·1MiB "\x00\x02\xbc..*\a0,v14888":"\xff\xfa\xbc..\xc96\xdf,v10382"
+20:56:01.586461 version@stat F·[0 1] S·1MiB[0B 1MiB] Sc·[0.00 0.02]
+20:56:01.626402 table@compaction committed F-3 S-699B Ke·0 D·7 T·482.7919ms
+20:56:01.627343 table@remove removed @11
+20:56:01.628340 table@remove removed @8
+20:56:01.628340 table@remove removed @5
+20:56:01.629312 table@remove removed @2
+=============== Jun 4, 2018 (CST) ===============
+21:00:01.858215 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+21:00:01.878162 version@stat F·[0 1] S·1MiB[0B 1MiB] Sc·[0.00 0.02]
+21:00:01.878162 db@open opening
+21:00:01.879159 journal@recovery F·1
+21:00:01.883148 journal@recovery recovering @12
+21:00:01.911074 memdb@flush created L0@15 N·2 S·243B "Blo..ion,v21278":"Las..der,v21279"
+21:00:01.916060 version@stat F·[1 1] S·1MiB[243B 1MiB] Sc·[0.25 0.02]
+21:00:01.923041 db@janitor F·4 G·0
+21:00:01.923041 db@open done T·44.8793ms
