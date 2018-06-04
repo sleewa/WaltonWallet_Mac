@@ -1,135 +1,66 @@
 <?xml version="1.0" ?>
 <ArrayOfAddressTransactionsEntity xmlns:xsd="&quot;http://www.w3.org/2001/XMLSchema&quot;">
-      
+                
  <AddressTransactionsEntity>
-            
+                                
   <Address>0xAB828046856F5886a3835C914862E0F5f834Ee7d</Address>
-            
+                                
   <UpdateTime>2018-06-04</UpdateTime>
-            
-  <TransactionList>             </TransactionList>
-         
+                                
+  <TransactionList>                             </TransactionList>
+                        
  </AddressTransactionsEntity>
-      
+                
  <AddressTransactionsEntity>
-            
+                                
   <Address>0xFBf36B7c56258dC3e29769C1a686250B8B002dE3</Address>
-            
+                                
   <UpdateTime>2018-06-04</UpdateTime>
-            
+                                
   <TransactionList>
-            
-   <AccountTransactionsEntity>
-                
-    <addressFrom>0xAB828046856F5886a3835C914862E0F5f834Ee7d</addressFrom>
-                
-    <blockNumber>none</blockNumber>
-                
-    <gasPrice>0.000000036</gasPrice>
-                
-    <blockHash/>
-                
-    <transacIndex> </transacIndex>
-                
-    <tx_hash>0xbfb5bc47f5d7d9c1af9aaf8e7df15f4069bd8cca85b7560d9a602935056fbfb3</tx_hash>
-                
-    <gas>200000</gas>
-                
-    <addressTo>0xFBf36B7c56258dC3e29769C1a686250B8B002dE3</addressTo>
-                
-    <value>0.12345</value>
-                
-    <utc_timestamp>2018-06-04 06:52:03</utc_timestamp>
-                
-    <transType>Recieve</transType>
-                
-    <blockType>Submitted</blockType>
-              
-   </AccountTransactionsEntity>
-            
-   <AccountTransactionsEntity>
-                
-    <addressFrom>0xAB828046856F5886a3835C914862E0F5f834Ee7d</addressFrom>
-                
-    <blockNumber>none</blockNumber>
-                
-    <gasPrice>0.000000036</gasPrice>
-                
-    <blockHash/>
-                
-    <transacIndex> </transacIndex>
-                
-    <tx_hash>0xf8bb2ed23d22f1b38abcf3e72c7776481e6e6b230d2daabae39fc83684ca5fc6</tx_hash>
-                
-    <gas>200000</gas>
-                
-    <addressTo>0xFBf36B7c56258dC3e29769C1a686250B8B002dE3</addressTo>
-                
-    <value>1.12345</value>
-                
-    <utc_timestamp>2018-06-04 06:54:55</utc_timestamp>
-                
-    <transType>Recieve</transType>
-                
-    <blockType>Submitted</blockType>
-              
-   </AccountTransactionsEntity>
+                                                                                     
           
-   <AccountTransactionsEntity>
-    <addressFrom>0xAB828046856F5886a3835C914862E0F5f834Ee7d</addressFrom>
-    <blockNumber>none</blockNumber>
-    <gasPrice>0.000000036</gasPrice>
-    <blockHash/>
-    <transacIndex> </transacIndex>
-    <tx_hash>0xcddc58141c76321748ba09065279cc6b8213a499614d681caeacbaa177356ecd</tx_hash>
-    <gas>200000</gas>
-    <addressTo>0xFBf36B7c56258dC3e29769C1a686250B8B002dE3</addressTo>
-    <value>2.12345</value>
-    <utc_timestamp>2018-06-04 07:05:05</utc_timestamp>
-    <transType>Recieve</transType>
-    <blockType>Submitted</blockType>
-   </AccountTransactionsEntity>
   </TransactionList>
-         
+                        
  </AddressTransactionsEntity>
-      
+                
  <AddressTransactionsEntity>
-            
+                                
   <Address>0xbc150472895D0163Dc990e6FC6beD90A87145535</Address>
-            
+                                
   <UpdateTime>2018-06-04</UpdateTime>
-            
+                                
   <TransactionList/>
-         
+                        
  </AddressTransactionsEntity>
-      
+                
  <AddressTransactionsEntity>
-            
+                                
   <Address>0x94682fdf819af9D58af12B9023562815f5c3fDc8</Address>
-            
+                                
   <UpdateTime>2018-06-04</UpdateTime>
-            
+                                
   <TransactionList/>
-         
+                        
  </AddressTransactionsEntity>
-      
+                
  <AddressTransactionsEntity>
-            
+                                
   <Address>0x9D49a072884E16052D7C592C12283546c1FDcF94</Address>
-            
+                                
   <UpdateTime>2018-06-04</UpdateTime>
-            
+                                
   <TransactionList/>
-         
+                        
  </AddressTransactionsEntity>
-      
+                
  <AddressTransactionsEntity>
-            
+                                
   <Address>0x920295e58efb8C08a191DceF904C38216Ef81324</Address>
-            
+                                
   <UpdateTime>2018-06-04</UpdateTime>
-            
+                                
   <TransactionList/>
-         
+                        
  </AddressTransactionsEntity>
 </ArrayOfAddressTransactionsEntity>

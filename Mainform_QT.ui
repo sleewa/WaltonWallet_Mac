@@ -3185,9 +3185,9 @@ border-radius:25px;</string>
       <widget class="QPushButton" name="pushButton_35">
        <property name="geometry">
         <rect>
-         <x>760</x>
+         <x>750</x>
          <y>250</y>
-         <width>31</width>
+         <width>41</width>
          <height>41</height>
         </rect>
        </property>
@@ -3487,6 +3487,41 @@ background-color: rgb(230, 238, 255);</string>
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
        </property>
       </widget>
+      <widget class="QPushButton" name="pushButton_43">
+       <property name="geometry">
+        <rect>
+         <x>790</x>
+         <y>250</y>
+         <width>41</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="cursor">
+        <cursorShape>PointingHandCursor</cursorShape>
+       </property>
+       <property name="autoFillBackground">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset>
+         <normaloff>pic/QRC.png</normaloff>pic/QRC.png</iconset>
+       </property>
+       <property name="iconSize">
+        <size>
+         <width>77</width>
+         <height>77</height>
+        </size>
+       </property>
+       <property name="autoDefault">
+        <bool>false</bool>
+       </property>
+       <property name="flat">
+        <bool>true</bool>
+       </property>
+      </widget>
       <zorder>label_2</zorder>
       <zorder>TransactionHistory</zorder>
       <zorder>line_19</zorder>
@@ -3508,6 +3543,7 @@ background-color: rgb(230, 238, 255);</string>
       <zorder>line_16</zorder>
       <zorder>pushButton_46</zorder>
       <zorder>label_72</zorder>
+      <zorder>pushButton_43</zorder>
      </widget>
      <widget class="QWidget" name="page_7">
       <widget class="QLabel" name="label_9">

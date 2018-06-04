@@ -44,6 +44,8 @@ from ConInfoForm import Ui_ConInfoForm
 from PswForm import Ui_PswForm
 from SetPswForm import Ui_SetPswForm
 from ChangePswForm import Ui_ChangePswForm
+from PriKeyForm import Ui_PriKeyForm
+
 import xml.etree.ElementTree as ET
 import matplotlib
 import datetime
@@ -257,6 +259,58 @@ class changepswform(QWidget, Ui_ChangePswForm):
     def closeform(self):
         self.Dialog.close()
 
+class prikeyform(QWidget, Ui_PriKeyForm):
+    def __init__(self,PRAE):
+        super().__init__()
+        self.ui = Ui_PriKeyForm()
+        # self.ui.setupUi(self)
+        self.Dialog = QDialog(PRAE)
+        self.ui.setupUi(self.Dialog)
+        self.Dialog.setWindowFlags(Qt.CustomizeWindowHint)
+        # self.setWindowFlags(Qt.CustomizeWindowHint)
+        btnc = self.ui.closeenterpsw
+        btnc.clicked.connect(self.closeform)
+        btncopy = self.ui.pushButton_35
+        btncopy.clicked.connect(self.copyaddr)
+        #self.ui.lineEdit_6.changeEvent.connect(self.showqrcode)
+        #self.ui.lineEdit_6.keyPressEvent(self,self.showqrcode)
+        self.Dialog.close()
+
+    def show_w2(self,PRAE):  # 显示窗体2
+        # self.show()
+        self.showqrcode()
+        screen = PRAE.geometry()
+        size = self.Dialog.geometry()
+        self.Dialog.move((screen.width() - size.width()) / 2,
+                         (screen.height() - size.height()) / 2)
+        self.Dialog.show()
+        self.Dialog.exec_()
+
+    def showqrcode(self):
+        self.ui.lineEdit_8.setText(ex.m_wallet.privateKey)
+        strAddressAndAmount = ex.m_wallet.privateKey# + "," + value
+        self.imgpub = qrcode.make(strAddressAndAmount)
+        self.imgpub.save("pic\\private.png")
+        self.ui.label.setPixmap(QPixmap("pic\\private.png"))
+        self.ui.label.setAutoFillBackground(1)
+
+    def copyaddr(self):
+        self.clipboard_public_key = QApplication.clipboard()
+        self.clipboard_public_key.setText(ex.m_wallet.privateKey)
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.dragPosition = event.globalPos() - self.frameGeometry().topLeft()
+            QApplication.postEvent(self, Core_func.QEvent(174))
+            event.accept()
+
+    def mouseMoveEvent(self, event):
+        if event.buttons() == Qt.LeftButton:
+            self.move(event.globalPos() - self.dragPosition)
+            event.accept()
+
+    def closeform(self):
+        self.Dialog.close()
 
 class setpswform(QWidget, Ui_SetPswForm):
     def __init__(self,PRAE):
@@ -455,6 +509,7 @@ class enterpswform(QWidget, Ui_EnterPswForm):
             ex.ui.lineEdit_9.setText(self.prikey)
             ex.m_wallet.privateKey = self.prikey
             ex.ui.pushButton_35.setIcon(QIcon("pic/01.png"))
+            ex.ui.pushButton_43.setIcon(QIcon("pic/010.png"))
             ex.ui.lineEdit_9.setEchoMode(0)
             ex.privatekeyeye = 0
         self.needtosend = 0
@@ -1636,7 +1691,16 @@ class Example(QDialog,QWidget):
         else:
             self.ui.lineEdit_9.setEchoMode(QLineEdit.Password)
             self.ui.pushButton_35.setIcon(QIcon("pic/08.png"))
+            self.ui.pushButton_43.setIcon(QIcon("pic/QRC.png"))
             self.privatekeyeye = 1
+
+    def seeprivateqrcode(self):
+        if self.privatekeyeye == 0:
+            self.imgpub = qrcode.make(self.ui.lineEdit_9.text())
+            self.imgpub.save("pic\\private.png")
+            self.prikeyform = prikeyform(self)
+            self.prikeyform.show_w2(self)
+
 
     def seeprikey(self):
         if self.prieye == 1:
@@ -2009,10 +2073,10 @@ class Example(QDialog,QWidget):
                                 for j in range(len(ret[1])):
                                     if ret[1][j]['tx_hash']  == AccountTransactionsEntity.getElementsByTagName('tx_hash')[0].firstChild.data:
                                         AccountTransactionsEntity.parentNode.removeChild(AccountTransactionsEntity)
-                                        f = open('trans.xml', 'w')
-                                        self.transdom.writexml(f, addindent=' ', newl='\n')
-                                        f.close()
                                         break
+                        f = open('trans.xml', 'w')
+                        self.transdom.writexml(f, addindent=' ', newl='\n')
+                        f.close()
                         a = range(len(TransactionList.getElementsByTagName('AccountTransactionsEntity')))
                         for i in reversed(a):
                             AccountTransactionsEntity = TransactionList.getElementsByTagName('AccountTransactionsEntity')[i]
@@ -2858,6 +2922,8 @@ class Example(QDialog,QWidget):
         btneyepri = self.ui.pushButton_35
         self.privatekeyeye = 1
         btneyepri.clicked.connect(self.seeprivatekey)
+        btneyepriqrcode = self.ui.pushButton_43
+        btneyepriqrcode.clicked.connect(self.seeprivateqrcode)
         btncopypub = self.ui.pushButton_34
         btncopypub.clicked.connect(self.copyPublicKey)
         btnreb = self.ui.pushButton_6
